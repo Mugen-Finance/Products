@@ -4,7 +4,7 @@ pragma solidity 0.8.15;
 
 import {IStargateReceiver} from "../interfaces/IStargateReceiver.sol";
 import {IStargateRouter} from "../interfaces/IStargateRouter.sol";
-import "../interfaces/ICrossChainSwaps.sol";
+import {ICrossChainSwaps} from "../interfaces/ICrossChainSwaps.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 //{ICrossChainSwaps} from
@@ -17,54 +17,51 @@ abstract contract StargateAdapter is IStargateReceiver {
     }
 
     struct StargateParams {
-        uint16 dstChainId;
-        uint256 srcPoolId;
-        uint256 dstPoolId;
-        address payable refundAddress;
-        uint256 amountLD;
-        uint256 minAmountLD;
-        uint256 dstGas;
-        uint256 dstNativeAmount;
-        bytes dstNativeAddr;
-        address destinationAddress;
+        uint16 dstChainId; // stargate dst chain id
+        address token; // token getting bridged
+        uint256 srcPoolId; // stargate src pool id
+        uint256 dstPoolId; // stargate dst pool id
+        uint256 amount; // amount to bridge
+        uint256 amountMin; // amount to bridge minimum
+        uint256 dustAmount; // native token to be received on dst chain
+        address receiver; // sushiXswap on dst chain
+        address to; // receiver bridge token incase of transaction reverts on dst chain
+        uint256 gas; // extra gas to be sent for dst chain operations
+        bytes32 srcContext; // random bytes32 as source context
     }
 
     function stargateSwap(
         StargateParams memory params,
         uint8[] memory stepsDst,
         bytes[] memory dataDst
-    ) public payable {
-        bytes memory dstDestinationAddress = abi.encodePacked(
-            params.destinationAddress
-        );
+    ) internal {
         bytes memory payload = abi.encode(stepsDst, dataDst);
         IStargateRouter(stargateRouter).swap(
             params.dstChainId,
             params.srcPoolId,
             params.dstPoolId,
-            params.refundAddress,
-            params.amountLD,
-            params.minAmountLD,
+            payable(msg.sender),
+            params.amount != 0
+                ? params.amount
+                : IERC20(params.token).balanceOf(address(this)),
+            params.amountMin,
             IStargateRouter.lzTxObj(
-                params.dstGas,
-                params.dstNativeAmount,
-                params.dstNativeAddr
+                params.gas,
+                params.dustAmount,
+                abi.encodePacked(params.receiver)
             ),
-            dstDestinationAddress,
+            abi.encodePacked(params.receiver),
             payload
         );
     }
 
-    /// @param _chainId The remote chainId sending the tokens
-    /// @param _srcAddress The remote Bridge address
-    /// @param _nonce The message ordering nonce
     /// @param _token The token contract on the local chain
     /// @param amountLD The qty of local _token contract tokens
     /// @param _payload The bytes containing the toAddress
     function sgReceive(
-        uint16 _chainId,
-        bytes memory _srcAddress,
-        uint256 _nonce,
+        uint16,
+        bytes memory,
+        uint256,
         address _token,
         uint256 amountLD,
         bytes memory _payload
@@ -73,10 +70,17 @@ abstract contract StargateAdapter is IStargateReceiver {
             msg.sender == address(stargateRouter),
             "only stargate router can call sgReceive!"
         );
-        (address _toAddr, uint8[] memory steps, bytes[] memory data) = abi
-            .decode(_payload, (address, uint8[], bytes[]));
-        ICrossChainSwaps(payable(address(this))).swaps(steps, data); //Why does this work?
-        IERC20(_token).transfer(_toAddr, amountLD);
+        (address to, uint8[] memory steps, bytes[] memory data) = abi.decode(
+            _payload,
+            (address, uint8[], bytes[])
+        );
+        bool failed;
+        try
+            ICrossChainSwaps(payable(address(this))).swaps(steps, data)
+        {} catch (bytes memory) {
+            IERC20(_token).transfer(to, amountLD);
+            failed = true;
+        }
         //emit ReceivedOnDestination(_token, amountLD);
     }
 }
