@@ -7,13 +7,17 @@ import {IStargateRouter} from "../interfaces/IStargateRouter.sol";
 import {ICrossChainSwaps} from "../interfaces/ICrossChainSwaps.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-//{ICrossChainSwaps} from
+/**
+ * Add fee
+ */
 
 abstract contract StargateAdapter is IStargateReceiver {
     IStargateRouter public immutable stargateRouter;
+    address public immutable feeCollector;
 
     constructor(IStargateRouter _stargateRouter) {
         stargateRouter = _stargateRouter;
+        feeCollector = msg.sender;
     }
 
     struct StargateParams {
@@ -36,6 +40,9 @@ abstract contract StargateAdapter is IStargateReceiver {
         bytes[] memory dataDst
     ) internal {
         bytes memory payload = abi.encode(stepsDst, dataDst);
+        uint256 fee = (params.amount * 25) / 1000;
+        params.amount = params.amount - fee;
+        IERC20(token).safeTransfer(feeCollector, fee);
         IStargateRouter(stargateRouter).swap(
             params.dstChainId,
             params.srcPoolId,
@@ -81,6 +88,9 @@ abstract contract StargateAdapter is IStargateReceiver {
             IERC20(_token).transfer(to, amountLD);
             failed = true;
         }
+
+        if (address(this).balance > 0)
+            to.call{value: (address(this).balance)}("");
         //emit ReceivedOnDestination(_token, amountLD);
     }
 }

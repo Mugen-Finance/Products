@@ -19,13 +19,35 @@ contract CrossChainSwaps is
 {
     using SafeERC20 for IERC20;
 
-    address public immutable weth;
+    /*//////////////////////////////////////////////////////////////
+                               CONSTANTS
+    //////////////////////////////////////////////////////////////*/
+
     IJoeRouter02 public constant joeRouter =
         IJoeRouter02(0x60aE616a2155Ee3d9A68541Ba4544862310933d4);
     IPancakeRouter02 public constant pancakeRouter =
         IPancakeRouter02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
     IUniswapV2Router02 public constant spookyRouter =
         IUniswapV2Router02(0xF491e7B69E4244ad4002BC14e878a34207E38c29);
+    uint8 internal constant DEPOSIT = 1;
+    uint8 internal constant WETH_DEPOSIT = 2;
+    uint8 internal constant UNISWAP_SINGLE = 3;
+    uint8 internal constant UNISWAP_MULTI = 4;
+    uint8 internal constant SUSHI_LEGACY = 5;
+    uint8 internal constant TRADERJOE_SWAP = 6;
+    uint8 internal constant PANCAKE_SWAP = 7;
+    uint8 internal constant SPOOKY_SWAP = 8;
+    uint8 internal constant STARGATE = 9;
+
+    /*//////////////////////////////////////////////////////////////
+                               IMMUTABLES
+    //////////////////////////////////////////////////////////////*/
+
+    address public immutable weth;
+
+    /*//////////////////////////////////////////////////////////////
+                               CONSTRUCTOR
+    //////////////////////////////////////////////////////////////*/
 
     constructor(
         address _weth,
@@ -41,15 +63,9 @@ contract CrossChainSwaps is
         weth = _weth;
     }
 
-    uint8 internal constant DEPOSIT = 1;
-    uint8 internal constant WETH_DEPOSIT = 2;
-    uint8 internal constant UNISWAP_SINGLE = 3;
-    uint8 internal constant UNISWAP_MULTI = 4;
-    uint8 internal constant SUSHI_LEGACY = 5;
-    uint8 internal constant TRADERJOE_SWAP = 6;
-    uint8 internal constant PANCAKE_SWAP = 7;
-    uint8 internal constant SPOOKY_SWAP = 8;
-    uint8 internal constant STARGATE = 9;
+    /*//////////////////////////////////////////////////////////////
+                               USER FUNCTIONS
+    //////////////////////////////////////////////////////////////*/
 
     function swaps(uint8[] memory steps, bytes[] memory data) external payable {
         for (uint256 i = 0; i < steps.length; i++) {
