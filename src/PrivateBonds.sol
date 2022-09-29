@@ -70,6 +70,7 @@ contract PrivateBonds is ERC721, Ownable {
         if (amount < requiredRepayment) revert NotEnoguh();
         IERC20(bond.token).safeTransferFrom(msg.sender, address(this), amount);
         IERC20(bond.token).safeTransfer(creditor, amount);
+        _burn(loanId);
         emit Repayed(creditor, loanId);
     }
 
@@ -85,6 +86,7 @@ contract PrivateBonds is ERC721, Ownable {
                 address(this),
                 details.amount
             );
+            _mint(loaner, offerNumber);
             emit OfferAccepted(decision, offerNumber);
         } else {
             emit OfferDeclined(decision, offerNumber);
