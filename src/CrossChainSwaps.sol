@@ -2,6 +2,11 @@
 
 pragma solidity 0.8.15;
 
+/**
+ * TODO
+ * Add Events and comments
+ */
+
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IWETH9} from "./interfaces/IWETH9.sol";
@@ -67,6 +72,8 @@ contract CrossChainSwaps is
                                USER FUNCTIONS
     //////////////////////////////////////////////////////////////*/
 
+    ///@param steps one way array mapping steps with actions
+    ///@param data one way array of data to perform at each called step
     function swaps(uint8[] memory steps, bytes[] memory data) external payable {
         for (uint256 i = 0; i < steps.length; i++) {
             uint8 step = steps[i];

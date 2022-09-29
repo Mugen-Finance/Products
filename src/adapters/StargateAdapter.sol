@@ -2,24 +2,50 @@
 
 pragma solidity 0.8.15;
 
+/**
+ * TODO
+ * Add Events and comments
+ */
+
 import {IStargateReceiver} from "../interfaces/IStargateReceiver.sol";
 import {IStargateRouter} from "../interfaces/IStargateRouter.sol";
 import {ICrossChainSwaps} from "../interfaces/ICrossChainSwaps.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
-
-/**
- * Add fee
- */
+import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 abstract contract StargateAdapter is IStargateReceiver {
+    using SafeERC20 for IERC20;
+
+    /*//////////////////////////////////////////////////////////////
+                               IMMUTABLES
+    //////////////////////////////////////////////////////////////*/
+
+    ///@notice address of the stargate router
     IStargateRouter public immutable stargateRouter;
+
+    ///@notice address of the wallet to collect fees
     address public immutable feeCollector;
+
+    /*//////////////////////////////////////////////////////////////
+                               EVENTS
+    //////////////////////////////////////////////////////////////*/
+
+    event ReceivedOnDestination(
+        address indexed token,
+        uint256 amountLD,
+        bool failed
+    );
+
+    /*//////////////////////////////////////////////////////////////
+                               CONSTRUCTOR
+    //////////////////////////////////////////////////////////////*/
 
     constructor(IStargateRouter _stargateRouter) {
         stargateRouter = _stargateRouter;
         feeCollector = msg.sender;
     }
 
+    ///@notice struct to define parameters needed for the swap.
     struct StargateParams {
         uint16 dstChainId; // stargate dst chain id
         address token; // token getting bridged
@@ -28,21 +54,32 @@ abstract contract StargateAdapter is IStargateReceiver {
         uint256 amount; // amount to bridge
         uint256 amountMin; // amount to bridge minimum
         uint256 dustAmount; // native token to be received on dst chain
-        address receiver; // sushiXswap on dst chain
+        address receiver; // Mugen contract on dst chain
         address to; // receiver bridge token incase of transaction reverts on dst chain
         uint256 gas; // extra gas to be sent for dst chain operations
         bytes32 srcContext; // random bytes32 as source context
     }
 
+    /*//////////////////////////////////////////////////////////////
+                               INTERNAL FUNCTIONS
+    //////////////////////////////////////////////////////////////*/
+
+    /// @param params parameters for the stargate router defined in StargateParams
+    /// @param stepsDst an arrat of steps to be performed on the dst chain
+    /// @param dataDst an array of data to be performed on the dst chain
     function stargateSwap(
         StargateParams memory params,
         uint8[] memory stepsDst,
         bytes[] memory dataDst
     ) internal {
-        bytes memory payload = abi.encode(stepsDst, dataDst);
+        bytes memory payload = abi.encode(params.to, stepsDst, dataDst);
         uint256 fee = (params.amount * 25) / 1000;
         params.amount = params.amount - fee;
-        IERC20(token).safeTransfer(feeCollector, fee);
+        IERC20(params.token).safeTransfer(feeCollector, fee);
+        IERC20(params.token).safeIncreaseAllowance(
+            address(stargateRouter),
+            params.amount
+        );
         IStargateRouter(stargateRouter).swap(
             params.dstChainId,
             params.srcPoolId,
@@ -61,6 +98,10 @@ abstract contract StargateAdapter is IStargateReceiver {
             payload
         );
     }
+
+    /*//////////////////////////////////////////////////////////////
+                               STARGATE LOGIC
+    //////////////////////////////////////////////////////////////*/
 
     /// @param _token The token contract on the local chain
     /// @param amountLD The qty of local _token contract tokens
@@ -85,12 +126,12 @@ abstract contract StargateAdapter is IStargateReceiver {
         try
             ICrossChainSwaps(payable(address(this))).swaps(steps, data)
         {} catch (bytes memory) {
-            IERC20(_token).transfer(to, amountLD);
+            IERC20(_token).safeTransfer(to, amountLD);
             failed = true;
         }
 
         if (address(this).balance > 0)
             to.call{value: (address(this).balance)}("");
-        //emit ReceivedOnDestination(_token, amountLD);
+        emit ReceivedOnDestination(_token, amountLD, failed);
     }
 }
