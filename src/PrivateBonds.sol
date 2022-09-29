@@ -16,10 +16,6 @@ import {Ownable} from "openzeppelin/contracts/access/Ownable.sol";
 contract PrivateBonds is ERC721, Ownable {
     using SafeERC20 for IERC20;
 
-    constructor(string memory name_, string memory symbol_)
-        ERC721(name_, symbol_)
-    {}
-
     mapping(uint256 => mapping(address => BondDetails)) public offers;
     mapping(uint256 => bool) public decisions;
     uint256 public bondId;
@@ -44,6 +40,10 @@ contract PrivateBonds is ERC721, Ownable {
         uint24 interestRate;
         uint256 expiration;
     }
+
+    constructor(string memory name_, string memory symbol_)
+        ERC721(name_, symbol_)
+    {}
 
     function offer(BondDetails memory details) external {
         require(IERC20(details.token).balanceOf(msg.sender) > details.amount);
