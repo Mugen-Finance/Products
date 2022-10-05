@@ -3,9 +3,20 @@
 pragma solidity 0.8.15;
 
 /**
+ * Initial logic was to have it set up so that users could offer undercollateralized loans in the form of bonds
+ * to protocols. But it would probably work best to have it in reverse where, protocols can set up bond terms
+ * and users can buy the NFTs if they desire.
+ */
+
+/**
  * TODO
  * Handle rejected bond offers
  * handle repayment situations (ie. has it been repayed yet or not. )
+ * Calculate interest properly
+ * Interest payments
+ * pricing
+ * Fractionalization
+ *
  */
 
 import {ERC721} from "openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -88,7 +99,7 @@ contract PrivateBonds is ERC721, Ownable {
             );
             _mint(loaner, offerNumber);
             emit OfferAccepted(decision, offerNumber);
-        } else {
+        } else if (decision == false) {
             emit OfferDeclined(decision, offerNumber);
         }
     }
