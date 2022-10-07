@@ -5,6 +5,7 @@ pragma solidity 0.8.15;
 /**
  * TODO
  * Look at preview mint and preview deposit to see what is happening there
+ * Look at Jones Dao to see how they handle withdraws and deposits
  */
 
 import "openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
@@ -57,6 +58,10 @@ contract CapETHVault is ERC4626 {
         return assets;
     }
 
+    function afterDeposit() internal {
+        ethPool.deposit{value: balanceOf(address(this))}(msg.value);
+    }
+
     function _deposit(
         address caller,
         address receiver,
@@ -75,9 +80,38 @@ contract CapETHVault is ERC4626 {
         emit Deposit(caller, receiver, assets, shares);
     }
 
-    function afterDeposit() internal {
-        ethPool.deposit{value: balanceOf(address(this))}(msg.value);
+    function beforeWithdraw(uint256 amount) internal {
+        ethPool.withdraw(amount);
     }
 
-    function beforeWithdraw() internal {}
+    function _withdraw(
+        address caller,
+        address receiver,
+        address owner,
+        uint256 assets,
+        uint256 shares
+    ) internal virtual override {
+        if (caller != owner) {
+            _spendAllowance(owner, caller, shares);
+        }
+
+        // If _asset is ERC777, `transfer` can trigger a reentrancy AFTER the transfer happens through the
+        // `tokensReceived` hook. On the other hand, the `tokensToSend` hook, that is triggered before the transfer,
+        // calls the vault, which is assumed not malicious.
+        //
+        // Conclusion: we need to do the transfer after the burn so that any reentrancy would happen after the
+        // shares are burned and after the assets are transferred, which is a valid state.
+        beforeWithdraw(assets);
+        _burn(owner, shares);
+        payable(receiver).transfer(assets);
+
+        emit Withdraw(caller, receiver, owner, assets, shares);
+    }
+
+    function compound() external {
+        ethRewards.collectReward();
+        ethPool.deposit{value: balanceOf(address(this))}(0);
+    }
+
+    receive() external payable {}
 }
