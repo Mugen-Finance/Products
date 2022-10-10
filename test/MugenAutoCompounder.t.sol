@@ -8,7 +8,7 @@ import "openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract MugenAutoCompounderTest is Test {
     MugenAutoCompounder mac;
-    address mugenWhale = address(0xCe3dC36Cd501C00f643a09f2C8d9b69Fb941bB74);
+    address mugenWhale = address(0xd783947ce4924147f35b319BD247eE628E7fB0BE);
     address factory = address(0x1F98431c8aD98523631AE4a59f267346ea31F984);
 
     function setUp() public {
@@ -56,10 +56,21 @@ contract MugenAutoCompounderTest is Test {
         mac.deposit(100 * 1e18, address(this));
         assertEq(mac.balanceOf(address(this)), 100 * 1e18);
         assertEq(mac.totalSupply(), 100 * 1e18);
+        assertEq(mac.totalAssets(), 100 * 1e18);
     }
 
     function testMACWithdraw() public {
         testMACDeposit();
+        uint256 preBalance = IERC20(0xFc77b86F3ADe71793E1EEc1E7944DB074922856e)
+            .balanceOf(address(this));
         mac.withdraw(100 * 1e18, address(this), address(this));
+        assertEq(mac.totalAssets(), 0);
+        assertEq(mac.totalSupply(), 0);
+        assertEq(
+            IERC20(0xFc77b86F3ADe71793E1EEc1E7944DB074922856e).balanceOf(
+                address(this)
+            ),
+            preBalance + 100 * 1e18
+        );
     }
 }

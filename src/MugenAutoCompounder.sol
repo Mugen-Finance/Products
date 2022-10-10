@@ -9,13 +9,6 @@ import "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "uniswap/v3-core/contracts/interfaces/IUniswapV3Factory.sol";
 import "uniswap/v3-periphery/contracts/libraries/OracleLibrary.sol";
 
-/**
- * Before Launching onto testnet, create uniswap pool, change constants for testnet, get factory address
- * Correct oracle and amount out information
- * Check to make sure that the correct input for the unstake amount is in there. This way they withdraw the correct amount
- * Or try setting it up with a last updated so that it compounds whenever someone leaves as well
- */
-
 contract MugenAutoCompounder is ERC4626 {
     using SafeERC20 for IERC20;
 
@@ -26,7 +19,6 @@ contract MugenAutoCompounder is ERC4626 {
         IStake(0x25B9f82D1F1549F97b86bd0873738E30f23D15ea);
 
     address public immutable pool;
-    uint256 public lastCompound;
 
     event Staked(uint256 stakedAmount);
 
@@ -74,17 +66,10 @@ contract MugenAutoCompounder is ERC4626 {
         uint256 assets,
         uint256 shares
     ) internal virtual override {
-        // If _asset is ERC777, `transferFrom` can trigger a reenterancy BEFORE the transfer happens through the
-        // `tokensToSend` hook. On the other hand, the `tokenReceived` hook, that is triggered after the transfer,
-        // calls the vault, which is assumed not malicious.
-        //
-        // Conclusion: we need to do the transfer before we mint so that any reentrancy would happen before the
-        // assets are transferred and before the shares are minted, which is a valid state.
         // slither-disable-next-line reentrancy-no-eth
         SafeERC20.safeTransferFrom(_asset, caller, address(this), assets);
         _mint(receiver, shares);
         afterDeposit(assets);
-
         emit Deposit(caller, receiver, assets, shares);
     }
 
@@ -99,12 +84,6 @@ contract MugenAutoCompounder is ERC4626 {
             _spendAllowance(owner, caller, shares);
         }
         beforeWithdraw(assets);
-        // If _asset is ERC777, `transfer` can trigger a reentrancy AFTER the transfer happens through the
-        // `tokensReceived` hook. On the other hand, the `tokensToSend` hook, that is triggered before the transfer,
-        // calls the vault, which is assumed not malicious.
-        //
-        // Conclusion: we need to do the transfer after the burn so that any reentrancy would happen after the
-        // shares are burned and after the assets are transferred, which is a valid state.
         _burn(owner, shares);
         SafeERC20.safeTransfer(_asset, receiver, assets);
 

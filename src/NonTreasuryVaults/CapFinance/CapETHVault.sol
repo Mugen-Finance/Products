@@ -5,7 +5,7 @@ pragma solidity 0.8.15;
 /**
  * TODO
  * Look at preview mint and preview deposit to see what is happening there
- * Look at Jones Dao to see how they handle withdraws and deposits
+ * Check to ensure withdraws and deposits are handeled correctly
  */
 
 import "openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
