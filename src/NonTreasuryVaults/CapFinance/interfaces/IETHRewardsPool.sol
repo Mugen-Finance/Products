@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.15;
 
-interface IETHRewards {
-    function updateRewards(address account) external;
-
+interface IETHRewardsPool {
     function collectReward() external;
 
     function getClaimableReward() external view returns (uint256);
