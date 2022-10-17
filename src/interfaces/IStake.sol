@@ -12,4 +12,6 @@ interface IStake {
     function withdraw(uint256 amount) external;
 
     function earned(address account) external view returns (uint256);
+
+    function getReward() external returns (uint256);
 }
