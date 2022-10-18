@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "../src/CrossChainSwaps.sol";
+import "../src/CrossChainSwaps/CrossChainSwaps.sol";
 import "../src/mocks/MockERC20.sol";
 import "openzeppelin/contracts/token/ERC20/IERC20.sol";
 

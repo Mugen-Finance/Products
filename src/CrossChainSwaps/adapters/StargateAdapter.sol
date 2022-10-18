@@ -5,6 +5,8 @@ pragma solidity 0.8.15;
 /**
  * TODO
  * Add Events and comments
+ *
+ * Check: Fee calculation, and swaps implementation
  */
 
 import {IStargateReceiver} from "../interfaces/IStargateReceiver.sol";
@@ -36,6 +38,8 @@ abstract contract StargateAdapter is IStargateReceiver {
         bool failed
     );
 
+    error NotStgRouter();
+
     /*//////////////////////////////////////////////////////////////
                                CONSTRUCTOR
     //////////////////////////////////////////////////////////////*/
@@ -64,6 +68,10 @@ abstract contract StargateAdapter is IStargateReceiver {
                                INTERNAL FUNCTIONS
     //////////////////////////////////////////////////////////////*/
 
+    function fee(uint256 amount) internal pure returns (uint256 _fee) {
+        _fee = (amount * 250) / 10000;
+    }
+
     /// @param params parameters for the stargate router defined in StargateParams
     /// @param stepsDst an arrat of steps to be performed on the dst chain
     /// @param dataDst an array of data to be performed on the dst chain
@@ -73,9 +81,9 @@ abstract contract StargateAdapter is IStargateReceiver {
         bytes[] memory dataDst
     ) internal {
         bytes memory payload = abi.encode(params.to, stepsDst, dataDst);
-        uint256 fee = (params.amount * 25) / 1000;
-        params.amount = params.amount - fee;
-        IERC20(params.token).safeTransfer(feeCollector, fee);
+        uint256 _fee = fee(params.amount);
+        params.amount = params.amount - _fee;
+        IERC20(params.token).safeTransfer(feeCollector, _fee);
         IERC20(params.token).safeIncreaseAllowance(
             address(stargateRouter),
             params.amount
@@ -114,10 +122,8 @@ abstract contract StargateAdapter is IStargateReceiver {
         uint256 amountLD,
         bytes memory _payload
     ) external override {
-        require(
-            msg.sender == address(stargateRouter),
-            "only stargate router can call sgReceive!"
-        );
+        if (msg.sender != address(stargateRouter)) revert NotStgRouter();
+
         (address to, uint8[] memory steps, bytes[] memory data) = abi.decode(
             _payload,
             (address, uint8[], bytes[])

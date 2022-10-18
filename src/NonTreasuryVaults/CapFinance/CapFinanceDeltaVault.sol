@@ -17,14 +17,39 @@ import {CapPositionHandler} from "./CapPositionHandler.sol";
  * Opening and closing shorts
  */
 
-contract CapFinanceDeltaVault is ERC4626 {
+contract CapFinanceDeltaVault is ERC4626, CapPositionHandler {
+    address private keeper;
+
     constructor(
         ERC20 _asset,
         string memory _name,
-        string memory _symbol
-    ) ERC4626(_asset, _name, _symbol) {}
+        string memory _symbol,
+        address _rewards,
+        address _ethPool
+    ) ERC4626(_asset, _name, _symbol) CapPositionHandler(_rewards, _ethPool) {}
 
     function totalAssets() public view virtual override returns (uint256) {
         //pass
+    }
+
+    function beforeWithdraw(uint256 assets, uint256 shares)
+        internal
+        virtual
+        override
+    {}
+
+    function afterDeposit(uint256 assets, uint256 shares)
+        internal
+        virtual
+        override
+    {}
+
+    function rebalance() external onlyKeeper {
+        _rebalance();
+    }
+
+    modifier onlyKeeper() {
+        if (msg.sender != keeper) revert NotKeeper();
+        _;
     }
 }

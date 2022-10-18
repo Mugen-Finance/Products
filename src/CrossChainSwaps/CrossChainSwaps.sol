@@ -3,8 +3,8 @@
 pragma solidity 0.8.15;
 
 /**
- * TODO
- * Add Events and comments
+ * Walkthrough code, look for optimizations, testing
+ * Do I need to ass Dst transferTo, add exact output from uniswap (would this even work properly?)
  */
 
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -24,6 +24,8 @@ contract CrossChainSwaps is
 {
     using SafeERC20 for IERC20;
 
+    error MustBeGt0();
+
     /*//////////////////////////////////////////////////////////////
                                CONSTANTS
     //////////////////////////////////////////////////////////////*/
@@ -36,8 +38,8 @@ contract CrossChainSwaps is
         IUniswapV2Router02(0xF491e7B69E4244ad4002BC14e878a34207E38c29);
     uint8 internal constant DEPOSIT = 1;
     uint8 internal constant WETH_DEPOSIT = 2;
-    uint8 internal constant UNISWAP_SINGLE = 3;
-    uint8 internal constant UNISWAP_MULTI = 4;
+    uint8 internal constant UNISWAP_INPUT_SINGLE = 3;
+    uint8 internal constant UNISWAP_INPUT_MULTI = 4;
     uint8 internal constant SUSHI_LEGACY = 5;
     uint8 internal constant TRADERJOE_SWAP = 6;
     uint8 internal constant PANCAKE_SWAP = 7;
@@ -75,7 +77,8 @@ contract CrossChainSwaps is
     ///@param steps one way array mapping steps with actions
     ///@param data one way array of data to perform at each called step
     function swaps(uint8[] memory steps, bytes[] memory data) external payable {
-        for (uint256 i = 0; i < steps.length; i++) {
+        if (msg.value <= 0) revert MustBeGt0();
+        for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == DEPOSIT) {
                 (address _token, uint256 _amount) = abi.decode(
@@ -90,7 +93,7 @@ contract CrossChainSwaps is
             } else if (step == WETH_DEPOSIT) {
                 uint256 _amount = abi.decode(data[i], (uint256));
                 IWETH9(weth).deposit{value: _amount}();
-            } else if (step == UNISWAP_SINGLE) {
+            } else if (step == UNISWAP_INPUT_SINGLE) {
                 (
                     uint256 amountIn,
                     address token1,
@@ -98,7 +101,7 @@ contract CrossChainSwaps is
                     uint24 poolFee
                 ) = abi.decode(data[i], (uint256, address, address, uint24));
                 swapExactInputSingle(amountIn, token1, token2, poolFee);
-            } else if (step == UNISWAP_MULTI) {
+            } else if (step == UNISWAP_INPUT_MULTI) {
                 (
                     uint256 amountIn,
                     address token1,
