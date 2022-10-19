@@ -12,7 +12,6 @@ import "uniswap/v3-periphery/contracts/libraries/OracleLibrary.sol";
 contract MugenAutoCompounder is ERC4626 {
     using SafeERC20 for IERC20;
 
-    //Testnet contracts
     address public constant MGN = 0xFc77b86F3ADe71793E1EEc1E7944DB074922856e;
     address public constant WETH = 0x82aF49447D8a07e3bd95BD0d56f35241523fBab1;
     IStake public constant stake =

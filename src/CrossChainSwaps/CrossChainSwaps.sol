@@ -4,7 +4,9 @@ pragma solidity 0.8.15;
 
 /**
  * Walkthrough code, look for optimizations, testing
- * Do I need to ass Dst transferTo, add exact output from uniswap (would this even work properly?)
+ * Do I need to add Dst transferTo, add exact output from uniswap (would this even work properly?) Add for src transfers
+ * Uniswap swaps recipint
+ * Sushi paircodeHash
  */
 
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -16,6 +18,10 @@ import {IUniswapV2Router02} from "spookyswap/contracts/interfaces/IUniswapV2Rout
 import "./adapters/UniswapAdapter.sol";
 import "./adapters/SushiAdapter.sol";
 import "./adapters/StargateAdapter.sol";
+
+/**@notice allows for cross-chain swaps across multiple chains and exchanges.
+ *Also interfaces for exchanges to facilitate swaps that do not involve cross-chain messaging.
+ */
 
 contract CrossChainSwaps is
     UniswapAdapter,
@@ -71,7 +77,7 @@ contract CrossChainSwaps is
     }
 
     /*//////////////////////////////////////////////////////////////
-                               USER FUNCTIONS
+                               CROSS-CHAIN FUNCTIONS
     //////////////////////////////////////////////////////////////*/
 
     ///@param steps one way array mapping steps with actions
@@ -98,28 +104,45 @@ contract CrossChainSwaps is
                     uint256 amountIn,
                     address token1,
                     address token2,
-                    uint24 poolFee
-                ) = abi.decode(data[i], (uint256, address, address, uint24));
-                swapExactInputSingle(amountIn, token1, token2, poolFee);
+                    uint24 poolFee,
+                    address to
+                ) = abi.decode(
+                        data[i],
+                        (uint256, address, address, uint24, address)
+                    );
+                swapExactInputSingle(amountIn, token1, token2, poolFee, to);
             } else if (step == UNISWAP_INPUT_MULTI) {
                 (
                     uint256 amountIn,
+                    uint256 amountOutMin,
                     address token1,
                     address token2,
                     address token3,
                     uint24 fee1,
-                    uint24 fee2
+                    uint24 fee2,
+                    address to
                 ) = abi.decode(
                         data[i],
-                        (uint256, address, address, address, uint24, uint24)
+                        (
+                            uint256,
+                            uint256,
+                            address,
+                            address,
+                            address,
+                            uint24,
+                            uint24,
+                            address
+                        )
                     );
                 swapExactInputMultihop(
                     amountIn,
+                    amountOutMin,
                     token1,
                     token2,
                     token3,
                     fee1,
-                    fee2
+                    fee2,
+                    to
                 );
             } else if (step == SUSHI_LEGACY) {
                 (
@@ -210,6 +233,10 @@ contract CrossChainSwaps is
                 stargateSwap(params, stepperions, datass);
             }
         }
+    }
+
+    function version() external pure returns (string memory _version) {
+        _version = "0.0.1";
     }
 
     receive() external payable {}

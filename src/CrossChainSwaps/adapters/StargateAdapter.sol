@@ -69,7 +69,7 @@ abstract contract StargateAdapter is IStargateReceiver {
     //////////////////////////////////////////////////////////////*/
 
     function fee(uint256 amount) internal pure returns (uint256 _fee) {
-        _fee = (amount * 250) / 10000;
+        _fee = (amount * 25) / 10000;
     }
 
     /// @param params parameters for the stargate router defined in StargateParams

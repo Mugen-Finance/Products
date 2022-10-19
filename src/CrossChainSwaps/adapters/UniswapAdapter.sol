@@ -16,7 +16,8 @@ abstract contract UniswapAdapter {
         uint256 amountIn,
         address token1,
         address token2,
-        uint24 poolFee
+        uint24 poolFee,
+        address _recipient
     ) internal returns (uint256 amountOut) {
         // msg.sender must approve this contract
 
@@ -30,7 +31,7 @@ abstract contract UniswapAdapter {
                 tokenIn: token1,
                 tokenOut: token2,
                 fee: poolFee,
-                recipient: address(this),
+                recipient: _recipient,
                 deadline: block.timestamp,
                 amountIn: amountIn,
                 amountOutMinimum: 0,
@@ -44,15 +45,17 @@ abstract contract UniswapAdapter {
     /// @notice swapInputMultiplePools swaps a fixed amount of DAI for a maximum possible amount of WETH9 through an intermediary pool.
     /// For this example, we will swap DAI to USDC, then USDC to WETH9 to achieve our desired output.
     /// @dev The calling address must approve this contract to spend at least `amountIn` worth of its DAI for this function to succeed.
-    /// @param amountIn The amount of DAI to be swapped.
-    /// @return amountOut The amount of WETH9 received after the swap.
+    /// @param amountIn The amount of token1 to be swapped.
+    /// @return amountOut The amount of token3 received after the swap.
     function swapExactInputMultihop(
         uint256 amountIn,
+        uint256 amountOutMin,
         address token1,
         address token2,
         address token3,
         uint24 fee1,
-        uint24 fee2
+        uint24 fee2,
+        address to
     ) internal returns (uint256 amountOut) {
         // Approve the router to spend DAI.
         TransferHelper.safeApprove(token1, address(swapRouter), amountIn);
@@ -63,10 +66,10 @@ abstract contract UniswapAdapter {
         ISwapRouter.ExactInputParams memory params = ISwapRouter
             .ExactInputParams({
                 path: abi.encodePacked(token1, fee1, token2, fee2, token3),
-                recipient: address(this),
+                recipient: to,
                 deadline: block.timestamp,
                 amountIn: amountIn,
-                amountOutMinimum: 0
+                amountOutMinimum: amountOutMin
             });
 
         // Executes the swap.
