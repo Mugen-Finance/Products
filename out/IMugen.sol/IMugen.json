@@ -32,7 +32,7 @@
   "methodIdentifiers": {
     "mint(address,uint256)": "40c10f19"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.15+commit.e14f2714\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"mint\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/testnet/interfaces/IMugen.sol\":\"IMugen\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":fraxlend/=lib/fraxlend/\",\":joe-core/=lib/joe-core/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/\",\":pancake-smart-contracts/=lib/pancake-smart-contracts/\",\":pancake/=lib/pancake-smart-contracts/\",\":solmate/=lib/solmate/\",\":spookyswap-core/=lib/spookyswap-core/contracts/\",\":spookyswap/=lib/spookyswap-core/\",\":sushiswap/=lib/sushiswap/\",\":traderjoe/=lib/joe-core/\",\":uniswap/v3-core/=lib/v3-core/\",\":uniswap/v3-periphery/=lib/v3-periphery/\",\":v3-core/=lib/v3-core/\",\":v3-periphery/=lib/v3-periphery/contracts/\"]},\"sources\":{\"src/testnet/interfaces/IMugen.sol\":{\"keccak256\":\"0x3310ac562b32158b156472374e908549faa935624ab43aa7b17f8456dd45ed8f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://24ba0a0e959aa7279a1497b84b2b62853027e7a5ffef6c5bd8dd6278f51af14a\",\"dweb:/ipfs/QmZckoykPQxN81UnUUyfS6muUReCVSc3ydUaBtr5r5ztdm\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.15+commit.e14f2714\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"mint\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/testnet/interfaces/IMugen.sol\":\"IMugen\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":create3-factory/=lib/create3-factory/src/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":fraxlend/=lib/fraxlend/\",\":joe-core/=lib/joe-core/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/\",\":pancake-smart-contracts/=lib/pancake-smart-contracts/\",\":pancake/=lib/pancake-smart-contracts/\",\":solmate/=lib/solmate/\",\":spookyswap-core/=lib/spookyswap-core/contracts/\",\":spookyswap/=lib/spookyswap-core/\",\":sushiswap/=lib/sushiswap/\",\":traderjoe/=lib/joe-core/\",\":uniswap/v3-core/=lib/v3-core/\",\":uniswap/v3-periphery/=lib/v3-periphery/\",\":v3-core/=lib/v3-core/\",\":v3-periphery/=lib/v3-periphery/contracts/\"]},\"sources\":{\"src/testnet/interfaces/IMugen.sol\":{\"keccak256\":\"0x3310ac562b32158b156472374e908549faa935624ab43aa7b17f8456dd45ed8f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://24ba0a0e959aa7279a1497b84b2b62853027e7a5ffef6c5bd8dd6278f51af14a\",\"dweb:/ipfs/QmZckoykPQxN81UnUUyfS6muUReCVSc3ydUaBtr5r5ztdm\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.15+commit.e14f2714"
@@ -71,6 +71,7 @@
     },
     "settings": {
       "remappings": [
+        ":create3-factory/=lib/create3-factory/src/",
         ":ds-test/=lib/forge-std/lib/ds-test/src/",
         ":forge-std/=lib/forge-std/src/",
         ":fraxlend/=lib/fraxlend/",
@@ -115,17 +116,17 @@
   },
   "ast": {
     "absolutePath": "src/testnet/interfaces/IMugen.sol",
-    "id": 34964,
+    "id": 34990,
     "exportedSymbols": {
       "IMugen": [
-        34963
+        34989
       ]
     },
     "nodeType": "SourceUnit",
     "src": "32:104:67",
     "nodes": [
       {
-        "id": 34955,
+        "id": 34981,
         "nodeType": "PragmaDirective",
         "src": "32:23:67",
         "literals": [
@@ -136,12 +137,12 @@
         ]
       },
       {
-        "id": 34963,
+        "id": 34989,
         "nodeType": "ContractDefinition",
         "src": "57:78:67",
         "nodes": [
           {
-            "id": 34962,
+            "id": 34988,
             "nodeType": "FunctionDefinition",
             "src": "80:53:67",
             "functionSelector": "40c10f19",
@@ -151,17 +152,17 @@
             "name": "mint",
             "nameLocation": "89:4:67",
             "parameters": {
-              "id": 34960,
+              "id": 34986,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 34957,
+                  "id": 34983,
                   "mutability": "mutable",
                   "name": "_to",
                   "nameLocation": "102:3:67",
                   "nodeType": "VariableDeclaration",
-                  "scope": 34962,
+                  "scope": 34988,
                   "src": "94:11:67",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -170,7 +171,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 34956,
+                    "id": 34982,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "94:7:67",
@@ -184,12 +185,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 34959,
+                  "id": 34985,
                   "mutability": "mutable",
                   "name": "_amount",
                   "nameLocation": "115:7:67",
                   "nodeType": "VariableDeclaration",
-                  "scope": 34962,
+                  "scope": 34988,
                   "src": "107:15:67",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -198,7 +199,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 34958,
+                    "id": 34984,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "107:7:67",
@@ -213,12 +214,12 @@
               "src": "93:30:67"
             },
             "returnParameters": {
-              "id": 34961,
+              "id": 34987,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "132:0:67"
             },
-            "scope": 34963,
+            "scope": 34989,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
@@ -231,11 +232,11 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          34963
+          34989
         ],
         "name": "IMugen",
         "nameLocation": "67:6:67",
-        "scope": 34964,
+        "scope": 34990,
         "usedErrors": []
       }
     ],

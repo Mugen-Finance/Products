@@ -2,13 +2,6 @@
 
 pragma solidity 0.8.15;
 
-/**
- * Walkthrough code, look for optimizations, testing
- * Do I need to add Dst transferTo, add exact output from uniswap (would this even work properly?) Add for src transfers
- * Uniswap swaps recipint
- * Sushi paircodeHash
- */
-
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IWETH9} from "./interfaces/IWETH9.sol";
@@ -36,6 +29,8 @@ contract CrossChainSwaps is
                                CONSTANTS
     //////////////////////////////////////////////////////////////*/
 
+    //Change these for testnet
+
     IJoeRouter02 public constant joeRouter =
         IJoeRouter02(0x60aE616a2155Ee3d9A68541Ba4544862310933d4);
     IPancakeRouter02 public constant pancakeRouter =
@@ -56,7 +51,7 @@ contract CrossChainSwaps is
                                IMMUTABLES
     //////////////////////////////////////////////////////////////*/
 
-    address public immutable weth;
+    address public immutable weth; ///@notice on non eth or l2's this variable is simply wrapped native assets
 
     /*//////////////////////////////////////////////////////////////
                                CONSTRUCTOR
