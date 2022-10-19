@@ -31,12 +31,11 @@ contract CrossChainSwaps is
 
     //Change these for testnet
 
-    IJoeRouter02 public constant joeRouter =
-        IJoeRouter02(0x60aE616a2155Ee3d9A68541Ba4544862310933d4);
+    IJoeRouter02 public constant joeRouter = IJoeRouter02(address(0));
     IPancakeRouter02 public constant pancakeRouter =
-        IPancakeRouter02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
+        IPancakeRouter02(address(0));
     IUniswapV2Router02 public constant spookyRouter =
-        IUniswapV2Router02(0xF491e7B69E4244ad4002BC14e878a34207E38c29);
+        IUniswapV2Router02(address(0));
     uint8 internal constant DEPOSIT = 1;
     uint8 internal constant WETH_DEPOSIT = 2;
     uint8 internal constant UNISWAP_INPUT_SINGLE = 3;
