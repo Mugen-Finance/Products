@@ -5,6 +5,7 @@ import "forge-std/Test.sol";
 import "../src/CrossChainSwaps/CrossChainSwaps.sol";
 import "../src/mocks/MockERC20.sol";
 import "openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "../src/CrossChainSwaps/adapters/StargateAdapter.sol";
 
 contract CrossChainSwapsTest is Test {
     CrossChainSwaps swap;
@@ -20,7 +21,7 @@ contract CrossChainSwapsTest is Test {
             bytes32(
                 0xe18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303
             ),
-            IStargateRouter(address(this))
+            IStargateRouter(0x8731d54E9D02c286767d56ac03e8037C07e01e98)
         );
         avaxSwap = new CrossChainSwaps(
             address(0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7),
@@ -169,8 +170,103 @@ contract CrossChainSwapsTest is Test {
             block.timestamp
         );
 
-        uint256 amount = 10 ether;
+        uint256 amount = 11 ether;
         bnbSwap.swaps{value: amount}(step, data);
         assertGt(IERC20(path[1]).balanceOf(address(bnbSwap)), 2500 * 1e18);
+    }
+
+    function testStargateSwap() public {
+        //need to also get the data and steps to send with this step. Has to perform a swap
+        // uint16 dstChainId; // stargate dst chain id
+        // address token; // token getting bridged
+        // uint256 srcPoolId; // stargate src pool id
+        // uint256 dstPoolId; // stargate dst pool id
+        // uint256 amount; // amount to bridge
+        // uint256 amountMin; // amount to bridge minimum
+        // uint256 dustAmount; // native token to be received on dst chain
+        // address receiver; // Mugen contract on dst chain
+        // address to; // receiver bridge token incase of transaction reverts on dst chain
+        // uint256 gas; // extra gas to be sent for dst chain operations
+        // bytes32 srcContext; // random bytes32 as source context
+        StargateAdapter.StargateParams memory params = StargateAdapter
+            .StargateParams(
+                106,
+                0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48,
+                1,
+                1,
+                1,
+                0,
+                1e18,
+                0xd6eE20BEe516920c606c60B8F9C823Cd5902634f,
+                0x6Cb6D9Fb673CfbF31b3A432F6316fE3196efd4aA,
+                1e18,
+                bytes32("0xsadg")
+            );
+
+        bytes memory data;
+        uint8[] memory step;
+        uint8[] memory steps = new uint8[](3);
+        steps[0] = 2;
+        steps[1] = 3;
+        steps[2] = 9;
+        bytes[] memory datas = new bytes[](3);
+        datas[0] = abi.encode(uint256(1 ether));
+        datas[1] = abi.encode(
+            uint256(1e18),
+            address(swap.weth()),
+            address(0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48),
+            uint24(3000),
+            address(swap)
+        );
+        datas[2] = abi.encode(params, step, data);
+
+        uint256 amount = 100e18;
+        address(swap).call{value: 1e18}("");
+        swap.swaps{value: amount}(steps, datas);
+        // Fails due to layer Zero Fee
+    }
+
+    function testComplexPath() public {
+        bytes memory data;
+        uint8[] memory step;
+        uint8[] memory steps = new uint8[](2);
+        steps[0] = 2;
+        steps[1] = 3;
+        //steps[2] = 3;
+        bytes[] memory datas = new bytes[](2);
+        datas[0] = abi.encode(uint256(10 ether));
+        datas[1] = abi.encode(
+            uint256(5e18),
+            address(swap.weth()),
+            address(0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48),
+            uint24(3000),
+            address(this)
+        );
+        // datas[2] = abi.encode(
+        //     uint256(5e18),
+        //     address(swap.weth()),
+        //     address(0x6B175474E89094C44Da98b954EedeAC495271d0F),
+        //     uint24(3000),
+        //     address(this)
+        // );
+
+        uint256 amount = 10e18;
+        address(swap).call{value: 10e18}("");
+        swap.swaps{value: amount}(steps, datas);
+        //Rough Estimate of what the USDC return should be
+        assertGt(
+            IERC20(0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48).balanceOf(
+                address(this)
+            ),
+            6000e6
+        );
+        //Rough Estimate of what the DAI return should be
+        // assertGt(
+        //     IERC20(0x6B175474E89094C44Da98b954EedeAC495271d0F).balanceOf(
+        //         address(this)
+        //     ),
+        //     6000e18
+        // );
+        //254312 Gas
     }
 }

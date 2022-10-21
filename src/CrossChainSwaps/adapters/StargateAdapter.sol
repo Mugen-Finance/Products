@@ -2,13 +2,6 @@
 
 pragma solidity 0.8.15;
 
-/**
- * TODO
- * Add Events and comments
- *
- * Check: Fee calculation, and swaps implementation
- */
-
 import {IStargateReceiver} from "../interfaces/IStargateReceiver.sol";
 import {IStargateRouter} from "../interfaces/IStargateRouter.sol";
 import {ICrossChainSwaps} from "../interfaces/ICrossChainSwaps.sol";
