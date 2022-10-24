@@ -8,6 +8,7 @@ import {IWETH9} from "./interfaces/IWETH9.sol";
 import {IJoeRouter02} from "traderjoe/contracts/traderjoe/interfaces/IJoeRouter02.sol";
 import {IPancakeRouter02} from "pancake/projects/exchange-protocol/contracts/interfaces/IPancakeRouter02.sol";
 import {IUniswapV2Router02} from "spookyswap/contracts/interfaces/IUniswapV2Router02.sol";
+import {VelodromeAdapter} from "./adapters/VelodromeAdapter.sol";
 import "./adapters/UniswapAdapter.sol";
 import "./adapters/SushiAdapter.sol";
 import "./adapters/StargateAdapter.sol";
@@ -19,11 +20,14 @@ import "./adapters/StargateAdapter.sol";
 contract CrossChainSwaps is
     UniswapAdapter,
     SushiLegacyAdapter,
-    StargateAdapter
+    StargateAdapter,
+    VelodromeAdapter
 {
     using SafeERC20 for IERC20;
 
     error MustBeGt0();
+
+    event FeePaid(uint256 _fee);
 
     /*//////////////////////////////////////////////////////////////
                                CONSTANTS
@@ -31,7 +35,8 @@ contract CrossChainSwaps is
 
     //Change these for testnet
 
-    IJoeRouter02 public constant joeRouter = IJoeRouter02(address(0));
+    IJoeRouter02 public constant joeRouter =
+        IJoeRouter02(0xd7f655E3376cE2D7A2b08fF01Eb3B1023191A901);
     IPancakeRouter02 public constant pancakeRouter =
         IPancakeRouter02(address(0));
     IUniswapV2Router02 public constant spookyRouter =
@@ -44,7 +49,8 @@ contract CrossChainSwaps is
     uint8 internal constant TRADERJOE_SWAP = 6;
     uint8 internal constant PANCAKE_SWAP = 7;
     uint8 internal constant SPOOKY_SWAP = 8;
-    uint8 internal constant STARGATE = 9;
+    uint8 internal constant VELODROME = 9;
+    uint8 internal constant STARGATE = 10;
 
     /*//////////////////////////////////////////////////////////////
                                IMMUTABLES
@@ -59,13 +65,16 @@ contract CrossChainSwaps is
     constructor(
         address _weth,
         ISwapRouter _swapRouter,
-        address _factory,
-        bytes32 _pairCodeHash,
+        address _sushiFactory,
+        bytes32 _sushiPairCodeHash,
+        address _veloFactory,
+        address _veloWeth,
         IStargateRouter _stargateRouter
     )
         UniswapAdapter(_swapRouter)
-        SushiLegacyAdapter(_factory, _pairCodeHash)
+        SushiLegacyAdapter(_sushiFactory, _sushiPairCodeHash)
         StargateAdapter(_stargateRouter)
+        VelodromeAdapter(_veloFactory, _veloWeth)
     {
         weth = _weth;
     }
@@ -85,14 +94,21 @@ contract CrossChainSwaps is
                     data[i],
                     (address, uint256)
                 );
+
                 IERC20(_token).safeTransferFrom(
                     msg.sender,
                     address(this),
                     _amount
                 );
+                uint256 _fee = fee(_amount);
+                IERC20(_token).safeTransfer(feeCollector, _fee);
             } else if (step == WETH_DEPOSIT) {
                 uint256 _amount = abi.decode(data[i], (uint256));
+                uint256 _fee = fee(_amount);
+                payable(feeCollector).call{value: _fee}("");
+                _amount = _amount - _fee;
                 IWETH9(weth).deposit{value: _amount}();
+                emit FeePaid(_fee);
             } else if (step == UNISWAP_INPUT_SINGLE) {
                 (
                     uint256 amountIn,
@@ -218,6 +234,24 @@ contract CrossChainSwaps is
                     to,
                     deadline
                 );
+            } else if (step == VELODROME) {
+                (
+                    uint256 amountIn,
+                    uint256 amountOutMin,
+                    route[] memory routes,
+                    address to,
+                    uint256 deadline
+                ) = abi.decode(
+                        data[i],
+                        (uint256, uint256, route[], address, uint256)
+                    );
+                veloSwapExactTokensForTokens(
+                    amountIn,
+                    amountOutMin,
+                    routes,
+                    to,
+                    deadline
+                );
             } else if (step == STARGATE) {
                 (
                     StargateParams memory params,
@@ -231,6 +265,14 @@ contract CrossChainSwaps is
 
     function version() external pure returns (string memory _version) {
         _version = "0.0.1";
+    }
+
+    /*//////////////////////////////////////////////////////////////
+                               INTERNAL FUNCTIONS
+    //////////////////////////////////////////////////////////////*/
+
+    function fee(uint256 amount) internal pure returns (uint256 _fee) {
+        _fee = (amount * 500) / 10000;
     }
 
     receive() external payable {}

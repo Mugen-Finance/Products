@@ -61,10 +61,6 @@ abstract contract StargateAdapter is IStargateReceiver {
                                INTERNAL FUNCTIONS
     //////////////////////////////////////////////////////////////*/
 
-    function fee(uint256 amount) internal pure returns (uint256 _fee) {
-        _fee = (amount * 25) / 10000;
-    }
-
     /// @param params parameters for the stargate router defined in StargateParams
     /// @param stepsDst an arrat of steps to be performed on the dst chain
     /// @param dataDst an array of data to be performed on the dst chain
@@ -74,18 +70,15 @@ abstract contract StargateAdapter is IStargateReceiver {
         bytes[] memory dataDst
     ) internal {
         bytes memory payload = abi.encode(params.to, stepsDst, dataDst);
-        uint256 _fee = fee(params.amount);
-        params.amount = params.amount - _fee;
-        IERC20(params.token).safeTransfer(feeCollector, _fee);
         IERC20(params.token).safeIncreaseAllowance(
             address(stargateRouter),
             params.amount
         );
-        IStargateRouter(stargateRouter).swap(
+        IStargateRouter(stargateRouter).swap{value: address(this).balance}(
             params.dstChainId,
             params.srcPoolId,
             params.dstPoolId,
-            payable(msg.sender),
+            payable(address(this)),
             params.amount != 0
                 ? params.amount
                 : IERC20(params.token).balanceOf(address(this)),

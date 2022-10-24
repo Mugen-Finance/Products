@@ -4,6 +4,7 @@ pragma abicoder v2;
 
 import {ISwapRouter} from "uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import {TransferHelper} from "uniswap/v3-periphery/contracts/libraries/TransferHelper.sol";
+import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 abstract contract UniswapAdapter {
     ISwapRouter public immutable swapRouter;
@@ -22,7 +23,11 @@ abstract contract UniswapAdapter {
         // msg.sender must approve this contract
 
         // Approve the router to spend DAI.
-        TransferHelper.safeApprove(token1, address(swapRouter), amountIn);
+        TransferHelper.safeApprove(
+            token1,
+            address(swapRouter),
+            IERC20(token1).balanceOf(address(this))
+        );
 
         // Naively set amountOutMinimum to 0. In production, use an oracle or other data source to choose a safer value for amountOutMinimum.
         // We also set the sqrtPriceLimitx96 to be 0 to ensure we swap our exact input amount.
@@ -33,7 +38,7 @@ abstract contract UniswapAdapter {
                 fee: poolFee,
                 recipient: _recipient,
                 deadline: block.timestamp,
-                amountIn: amountIn,
+                amountIn: IERC20(token1).balanceOf(address(this)),
                 amountOutMinimum: 0,
                 sqrtPriceLimitX96: 0
             });
@@ -68,7 +73,7 @@ abstract contract UniswapAdapter {
                 path: abi.encodePacked(token1, fee1, token2, fee2, token3),
                 recipient: to,
                 deadline: block.timestamp,
-                amountIn: amountIn,
+                amountIn: IERC20(token1).balanceOf(address(this)),
                 amountOutMinimum: amountOutMin
             });
 
