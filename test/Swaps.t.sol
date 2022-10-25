@@ -179,7 +179,7 @@ contract SwapsTest is Test {
         address[] memory path = new address[](2);
         path[0] = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
         path[1] = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
-        data2[1] = abi.encode(0, 10, path, address(ethSwaps), true);
+        data2[1] = abi.encode(10000e6, 10, path, address(ethSwaps), true);
         //data2[2] = abi.encode(params, step, datas);
         ethSwaps.swaps(steps2, data2);
         assertGt(

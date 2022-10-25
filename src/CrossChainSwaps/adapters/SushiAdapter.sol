@@ -28,9 +28,6 @@ abstract contract SushiLegacyAdapter {
         address to,
         bool sendTokens
     ) internal returns (uint256 amountOut) {
-        amountIn = amountIn != 0
-            ? amountIn
-            : IERC20(path[0]).balanceOf(address(this));
         uint256[] memory amounts = UniswapV2Library.getAmountsOut(
             factory,
             amountIn,

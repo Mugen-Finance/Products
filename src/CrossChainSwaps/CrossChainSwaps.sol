@@ -9,7 +9,6 @@ import {IJoeRouter02} from "traderjoe/contracts/traderjoe/interfaces/IJoeRouter0
 import {IPancakeRouter02} from "pancake/projects/exchange-protocol/contracts/interfaces/IPancakeRouter02.sol";
 import {IUniswapV2Router02} from "spookyswap/contracts/interfaces/IUniswapV2Router02.sol";
 import {VelodromeAdapter} from "./adapters/VelodromeAdapter.sol";
-import {TridentSwapAdapter} from "sushiswap/protocols/sushixswap/contracts/adapters/TridentSwapAdapter.sol";
 import "./adapters/UniswapAdapter.sol";
 import "./adapters/SushiAdapter.sol";
 import "./adapters/StargateAdapter.sol";
@@ -26,9 +25,13 @@ contract CrossChainSwaps is
 {
     using SafeERC20 for IERC20;
 
-    event FeePaid(uint256 _fee);
-
     error NotEnoughSteps();
+
+    struct SrcTransferParams {
+        address[] tokens;
+        address to;
+        uint256[] amounts;
+    }
 
     /*//////////////////////////////////////////////////////////////
                                CONSTANTS
@@ -51,7 +54,8 @@ contract CrossChainSwaps is
     uint8 internal constant PANCAKE_SWAP = 7;
     uint8 internal constant SPOOKY_SWAP = 8;
     uint8 internal constant VELODROME = 9;
-    uint8 internal constant STARGATE = 10;
+    uint8 internal constant SRC_TRANSFER = 10;
+    uint8 internal constant STARGATE = 11;
 
     /*//////////////////////////////////////////////////////////////
                                IMMUTABLES
@@ -101,15 +105,9 @@ contract CrossChainSwaps is
                     address(this),
                     _amount
                 );
-                uint256 _fee = fee(_amount);
-                IERC20(_token).safeTransfer(feeCollector, _fee);
             } else if (step == WETH_DEPOSIT) {
                 uint256 _amount = abi.decode(data[i], (uint256));
-                uint256 _fee = fee(_amount);
-                payable(feeCollector).call{value: _fee}("");
-                _amount = _amount - _fee;
                 IWETH9(weth).deposit{value: _amount}();
-                emit FeePaid(_fee);
             } else if (step == UNISWAP_INPUT_SINGLE) {
                 (
                     uint256 amountIn,
@@ -257,6 +255,19 @@ contract CrossChainSwaps is
                     to,
                     deadline
                 );
+            } else if (step == SRC_TRANSFER) {
+                SrcTransferParams memory params = abi.decode(
+                    data[i],
+                    (SrcTransferParams)
+                );
+                for (i; i < params.tokens.length; i++) {
+                    address token = params.tokens[i];
+                    uint256 amount = params.amounts[i];
+                    uint256 fee = calculateFee(amount);
+                    amount -= fee;
+                    IERC20(token).safeTransfer(params.to, amount);
+                    emit FeePaid(token, fee);
+                }
             } else if (step == STARGATE) {
                 (
                     StargateParams memory params,
@@ -269,15 +280,7 @@ contract CrossChainSwaps is
     }
 
     function version() external pure returns (string memory _version) {
-        _version = "0.0.1";
-    }
-
-    /*//////////////////////////////////////////////////////////////
-                               INTERNAL FUNCTIONS
-    //////////////////////////////////////////////////////////////*/
-
-    function fee(uint256 amount) internal pure returns (uint256 _fee) {
-        _fee = (amount * 5) / 10000;
+        _version = "0.0.3";
     }
 
     receive() external payable {}

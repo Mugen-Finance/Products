@@ -29,8 +29,7 @@ abstract contract UniswapAdapter {
             IERC20(token1).balanceOf(address(this))
         );
 
-        // Naively set amountOutMinimum to 0. In production, use an oracle or other data source to choose a safer value for amountOutMinimum.
-        // We also set the sqrtPriceLimitx96 to be 0 to ensure we swap our exact input amount.
+        // set the sqrtPriceLimitx96 to be 0 to ensure we swap our exact input amount.
         ISwapRouter.ExactInputSingleParams memory params = ISwapRouter
             .ExactInputSingleParams({
                 tokenIn: token1,
@@ -38,7 +37,7 @@ abstract contract UniswapAdapter {
                 fee: poolFee,
                 recipient: _recipient,
                 deadline: block.timestamp,
-                amountIn: IERC20(token1).balanceOf(address(this)),
+                amountIn: amountIn,
                 amountOutMinimum: 0,
                 sqrtPriceLimitX96: 0
             });
@@ -74,7 +73,7 @@ abstract contract UniswapAdapter {
                 path: abi.encodePacked(token1, fee1, token2, fee2, token3),
                 recipient: to,
                 deadline: block.timestamp,
-                amountIn: IERC20(token1).balanceOf(address(this)),
+                amountIn: amountIn,
                 amountOutMinimum: amountOutMin
             });
 

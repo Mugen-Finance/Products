@@ -30,6 +30,7 @@ abstract contract StargateAdapter is IStargateReceiver {
         uint256 amountLD,
         bool failed
     );
+    event FeePaid(address _token, uint256 _fee);
 
     error NotStgRouter();
     error MustBeGt0();
@@ -72,18 +73,23 @@ abstract contract StargateAdapter is IStargateReceiver {
     ) internal {
         if (msg.value <= 0) revert MustBeGt0();
         bytes memory payload = abi.encode(params.to, stepsDst, dataDst);
+
+        params.amount = params.amount != 0
+            ? params.amount
+            : IERC20(params.token).balanceOf(address(this));
         IERC20(params.token).safeIncreaseAllowance(
             address(stargateRouter),
-            IERC20(params.token).balanceOf(address(this))
+            params.amount
         );
+        uint256 fee = calculateFee(params.amount);
+        params.amount -= fee;
+        IERC20(params.token).safeTransfer(feeCollector, fee);
         IStargateRouter(stargateRouter).swap{value: address(this).balance}(
             params.dstChainId,
             params.srcPoolId,
             params.dstPoolId,
             payable(address(this)),
-            params.amount != 0
-                ? params.amount
-                : IERC20(params.token).balanceOf(address(this)),
+            params.amount,
             params.amountMin,
             IStargateRouter.lzTxObj(
                 params.gas,
@@ -93,6 +99,11 @@ abstract contract StargateAdapter is IStargateReceiver {
             abi.encodePacked(params.receiver),
             payload
         );
+        emit FeePaid(params.token, fee);
+    }
+
+    function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
+        fee = (amount * 500) / 1e6;
     }
 
     /*//////////////////////////////////////////////////////////////
