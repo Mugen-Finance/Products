@@ -1,0 +1,1443 @@
+{
+  "abi": [
+    {
+      "inputs": [],
+      "name": "bentoBox",
+      "outputs": [
+        {
+          "internalType": "contract IBentoBoxMinimal",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "factory",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pairCodeHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "stargateRouter",
+      "outputs": [
+        {
+          "internalType": "contract IStargateRouter",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "stargateWidget",
+      "outputs": [
+        {
+          "internalType": "contract IStargateWidget",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "bentoBox()": "6b2ace87",
+    "factory()": "c45a0155",
+    "pairCodeHash()": "9aab9248",
+    "stargateRouter()": "a9e56f3c",
+    "stargateWidget()": "6f435ac2"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.15+commit.e14f2714\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"bentoBox\",\"outputs\":[{\"internalType\":\"contract IBentoBoxMinimal\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"factory\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pairCodeHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"stargateRouter\",\"outputs\":[{\"internalType\":\"contract IStargateRouter\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"stargateWidget\",\"outputs\":[{\"internalType\":\"contract IStargateWidget\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"These are generic functions, make sure, only msg.sender, address(this) and address(bentoBox) are passed in the from param, or else the attacker can sifu user's funds in bentobox.\",\"kind\":\"dev\",\"methods\":{},\"title\":\"BentoAdapter\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"bentoBox()\":{\"notice\":\"BentoBox token vault\"},\"factory()\":{\"notice\":\"Sushiswap Legacy AMM Factory\"},\"pairCodeHash()\":{\"notice\":\"Sushiswap Legacy AMM PairCodeHash\"},\"stargateRouter()\":{\"notice\":\"Stargate Router for cross chain interaction\"},\"stargateWidget()\":{\"notice\":\"Stargate Widget for stargate partner fee\"}},\"notice\":\"Adapter which provides all functions of BentoBox require by this contract.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/sushiswap/protocols/sushixswap/contracts/adapters/BentoAdapter.sol\":\"BentoAdapter\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":LayerZero/=lib/contracts/lib/LayerZero/contracts/\",\":contracts/=lib/contracts/contracts/\",\":create3-factory/=lib/create3-factory/src/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":fraxlend/=lib/fraxlend/\",\":joe-core/=lib/joe-core/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/\",\":pancake-smart-contracts/=lib/pancake-smart-contracts/\",\":pancake/=lib/pancake-smart-contracts/\",\":solmate/=lib/solmate/\",\":spookyswap-core/=lib/spookyswap-core/contracts/\",\":spookyswap/=lib/spookyswap-core/\",\":sushiswap/=lib/sushiswap/\",\":traderjoe/=lib/joe-core/\",\":uniswap/v3-core/=lib/v3-core/\",\":uniswap/v3-periphery/=lib/v3-periphery/\",\":utils/=lib/contracts/test/utils/\",\":v3-core/=lib/v3-core/\",\":v3-periphery/=lib/v3-periphery/contracts/\",\":velodrome/=lib/contracts/\"]},\"sources\":{\"lib/sushiswap/protocols/sushixswap/contracts/adapters/BentoAdapter.sol\":{\"keccak256\":\"0x1790fb02c1bc375ec42f32a2522cead45200838648d920425f673670a1399ee6\",\"license\":\"GPL-3.0-or-later\",\"urls\":[\"bzz-raw://b3f02d67e17df799b9cb5340cf60cd571c222758ec65739f68c7d354a7f7aed8\",\"dweb:/ipfs/QmRozQ1pM27zMBtQxzkcaBo9wvXyqeFV36MpwC5WJL43bJ\"]},\"lib/sushiswap/protocols/sushixswap/contracts/base/ImmutableState.sol\":{\"keccak256\":\"0x6f9b68afc635575050b347443d58b97db82fb4f626a2254f42c4b098350b77af\",\"license\":\"GPL-3.0-or-later\",\"urls\":[\"bzz-raw://8dea4a3e5fb4c597172e36211eef46158c3b78d105a67ad9f838e17e3f7d507a\",\"dweb:/ipfs/Qmdm4uNya2PHmorQLuNqRpuMYx8xmxi6PkJf5uXffZhdKt\"]},\"lib/sushiswap/protocols/sushixswap/contracts/interfaces/IBentoBoxMinimal.sol\":{\"keccak256\":\"0xc50f00779e912051ed313b14084df6a35bc1bf1b2d14a2e4b0dc0ba52f2efdab\",\"license\":\"GPL-3.0-or-later\",\"urls\":[\"bzz-raw://0f34e693fb220c820003e274b76808b40f824bdbebdac7b8d9fe548d2ed9c6ad\",\"dweb:/ipfs/QmZdDXuozKYaxegzApL4zMxXf1Wb9WztahZvGk3g4JGnkx\"]},\"lib/sushiswap/protocols/sushixswap/contracts/interfaces/IImmutableState.sol\":{\"keccak256\":\"0x33bb8d9c850e78715ba84134a602cfd3c29f648a4d4d95d686b439aeea46df14\",\"license\":\"GPL-3.0-or-later\",\"urls\":[\"bzz-raw://ca906422e7120dc5d7c1fd81352b9a0f25a49e697dcfdc2376d8e85d45374ef1\",\"dweb:/ipfs/QmdDtXFPhpp7CuhbiGukTfHPbyGCXapT7XCSfRQgppcxCi\"]},\"lib/sushiswap/protocols/sushixswap/contracts/interfaces/stargate/IStargateRouter.sol\":{\"keccak256\":\"0x5667104d5a37ac403586c0fe4c23a572273da2bf015d814f8330c2c6c4c6a76e\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://0334d325f0037ff3f728cc96657eb277da267d39da5392c2ae7ac80d0b5d785f\",\"dweb:/ipfs/QmcCEaSnUjWRuouPUjb69dT1HUzFWWrKDUp62GdR7xC9Mw\"]},\"lib/sushiswap/protocols/sushixswap/contracts/interfaces/stargate/IStargateWidget.sol\":{\"keccak256\":\"0x9db2c6a8da7103050f5203ac91e16d1f5e3ae9acc5c2e4e0e8ea60750ff5b521\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://8b5f29c4f8f85f06546ff2d3706e7f6ae2a40f922e2ec15e582a83d31a261b91\",\"dweb:/ipfs/QmfZpxhdsATrJ4p5Rvbv26vWejUdqg6cyrc6u6pX2Wupvm\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.15+commit.e14f2714"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "bentoBox",
+          "outputs": [
+            {
+              "internalType": "contract IBentoBoxMinimal",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "factory",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "pairCodeHash",
+          "outputs": [
+            {
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "stargateRouter",
+          "outputs": [
+            {
+              "internalType": "contract IStargateRouter",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "stargateWidget",
+          "outputs": [
+            {
+              "internalType": "contract IStargateWidget",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {
+          "bentoBox()": {
+            "notice": "BentoBox token vault"
+          },
+          "factory()": {
+            "notice": "Sushiswap Legacy AMM Factory"
+          },
+          "pairCodeHash()": {
+            "notice": "Sushiswap Legacy AMM PairCodeHash"
+          },
+          "stargateRouter()": {
+            "notice": "Stargate Router for cross chain interaction"
+          },
+          "stargateWidget()": {
+            "notice": "Stargate Widget for stargate partner fee"
+          }
+        },
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":LayerZero/=lib/contracts/lib/LayerZero/contracts/",
+        ":contracts/=lib/contracts/contracts/",
+        ":create3-factory/=lib/create3-factory/src/",
+        ":ds-test/=lib/forge-std/lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/",
+        ":fraxlend/=lib/fraxlend/",
+        ":joe-core/=lib/joe-core/",
+        ":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
+        ":openzeppelin/=lib/openzeppelin-contracts/",
+        ":pancake-smart-contracts/=lib/pancake-smart-contracts/",
+        ":pancake/=lib/pancake-smart-contracts/",
+        ":solmate/=lib/solmate/",
+        ":spookyswap-core/=lib/spookyswap-core/contracts/",
+        ":spookyswap/=lib/spookyswap-core/",
+        ":sushiswap/=lib/sushiswap/",
+        ":traderjoe/=lib/joe-core/",
+        ":uniswap/v3-core/=lib/v3-core/",
+        ":uniswap/v3-periphery/=lib/v3-periphery/",
+        ":utils/=lib/contracts/test/utils/",
+        ":v3-core/=lib/v3-core/",
+        ":v3-periphery/=lib/v3-periphery/contracts/",
+        ":velodrome/=lib/contracts/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "lib/sushiswap/protocols/sushixswap/contracts/adapters/BentoAdapter.sol": "BentoAdapter"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "lib/sushiswap/protocols/sushixswap/contracts/adapters/BentoAdapter.sol": {
+        "keccak256": "0x1790fb02c1bc375ec42f32a2522cead45200838648d920425f673670a1399ee6",
+        "urls": [
+          "bzz-raw://b3f02d67e17df799b9cb5340cf60cd571c222758ec65739f68c7d354a7f7aed8",
+          "dweb:/ipfs/QmRozQ1pM27zMBtQxzkcaBo9wvXyqeFV36MpwC5WJL43bJ"
+        ],
+        "license": "GPL-3.0-or-later"
+      },
+      "lib/sushiswap/protocols/sushixswap/contracts/base/ImmutableState.sol": {
+        "keccak256": "0x6f9b68afc635575050b347443d58b97db82fb4f626a2254f42c4b098350b77af",
+        "urls": [
+          "bzz-raw://8dea4a3e5fb4c597172e36211eef46158c3b78d105a67ad9f838e17e3f7d507a",
+          "dweb:/ipfs/Qmdm4uNya2PHmorQLuNqRpuMYx8xmxi6PkJf5uXffZhdKt"
+        ],
+        "license": "GPL-3.0-or-later"
+      },
+      "lib/sushiswap/protocols/sushixswap/contracts/interfaces/IBentoBoxMinimal.sol": {
+        "keccak256": "0xc50f00779e912051ed313b14084df6a35bc1bf1b2d14a2e4b0dc0ba52f2efdab",
+        "urls": [
+          "bzz-raw://0f34e693fb220c820003e274b76808b40f824bdbebdac7b8d9fe548d2ed9c6ad",
+          "dweb:/ipfs/QmZdDXuozKYaxegzApL4zMxXf1Wb9WztahZvGk3g4JGnkx"
+        ],
+        "license": "GPL-3.0-or-later"
+      },
+      "lib/sushiswap/protocols/sushixswap/contracts/interfaces/IImmutableState.sol": {
+        "keccak256": "0x33bb8d9c850e78715ba84134a602cfd3c29f648a4d4d95d686b439aeea46df14",
+        "urls": [
+          "bzz-raw://ca906422e7120dc5d7c1fd81352b9a0f25a49e697dcfdc2376d8e85d45374ef1",
+          "dweb:/ipfs/QmdDtXFPhpp7CuhbiGukTfHPbyGCXapT7XCSfRQgppcxCi"
+        ],
+        "license": "GPL-3.0-or-later"
+      },
+      "lib/sushiswap/protocols/sushixswap/contracts/interfaces/stargate/IStargateRouter.sol": {
+        "keccak256": "0x5667104d5a37ac403586c0fe4c23a572273da2bf015d814f8330c2c6c4c6a76e",
+        "urls": [
+          "bzz-raw://0334d325f0037ff3f728cc96657eb277da267d39da5392c2ae7ac80d0b5d785f",
+          "dweb:/ipfs/QmcCEaSnUjWRuouPUjb69dT1HUzFWWrKDUp62GdR7xC9Mw"
+        ],
+        "license": "GPL-3.0"
+      },
+      "lib/sushiswap/protocols/sushixswap/contracts/interfaces/stargate/IStargateWidget.sol": {
+        "keccak256": "0x9db2c6a8da7103050f5203ac91e16d1f5e3ae9acc5c2e4e0e8ea60750ff5b521",
+        "urls": [
+          "bzz-raw://8b5f29c4f8f85f06546ff2d3706e7f6ae2a40f922e2ec15e582a83d31a261b91",
+          "dweb:/ipfs/QmfZpxhdsATrJ4p5Rvbv26vWejUdqg6cyrc6u6pX2Wupvm"
+        ],
+        "license": "GPL-3.0"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "lib/sushiswap/protocols/sushixswap/contracts/adapters/BentoAdapter.sol",
+    "id": 26513,
+    "exportedSymbols": {
+      "BentoAdapter": [
+        26512
+      ],
+      "IBentoBoxMinimal": [
+        27183
+      ],
+      "IImmutableState": [
+        27217
+      ],
+      "IStargateRouter": [
+        27287
+      ],
+      "IStargateWidget": [
+        27295
+      ],
+      "ImmutableState": [
+        27078
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "46:2416:28",
+    "nodes": [
+      {
+        "id": 26423,
+        "nodeType": "PragmaDirective",
+        "src": "46:24:28",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".11"
+        ]
+      },
+      {
+        "id": 26424,
+        "nodeType": "ImportDirective",
+        "src": "72:44:28",
+        "absolutePath": "lib/sushiswap/protocols/sushixswap/contracts/interfaces/IBentoBoxMinimal.sol",
+        "file": "../interfaces/IBentoBoxMinimal.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 26513,
+        "sourceUnit": 27184,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 26425,
+        "nodeType": "ImportDirective",
+        "src": "117:36:28",
+        "absolutePath": "lib/sushiswap/protocols/sushixswap/contracts/base/ImmutableState.sol",
+        "file": "../base/ImmutableState.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 26513,
+        "sourceUnit": 27079,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 26512,
+        "nodeType": "ContractDefinition",
+        "src": "458:2004:28",
+        "nodes": [
+          {
+            "id": 26457,
+            "nodeType": "FunctionDefinition",
+            "src": "1126:257:28",
+            "body": {
+              "id": 26456,
+              "nodeType": "Block",
+              "src": "1304:79:28",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 26449,
+                        "name": "token",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26431,
+                        "src": "1345:5:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "id": 26450,
+                        "name": "from",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26433,
+                        "src": "1352:4:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "id": 26451,
+                        "name": "to",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26435,
+                        "src": "1358:2:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "id": 26452,
+                        "name": "amount",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26437,
+                        "src": "1362:6:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "id": 26453,
+                        "name": "share",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 26439,
+                        "src": "1370:5:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          },
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          },
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          },
+                          {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        ],
+                        "expression": {
+                          "id": 26444,
+                          "name": "bentoBox",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 27022,
+                          "src": "1314:8:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_IBentoBoxMinimal_$27183",
+                            "typeString": "contract IBentoBoxMinimal"
+                          }
+                        },
+                        "id": 26446,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "deposit",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 27137,
+                        "src": "1314:16:28",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_function_external_payable$_t_address_$_t_address_$_t_address_$_t_uint256_$_t_uint256_$returns$_t_uint256_$_t_uint256_$",
+                          "typeString": "function (address,address,address,uint256,uint256) payable external returns (uint256,uint256)"
+                        }
+                      },
+                      "id": 26448,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "names": [
+                        "value"
+                      ],
+                      "nodeType": "FunctionCallOptions",
+                      "options": [
+                        {
+                          "id": 26447,
+                          "name": "value",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 26441,
+                          "src": "1338:5:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        }
+                      ],
+                      "src": "1314:30:28",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_payable$_t_address_$_t_address_$_t_address_$_t_uint256_$_t_uint256_$returns$_t_uint256_$_t_uint256_$value",
+                        "typeString": "function (address,address,address,uint256,uint256) payable external returns (uint256,uint256)"
+                      }
+                    },
+                    "id": 26454,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1314:62:28",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$_t_uint256_$_t_uint256_$",
+                      "typeString": "tuple(uint256,uint256)"
+                    }
+                  },
+                  "id": 26455,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1314:62:28"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 26429,
+              "nodeType": "StructuredDocumentation",
+              "src": "513:608:28",
+              "text": "@notice Deposits the token from users wallet into the BentoBox.\n @dev Make sure, only msg.sender, address(this) and address(bentoBox)\n are passed in the from param, or else the attacker can sifu user's funds in bentobox.\n Pass either amount or share.\n @param token token to deposit. Use token as address(0) when depositing native token\n @param from sender\n @param to receiver\n @param amount amount to be deposited\n @param share share to be deposited\n @param value native token value to be deposited. Only use when token address is address(0)"
+            },
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_depositToBentoBox",
+            "nameLocation": "1135:18:28",
+            "parameters": {
+              "id": 26442,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26431,
+                  "mutability": "mutable",
+                  "name": "token",
+                  "nameLocation": "1171:5:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26457,
+                  "src": "1163:13:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 26430,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1163:7:28",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26433,
+                  "mutability": "mutable",
+                  "name": "from",
+                  "nameLocation": "1194:4:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26457,
+                  "src": "1186:12:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 26432,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1186:7:28",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26435,
+                  "mutability": "mutable",
+                  "name": "to",
+                  "nameLocation": "1216:2:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26457,
+                  "src": "1208:10:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 26434,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1208:7:28",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26437,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "1236:6:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26457,
+                  "src": "1228:14:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 26436,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1228:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26439,
+                  "mutability": "mutable",
+                  "name": "share",
+                  "nameLocation": "1260:5:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26457,
+                  "src": "1252:13:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 26438,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1252:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26441,
+                  "mutability": "mutable",
+                  "name": "value",
+                  "nameLocation": "1283:5:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26457,
+                  "src": "1275:13:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 26440,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1275:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1153:141:28"
+            },
+            "returnParameters": {
+              "id": 26443,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1304:0:28"
+            },
+            "scope": 26512,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "id": 26511,
+            "nodeType": "FunctionDefinition",
+            "src": "1989:471:28",
+            "body": {
+              "id": 26510,
+              "nodeType": "Block",
+              "src": "2173:287:28",
+              "statements": [
+                {
+                  "condition": {
+                    "id": 26473,
+                    "name": "unwrapBento",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 26470,
+                    "src": "2187:11:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "falseBody": {
+                    "id": 26508,
+                    "nodeType": "Block",
+                    "src": "2280:174:28",
+                    "statements": [
+                      {
+                        "condition": {
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "id": 26487,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftExpression": {
+                            "id": 26485,
+                            "name": "amount",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 26466,
+                            "src": "2298:6:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "nodeType": "BinaryOperation",
+                          "operator": ">",
+                          "rightExpression": {
+                            "hexValue": "30",
+                            "id": 26486,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "kind": "number",
+                            "lValueRequested": false,
+                            "nodeType": "Literal",
+                            "src": "2307:1:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_rational_0_by_1",
+                              "typeString": "int_const 0"
+                            },
+                            "value": "0"
+                          },
+                          "src": "2298:10:28",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "id": 26498,
+                        "nodeType": "IfStatement",
+                        "src": "2294:95:28",
+                        "trueBody": {
+                          "id": 26497,
+                          "nodeType": "Block",
+                          "src": "2310:79:28",
+                          "statements": [
+                            {
+                              "expression": {
+                                "id": 26495,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "leftHandSide": {
+                                  "id": 26488,
+                                  "name": "share",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 26468,
+                                  "src": "2328:5:28",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                },
+                                "nodeType": "Assignment",
+                                "operator": "=",
+                                "rightHandSide": {
+                                  "arguments": [
+                                    {
+                                      "id": 26491,
+                                      "name": "token",
+                                      "nodeType": "Identifier",
+                                      "overloadedDeclarations": [],
+                                      "referencedDeclaration": 26460,
+                                      "src": "2353:5:28",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_address",
+                                        "typeString": "address"
+                                      }
+                                    },
+                                    {
+                                      "id": 26492,
+                                      "name": "amount",
+                                      "nodeType": "Identifier",
+                                      "overloadedDeclarations": [],
+                                      "referencedDeclaration": 26466,
+                                      "src": "2360:6:28",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                      }
+                                    },
+                                    {
+                                      "hexValue": "66616c7365",
+                                      "id": 26493,
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": true,
+                                      "kind": "bool",
+                                      "lValueRequested": false,
+                                      "nodeType": "Literal",
+                                      "src": "2368:5:28",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_bool",
+                                        "typeString": "bool"
+                                      },
+                                      "value": "false"
+                                    }
+                                  ],
+                                  "expression": {
+                                    "argumentTypes": [
+                                      {
+                                        "typeIdentifier": "t_address",
+                                        "typeString": "address"
+                                      },
+                                      {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                      },
+                                      {
+                                        "typeIdentifier": "t_bool",
+                                        "typeString": "bool"
+                                      }
+                                    ],
+                                    "expression": {
+                                      "id": 26489,
+                                      "name": "bentoBox",
+                                      "nodeType": "Identifier",
+                                      "overloadedDeclarations": [],
+                                      "referencedDeclaration": 27022,
+                                      "src": "2336:8:28",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_contract$_IBentoBoxMinimal_$27183",
+                                        "typeString": "contract IBentoBoxMinimal"
+                                      }
+                                    },
+                                    "id": 26490,
+                                    "isConstant": false,
+                                    "isLValue": false,
+                                    "isPure": false,
+                                    "lValueRequested": false,
+                                    "memberName": "toShare",
+                                    "nodeType": "MemberAccess",
+                                    "referencedDeclaration": 27103,
+                                    "src": "2336:16:28",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_function_external_view$_t_address_$_t_uint256_$_t_bool_$returns$_t_uint256_$",
+                                      "typeString": "function (address,uint256,bool) view external returns (uint256)"
+                                    }
+                                  },
+                                  "id": 26494,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "kind": "functionCall",
+                                  "lValueRequested": false,
+                                  "names": [],
+                                  "nodeType": "FunctionCall",
+                                  "src": "2336:38:28",
+                                  "tryCall": false,
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                },
+                                "src": "2328:46:28",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "id": 26496,
+                              "nodeType": "ExpressionStatement",
+                              "src": "2328:46:28"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "id": 26502,
+                              "name": "token",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26460,
+                              "src": "2420:5:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            {
+                              "id": 26503,
+                              "name": "from",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26462,
+                              "src": "2427:4:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            {
+                              "id": 26504,
+                              "name": "to",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26464,
+                              "src": "2433:2:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            {
+                              "id": 26505,
+                              "name": "share",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26468,
+                              "src": "2437:5:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              },
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              },
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              },
+                              {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            ],
+                            "expression": {
+                              "id": 26499,
+                              "name": "bentoBox",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 27022,
+                              "src": "2402:8:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_IBentoBoxMinimal_$27183",
+                                "typeString": "contract IBentoBoxMinimal"
+                              }
+                            },
+                            "id": 26501,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "transfer",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 27167,
+                            "src": "2402:17:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_address_$_t_uint256_$returns$__$",
+                              "typeString": "function (address,address,address,uint256) external"
+                            }
+                          },
+                          "id": 26506,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2402:41:28",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_tuple$__$",
+                            "typeString": "tuple()"
+                          }
+                        },
+                        "id": 26507,
+                        "nodeType": "ExpressionStatement",
+                        "src": "2402:41:28"
+                      }
+                    ]
+                  },
+                  "id": 26509,
+                  "nodeType": "IfStatement",
+                  "src": "2183:271:28",
+                  "trueBody": {
+                    "id": 26484,
+                    "nodeType": "Block",
+                    "src": "2200:74:28",
+                    "statements": [
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "id": 26477,
+                              "name": "token",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26460,
+                              "src": "2232:5:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            {
+                              "id": 26478,
+                              "name": "from",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26462,
+                              "src": "2239:4:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            {
+                              "id": 26479,
+                              "name": "to",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26464,
+                              "src": "2245:2:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            {
+                              "id": 26480,
+                              "name": "amount",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26466,
+                              "src": "2249:6:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            {
+                              "id": 26481,
+                              "name": "share",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 26468,
+                              "src": "2257:5:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              },
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              },
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              },
+                              {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            ],
+                            "expression": {
+                              "id": 26474,
+                              "name": "bentoBox",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 27022,
+                              "src": "2214:8:28",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_IBentoBoxMinimal_$27183",
+                                "typeString": "contract IBentoBoxMinimal"
+                              }
+                            },
+                            "id": 26476,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "withdraw",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 27155,
+                            "src": "2214:17:28",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_address_$_t_uint256_$_t_uint256_$returns$_t_uint256_$_t_uint256_$",
+                              "typeString": "function (address,address,address,uint256,uint256) external returns (uint256,uint256)"
+                            }
+                          },
+                          "id": 26482,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "2214:49:28",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_tuple$_t_uint256_$_t_uint256_$",
+                            "typeString": "tuple(uint256,uint256)"
+                          }
+                        },
+                        "id": 26483,
+                        "nodeType": "ExpressionStatement",
+                        "src": "2214:49:28"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "documentation": {
+              "id": 26458,
+              "nodeType": "StructuredDocumentation",
+              "src": "1389:595:28",
+              "text": "@notice Transfers the token from bentobox user to another or withdraw it to another address.\n @dev Make sure, only msg.sender, address(this) and address(bentoBox)\n are passed in the from param, or else the attacker can sifu user's funds in bentobox.\n Pass either amount or share.\n @param token token to transfer. For native tokens, use wnative token address\n @param from sender\n @param to receiver\n @param amount amount to transfer\n @param share share to transfer\n @param unwrapBento use true for withdraw and false for transfer"
+            },
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_transferFromBentoBox",
+            "nameLocation": "1998:21:28",
+            "parameters": {
+              "id": 26471,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26460,
+                  "mutability": "mutable",
+                  "name": "token",
+                  "nameLocation": "2037:5:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26511,
+                  "src": "2029:13:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 26459,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2029:7:28",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26462,
+                  "mutability": "mutable",
+                  "name": "from",
+                  "nameLocation": "2060:4:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26511,
+                  "src": "2052:12:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 26461,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2052:7:28",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26464,
+                  "mutability": "mutable",
+                  "name": "to",
+                  "nameLocation": "2082:2:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26511,
+                  "src": "2074:10:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 26463,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2074:7:28",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26466,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "2102:6:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26511,
+                  "src": "2094:14:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 26465,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2094:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26468,
+                  "mutability": "mutable",
+                  "name": "share",
+                  "nameLocation": "2126:5:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26511,
+                  "src": "2118:13:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 26467,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2118:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26470,
+                  "mutability": "mutable",
+                  "name": "unwrapBento",
+                  "nameLocation": "2146:11:28",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26511,
+                  "src": "2141:16:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 26469,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2141:4:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2019:144:28"
+            },
+            "returnParameters": {
+              "id": 26472,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2173:0:28"
+            },
+            "scope": 26512,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          }
+        ],
+        "abstract": true,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 26427,
+              "name": "ImmutableState",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 27078,
+              "src": "492:14:28"
+            },
+            "id": 26428,
+            "nodeType": "InheritanceSpecifier",
+            "src": "492:14:28"
+          }
+        ],
+        "canonicalName": "BentoAdapter",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 26426,
+          "nodeType": "StructuredDocumentation",
+          "src": "155:303:28",
+          "text": "@title BentoAdapter\n @notice Adapter which provides all functions of BentoBox require by this contract.\n @dev These are generic functions, make sure, only msg.sender, address(this) and address(bentoBox)\n are passed in the from param, or else the attacker can sifu user's funds in bentobox."
+        },
+        "fullyImplemented": false,
+        "linearizedBaseContracts": [
+          26512,
+          27078,
+          27217
+        ],
+        "name": "BentoAdapter",
+        "nameLocation": "476:12:28",
+        "scope": 26513,
+        "usedErrors": []
+      }
+    ],
+    "license": "GPL-3.0-or-later"
+  },
+  "id": 28
+}

@@ -67,13 +67,17 @@ contract SwapsTest is Test {
                 0x6Cb6D9Fb673CfbF31b3A432F6316fE3196efd4aA,
                 0x6Cb6D9Fb673CfbF31b3A432F6316fE3196efd4aA,
                 200000,
-                bytes32("wergwer")
+                bytes32("test")
             );
         data[2] = abi.encode(params, steped, datas);
         swaps.swaps{value: 11 ether}(steps, data);
-        balance = IERC20(0x7F5c764cBc14f9669B88837ca1490cCa17c31607).balanceOf(
-            address(swaps)
-        );
+        balance = IERC20(address(0x7F5c764cBc14f9669B88837ca1490cCa17c31607))
+            .balanceOf(address(swaps));
         assertEq(balance, 0);
+        assertEq(
+            IERC20(address(0x7F5c764cBc14f9669B88837ca1490cCa17c31607))
+                .balanceOf(address(this)),
+            0
+        );
     } //Approval Function, amounts autofill
 }

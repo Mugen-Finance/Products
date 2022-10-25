@@ -9,6 +9,7 @@ import {IJoeRouter02} from "traderjoe/contracts/traderjoe/interfaces/IJoeRouter0
 import {IPancakeRouter02} from "pancake/projects/exchange-protocol/contracts/interfaces/IPancakeRouter02.sol";
 import {IUniswapV2Router02} from "spookyswap/contracts/interfaces/IUniswapV2Router02.sol";
 import {VelodromeAdapter} from "./adapters/VelodromeAdapter.sol";
+import {TridentSwapAdapter} from "sushiswap/protocols/sushixswap/contracts/adapters/TridentSwapAdapter.sol";
 import "./adapters/UniswapAdapter.sol";
 import "./adapters/SushiAdapter.sol";
 import "./adapters/StargateAdapter.sol";
