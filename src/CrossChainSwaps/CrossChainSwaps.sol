@@ -41,6 +41,8 @@ contract CrossChainSwaps is
         IPancakeRouter02(address(0));
     IUniswapV2Router02 public constant spookyRouter =
         IUniswapV2Router02(address(0));
+    address public constant veloRouter =
+        0x9c12939390052919aF3155f41Bf4160Fd3666A6f;
     uint8 internal constant DEPOSIT = 1;
     uint8 internal constant WETH_DEPOSIT = 2;
     uint8 internal constant UNISWAP_INPUT_SINGLE = 3;
@@ -245,6 +247,10 @@ contract CrossChainSwaps is
                         data[i],
                         (uint256, uint256, route[], address, uint256)
                     );
+                IERC20(routes[0].from).safeIncreaseAllowance(
+                    veloRouter,
+                    amountIn
+                );
                 veloSwapExactTokensForTokens(
                     amountIn,
                     amountOutMin,
@@ -272,7 +278,7 @@ contract CrossChainSwaps is
     //////////////////////////////////////////////////////////////*/
 
     function fee(uint256 amount) internal pure returns (uint256 _fee) {
-        _fee = (amount * 500) / 10000;
+        _fee = (amount * 5) / 10000;
     }
 
     receive() external payable {}

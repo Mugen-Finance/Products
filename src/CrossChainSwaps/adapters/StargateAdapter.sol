@@ -72,7 +72,7 @@ abstract contract StargateAdapter is IStargateReceiver {
         bytes memory payload = abi.encode(params.to, stepsDst, dataDst);
         IERC20(params.token).safeIncreaseAllowance(
             address(stargateRouter),
-            params.amount
+            IERC20(params.token).balanceOf(address(this))
         );
         IStargateRouter(stargateRouter).swap{value: address(this).balance}(
             params.dstChainId,
@@ -83,11 +83,7 @@ abstract contract StargateAdapter is IStargateReceiver {
                 ? params.amount
                 : IERC20(params.token).balanceOf(address(this)),
             params.amountMin,
-            IStargateRouter.lzTxObj(
-                params.gas,
-                params.dustAmount,
-                abi.encodePacked(params.receiver)
-            ),
+            IStargateRouter.lzTxObj(params.gas, params.dustAmount, "0x"),
             abi.encodePacked(params.receiver),
             payload
         );

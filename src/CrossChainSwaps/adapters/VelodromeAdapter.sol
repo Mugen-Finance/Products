@@ -243,7 +243,7 @@ abstract contract VelodromeAdapter is IRouter {
         );
         _safeTransferFrom(
             routes[0].from,
-            msg.sender,
+            address(this),
             pairFor(routes[0].from, routes[0].to, routes[0].stable),
             amounts[0]
         );
