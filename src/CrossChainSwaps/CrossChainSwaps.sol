@@ -26,9 +26,9 @@ contract CrossChainSwaps is
 {
     using SafeERC20 for IERC20;
 
-    error MustBeGt0();
-
     event FeePaid(uint256 _fee);
+
+    error NotEnoughSteps();
 
     /*//////////////////////////////////////////////////////////////
                                CONSTANTS
@@ -36,14 +36,12 @@ contract CrossChainSwaps is
 
     //Change these for testnet
 
-    IJoeRouter02 public constant joeRouter =
-        IJoeRouter02(0xd7f655E3376cE2D7A2b08fF01Eb3B1023191A901);
+    IJoeRouter02 public constant joeRouter = IJoeRouter02(address(0));
     IPancakeRouter02 public constant pancakeRouter =
-        IPancakeRouter02(address(0));
+        IPancakeRouter02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
     IUniswapV2Router02 public constant spookyRouter =
         IUniswapV2Router02(address(0));
-    address public constant veloRouter =
-        0x9c12939390052919aF3155f41Bf4160Fd3666A6f;
+    address public constant veloRouter = address(0);
     uint8 internal constant DEPOSIT = 1;
     uint8 internal constant WETH_DEPOSIT = 2;
     uint8 internal constant UNISWAP_INPUT_SINGLE = 3;
@@ -89,7 +87,7 @@ contract CrossChainSwaps is
     ///@param steps one way array mapping steps with actions
     ///@param data one way array of data to perform at each called step
     function swaps(uint8[] memory steps, bytes[] memory data) external payable {
-        if (msg.value <= 0) revert MustBeGt0();
+        if (steps.length <= 1) revert NotEnoughSteps();
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == DEPOSIT) {

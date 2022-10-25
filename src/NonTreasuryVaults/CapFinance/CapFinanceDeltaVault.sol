@@ -7,18 +7,12 @@ import {CapPositionHandler} from "./CapPositionHandler.sol";
 import {SafeTransferLib} from "solmate/src/utils/SafeTransferLib.sol";
 import {WETH} from "solmate/src/tokens/WETH.sol";
 
-/**
- * Design Notes:
- * The purpose of this contract is to create a close to delta neutral vault using cap finance. Allowing users to take
- * ETH deposits and passing the, into the LP vault for cap, and opening a short position at the same time
- * Earned rewards will be compounded and at the time of the compound the vault will also rebalance the positions. Ensuring that the position is delta neutral.
- *
+/*
  * Design considerations:
  * Handling deposits at different times, handling rebalances, handling withdraws and proper asset accounting.
- * Opening and closing shorts
  *
- * Handle ETH deposits
- * Deposit / Withdraw opening and closing
+ * Updating State at the proper times
+ * Accounting logic
  */
 
 contract CapFinanceDeltaVault is ERC4626, CapPositionHandler {
@@ -26,6 +20,9 @@ contract CapFinanceDeltaVault is ERC4626, CapPositionHandler {
     address private keeper;
 
     WETH public immutable weth;
+
+    error DepositsClosed();
+    error WithdrawsClosed();
 
     constructor(
         ERC20 _asset,
@@ -54,6 +51,7 @@ contract CapFinanceDeltaVault is ERC4626, CapPositionHandler {
     {
         // Check for rounding error since we round down in previewDeposit.
         require((shares = previewDeposit(assets)) != 0, "ZERO_SHARES");
+        if (currentState() != State.Deposit) revert DepositsClosed();
 
         // Need to transfer before minting or ERC777s could reenter.
         asset.safeTransferFrom(msg.sender, address(this), assets);
@@ -71,6 +69,7 @@ contract CapFinanceDeltaVault is ERC4626, CapPositionHandler {
         override
         returns (uint256 assets)
     {
+        if (currentState() != State.Deposit) revert DepositsClosed();
         assets = previewMint(shares); // No need to check for rounding error, previewMint rounds up.
 
         // Need to transfer before minting or ERC777s could reenter.
@@ -88,6 +87,7 @@ contract CapFinanceDeltaVault is ERC4626, CapPositionHandler {
         address receiver,
         address owner
     ) public virtual override returns (uint256 shares) {
+        if (currentState() != State.Withdraw) revert WithdrawsClosed();
         shares = previewWithdraw(assets); // No need to check for rounding error, previewWithdraw rounds up.
 
         if (msg.sender != owner) {
@@ -111,6 +111,7 @@ contract CapFinanceDeltaVault is ERC4626, CapPositionHandler {
         address receiver,
         address owner
     ) public virtual override returns (uint256 assets) {
+        if (currentState() != State.Withdraw) revert WithdrawsClosed();
         if (msg.sender != owner) {
             uint256 allowed = allowance[owner][msg.sender]; // Saves gas for limited approvals.
 
@@ -141,7 +142,7 @@ contract CapFinanceDeltaVault is ERC4626, CapPositionHandler {
         virtual
         override
     {
-        weth.withdraw(asset.balanceOf(address(this)));
+        weth.withdraw(assets);
     }
 
     function rebalance() external onlyKeeper {
@@ -153,7 +154,5 @@ contract CapFinanceDeltaVault is ERC4626, CapPositionHandler {
         _;
     }
 
-    receive() external payable {
-        deposit(msg.value, msg.sender);
-    }
+    receive() external payable {}
 }

@@ -22,7 +22,7 @@ abstract contract UniswapAdapter {
     ) internal returns (uint256 amountOut) {
         // msg.sender must approve this contract
 
-        // Approve the router to spend DAI.
+        // Approve the router to spend token1.
         TransferHelper.safeApprove(
             token1,
             address(swapRouter),
@@ -47,9 +47,7 @@ abstract contract UniswapAdapter {
         amountOut = swapRouter.exactInputSingle(params);
     }
 
-    /// @notice swapInputMultiplePools swaps a fixed amount of DAI for a maximum possible amount of WETH9 through an intermediary pool.
-    /// For this example, we will swap DAI to USDC, then USDC to WETH9 to achieve our desired output.
-    /// @dev The calling address must approve this contract to spend at least `amountIn` worth of its DAI for this function to succeed.
+    /// @dev The calling address must approve this contract to spend at least `amountIn` worth of its token1 for this function to succeed.
     /// @param amountIn The amount of token1 to be swapped.
     /// @return amountOut The amount of token3 received after the swap.
     function swapExactInputMultihop(
@@ -62,12 +60,15 @@ abstract contract UniswapAdapter {
         uint24 fee2,
         address to
     ) internal returns (uint256 amountOut) {
-        // Approve the router to spend DAI.
-        TransferHelper.safeApprove(token1, address(swapRouter), amountIn);
+        // Approve the router to spend token1.
+        TransferHelper.safeApprove(
+            token1,
+            address(swapRouter),
+            IERC20(token1).balanceOf(address(this))
+        );
 
         // Multiple pool swaps are encoded through bytes called a `path`. A path is a sequence of token addresses and poolFees that define the pools used in the swaps.
         // The format for pool encoding is (tokenIn, fee, tokenOut/tokenIn, fee, tokenOut) where tokenIn/tokenOut parameter is the shared token across the pools.
-        // Since we are swapping DAI to USDC and then USDC to WETH9 the path encoding is (DAI, 0.3%, USDC, 0.3%, WETH9).
         ISwapRouter.ExactInputParams memory params = ISwapRouter
             .ExactInputParams({
                 path: abi.encodePacked(token1, fee1, token2, fee2, token3),

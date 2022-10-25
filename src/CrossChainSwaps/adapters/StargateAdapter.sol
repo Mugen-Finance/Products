@@ -32,6 +32,7 @@ abstract contract StargateAdapter is IStargateReceiver {
     );
 
     error NotStgRouter();
+    error MustBeGt0();
 
     /*//////////////////////////////////////////////////////////////
                                CONSTRUCTOR
@@ -69,6 +70,7 @@ abstract contract StargateAdapter is IStargateReceiver {
         uint8[] memory stepsDst,
         bytes[] memory dataDst
     ) internal {
+        if (msg.value <= 0) revert MustBeGt0();
         bytes memory payload = abi.encode(params.to, stepsDst, dataDst);
         IERC20(params.token).safeIncreaseAllowance(
             address(stargateRouter),
@@ -83,7 +85,11 @@ abstract contract StargateAdapter is IStargateReceiver {
                 ? params.amount
                 : IERC20(params.token).balanceOf(address(this)),
             params.amountMin,
-            IStargateRouter.lzTxObj(params.gas, params.dustAmount, "0x"),
+            IStargateRouter.lzTxObj(
+                params.gas,
+                params.dustAmount,
+                abi.encodePacked(params.receiver)
+            ),
             abi.encodePacked(params.receiver),
             payload
         );

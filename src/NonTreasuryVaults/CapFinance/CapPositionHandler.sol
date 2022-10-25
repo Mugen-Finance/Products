@@ -4,6 +4,7 @@ pragma solidity 0.8.15;
 
 //Contract that handles LP deposits and the opening and closing of positions for cap finance shorts
 // Handling fees
+// Add PNL calculator
 import {ITrading} from "./interfaces/ITrading.sol";
 import {IETHRewardsPool} from "./interfaces/IETHRewardsPool.sol";
 import {IETHPool} from "./interfaces/IETHPool.sol";
@@ -24,6 +25,7 @@ abstract contract CapPositionHandler {
         InPosition,
         Withdraw
     }
+    State public state;
 
     constructor(
         address _rewards,
@@ -67,6 +69,14 @@ abstract contract CapPositionHandler {
     }
 
     function withdraw() internal {}
+
+    function currentState() internal view returns (State) {
+        return state;
+    }
+
+    function calculateAssets() internal view returns (uint256 balance) {
+        balance = ethPool.getCurrencyBalance(address(this));
+    }
 }
 
 /**

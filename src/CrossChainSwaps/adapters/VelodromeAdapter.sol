@@ -19,7 +19,7 @@ abstract contract VelodromeAdapter is IRouter {
     address public immutable veloFactory;
     IWETH public immutable veloWETH;
     uint256 internal constant MINIMUM_LIQUIDITY = 10**3;
-    bytes32 immutable veloPairCodeHash;
+    //bytes32 immutable veloPairCodeHash;
 
     modifier ensure(uint256 deadline) {
         require(deadline >= block.timestamp, "Router: EXPIRED");
@@ -28,7 +28,7 @@ abstract contract VelodromeAdapter is IRouter {
 
     constructor(address _veloFactory, address _veloWETH) {
         veloFactory = _veloFactory;
-        veloPairCodeHash = IPairFactory(_veloFactory).pairCodeHash();
+        //veloPairCodeHash = IPairFactory(_veloFactory).pairCodeHash();
         veloWETH = IWETH(_veloWETH);
     }
 
@@ -50,21 +50,22 @@ abstract contract VelodromeAdapter is IRouter {
         address tokenB,
         bool stable
     ) public view returns (address pair) {
-        (address token0, address token1) = sortTokens(tokenA, tokenB);
-        pair = address(
-            uint160(
-                uint256(
-                    keccak256(
-                        abi.encodePacked(
-                            hex"ff",
-                            veloFactory,
-                            keccak256(abi.encodePacked(token0, token1, stable)),
-                            veloPairCodeHash // init code hash
-                        )
-                    )
-                )
-            )
-        );
+        // (address token0, address token1) = sortTokens(tokenA, tokenB);
+        // pair = address(
+        //     uint160(
+        //         uint256(
+        //             keccak256(
+        //                 abi.encodePacked(
+        //                     hex"ff",
+        //                     veloFactory,
+        //                     keccak256(abi.encodePacked(token0, token1, stable)),
+        //                     veloPairCodeHash // init code hash
+        //                 )
+        //             )
+        //         )
+        //     )
+        // );
+        pair = address(0);
     }
 
     // given some amount of an asset and pair reserves, returns an equivalent amount of the other asset
