@@ -4,11 +4,12 @@ pragma solidity 0.8.15;
 
 import {ERC20} from "openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {SafeERC20} from "fraxlend/src/contracts/libraries/SafeERC20.sol";
 import {SafeCast} from "openzeppelin/contracts/utils/math/SafeCast.sol";
 import {VaultAccountingLibrary, VaultAccount} from "./libraries/VaultAccountingLibrary.sol";
 import {ReentrancyGuard} from "openzeppelin/contracts/security/ReentrancyGuard.sol";
 import {Pausable} from "openzeppelin/contracts/security/Pausable.sol";
+import {Ownable} from "openzeppelin/contracts/access/Ownable.sol";
 import {AggregatorV3Interface} from "chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import {MugenLendingConstants} from "./MugenLendingConstants.sol";
 import {IERC4626} from "openzeppelin/contracts/interfaces/IERC4626.sol";
@@ -20,6 +21,7 @@ abstract contract MugenLendingCore is
     MugenLendingConstants,
     Pausable,
     ReentrancyGuard,
+    Ownable,
     ERC20
 {
     using VaultAccountingLibrary for VaultAccount;

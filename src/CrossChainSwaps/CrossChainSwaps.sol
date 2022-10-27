@@ -44,18 +44,22 @@ contract CrossChainSwaps is
         IPancakeRouter02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
     IUniswapV2Router02 public constant spookyRouter =
         IUniswapV2Router02(address(0));
-    address public constant veloRouter = address(0);
+
     uint8 internal constant DEPOSIT = 1;
-    uint8 internal constant WETH_DEPOSIT = 2;
-    uint8 internal constant UNISWAP_INPUT_SINGLE = 3;
-    uint8 internal constant UNISWAP_INPUT_MULTI = 4;
-    uint8 internal constant SUSHI_LEGACY = 5;
-    uint8 internal constant TRADERJOE_SWAP = 6;
-    uint8 internal constant PANCAKE_SWAP = 7;
-    uint8 internal constant SPOOKY_SWAP = 8;
-    uint8 internal constant VELODROME = 9;
-    uint8 internal constant SRC_TRANSFER = 10;
-    uint8 internal constant STARGATE = 11;
+    uint8 internal constant BATCH_DEPOSIT = 2;
+    uint8 internal constant WETH_DEPOSIT = 3;
+    uint8 internal constant UNISWAP_INPUT_SINGLE = 4;
+    uint8 internal constant UNISWAP_INPUT_MULTI = 5;
+    uint8 internal constant SUSHI_LEGACY = 6;
+    uint8 internal constant TRADERJOE_SWAP = 7;
+    uint8 internal constant PANCAKE_SWAP = 8;
+    uint8 internal constant SPOOKY_SWAP = 9;
+    uint8 internal constant VELODROME = 10;
+    uint8 internal constant SRC_TRANSFER = 11;
+    uint8 internal constant STARGATE = 12;
+
+    address public constant veloRouter =
+        address(0x9c12939390052919aF3155f41Bf4160Fd3666A6f);
 
     /*//////////////////////////////////////////////////////////////
                                IMMUTABLES
@@ -105,6 +109,16 @@ contract CrossChainSwaps is
                     address(this),
                     _amount
                 );
+            } else if (step == BATCH_DEPOSIT) {
+                (address[] memory tokens, uint256[] memory amounts) = abi
+                    .decode(data[i], (address[], uint256[]));
+                for (i; i < tokens.length; i++) {
+                    IERC20(tokens[i]).safeTransferFrom(
+                        msg.sender,
+                        address(this),
+                        amounts[i]
+                    );
+                }
             } else if (step == WETH_DEPOSIT) {
                 uint256 _amount = abi.decode(data[i], (uint256));
                 IWETH9(weth).deposit{value: _amount}();
