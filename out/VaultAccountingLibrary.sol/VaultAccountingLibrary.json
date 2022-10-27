@@ -1,0 +1,1593 @@
+{
+  "abi": [],
+  "bytecode": {
+    "object": "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212206557d4aa08fe43475177d2ea3ee3efa97780ee4b179b328d8fe20109e5c641fc64736f6c634300080f0033",
+    "sourceMap": "519:1213:66:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;519:1213:66;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212206557d4aa08fe43475177d2ea3ee3efa97780ee4b179b328d8fe20109e5c641fc64736f6c634300080f0033",
+    "sourceMap": "519:1213:66:-:0;;;;;;;;",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {},
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.15+commit.e14f2714\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"author\":\"Drake Evans (Frax Finance) github.com/drakeevans, modified from work by @Boring_Crypto github.com/boring_crypto\",\"details\":\"Uses uint128 to save on storage\",\"kind\":\"dev\",\"methods\":{},\"title\":\"VaultAccount Library\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"Provides a library for use with the VaultAccount struct, provides convenient math implementations\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/NonTreasuryVaults/Lending/libraries/VaultAccountingLibrary.sol\":\"VaultAccountingLibrary\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":LayerZero/=lib/contracts/lib/LayerZero/contracts/\",\":chainlink/=lib/chainlink/\",\":contracts/=lib/contracts/contracts/\",\":create3-factory/=lib/create3-factory/src/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":fraxlend/=lib/fraxlend/\",\":joe-core/=lib/joe-core/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/\",\":pancake-smart-contracts/=lib/pancake-smart-contracts/\",\":pancake/=lib/pancake-smart-contracts/\",\":solmate/=lib/solmate/\",\":spookyswap-core/=lib/spookyswap-core/contracts/\",\":spookyswap/=lib/spookyswap-core/\",\":sushiswap/=lib/sushiswap/\",\":traderjoe/=lib/joe-core/\",\":uniswap/v3-core/=lib/v3-core/\",\":uniswap/v3-periphery/=lib/v3-periphery/\",\":utils/=lib/contracts/test/utils/\",\":v3-core/=lib/v3-core/\",\":v3-periphery/=lib/v3-periphery/contracts/\",\":velodrome/=lib/contracts/\"]},\"sources\":{\"src/NonTreasuryVaults/Lending/libraries/VaultAccountingLibrary.sol\":{\"keccak256\":\"0x6cd98fee668e5701644608d06070bdd2eaedf9ca44fa160eb659ef78590a6e31\",\"license\":\"ISC\",\"urls\":[\"bzz-raw://b4b601a07cd5567159d5fe1427b4d423b12abc8772e796a7504bc42584fe0523\",\"dweb:/ipfs/QmbYeVCHfXiT1jD6m9HiqhngdyjUAMQJ8RzKRtWfN3gG5J\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.15+commit.e14f2714"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":LayerZero/=lib/contracts/lib/LayerZero/contracts/",
+        ":chainlink/=lib/chainlink/",
+        ":contracts/=lib/contracts/contracts/",
+        ":create3-factory/=lib/create3-factory/src/",
+        ":ds-test/=lib/forge-std/lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/",
+        ":fraxlend/=lib/fraxlend/",
+        ":joe-core/=lib/joe-core/",
+        ":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
+        ":openzeppelin/=lib/openzeppelin-contracts/",
+        ":pancake-smart-contracts/=lib/pancake-smart-contracts/",
+        ":pancake/=lib/pancake-smart-contracts/",
+        ":solmate/=lib/solmate/",
+        ":spookyswap-core/=lib/spookyswap-core/contracts/",
+        ":spookyswap/=lib/spookyswap-core/",
+        ":sushiswap/=lib/sushiswap/",
+        ":traderjoe/=lib/joe-core/",
+        ":uniswap/v3-core/=lib/v3-core/",
+        ":uniswap/v3-periphery/=lib/v3-periphery/",
+        ":utils/=lib/contracts/test/utils/",
+        ":v3-core/=lib/v3-core/",
+        ":v3-periphery/=lib/v3-periphery/contracts/",
+        ":velodrome/=lib/contracts/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/NonTreasuryVaults/Lending/libraries/VaultAccountingLibrary.sol": "VaultAccountingLibrary"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "src/NonTreasuryVaults/Lending/libraries/VaultAccountingLibrary.sol": {
+        "keccak256": "0x6cd98fee668e5701644608d06070bdd2eaedf9ca44fa160eb659ef78590a6e31",
+        "urls": [
+          "bzz-raw://b4b601a07cd5567159d5fe1427b4d423b12abc8772e796a7504bc42584fe0523",
+          "dweb:/ipfs/QmbYeVCHfXiT1jD6m9HiqhngdyjUAMQJ8RzKRtWfN3gG5J"
+        ],
+        "license": "ISC"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/NonTreasuryVaults/Lending/libraries/VaultAccountingLibrary.sol",
+    "id": 37887,
+    "exportedSymbols": {
+      "VaultAccount": [
+        37772
+      ],
+      "VaultAccountingLibrary": [
+        37886
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "32:1701:66",
+    "nodes": [
+      {
+        "id": 37767,
+        "nodeType": "PragmaDirective",
+        "src": "32:23:66",
+        "literals": [
+          "solidity",
+          "0.8",
+          ".15"
+        ]
+      },
+      {
+        "id": 37772,
+        "nodeType": "StructDefinition",
+        "src": "57:153:66",
+        "canonicalName": "VaultAccount",
+        "members": [
+          {
+            "constant": false,
+            "id": 37769,
+            "mutability": "mutable",
+            "name": "amount",
+            "nameLocation": "91:6:66",
+            "nodeType": "VariableDeclaration",
+            "scope": 37772,
+            "src": "83:14:66",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint128",
+              "typeString": "uint128"
+            },
+            "typeName": {
+              "id": 37768,
+              "name": "uint128",
+              "nodeType": "ElementaryTypeName",
+              "src": "83:7:66",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint128",
+                "typeString": "uint128"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 37771,
+            "mutability": "mutable",
+            "name": "shares",
+            "nameLocation": "152:6:66",
+            "nodeType": "VariableDeclaration",
+            "scope": 37772,
+            "src": "144:14:66",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint128",
+              "typeString": "uint128"
+            },
+            "typeName": {
+              "id": 37770,
+              "name": "uint128",
+              "nodeType": "ElementaryTypeName",
+              "src": "144:7:66",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint128",
+                "typeString": "uint128"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "VaultAccount",
+        "nameLocation": "64:12:66",
+        "scope": 37887,
+        "visibility": "public"
+      },
+      {
+        "id": 37886,
+        "nodeType": "ContractDefinition",
+        "src": "519:1213:66",
+        "nodes": [
+          {
+            "id": 37829,
+            "nodeType": "FunctionDefinition",
+            "src": "710:430:66",
+            "body": {
+              "id": 37828,
+              "nodeType": "Block",
+              "src": "854:286:66",
+              "statements": [
+                {
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    },
+                    "id": 37789,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "expression": {
+                        "id": 37786,
+                        "name": "total",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 37777,
+                        "src": "868:5:66",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_VaultAccount_$37772_memory_ptr",
+                          "typeString": "struct VaultAccount memory"
+                        }
+                      },
+                      "id": 37787,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "amount",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 37769,
+                      "src": "868:12:66",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint128",
+                        "typeString": "uint128"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "==",
+                    "rightExpression": {
+                      "hexValue": "30",
+                      "id": 37788,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "884:1:66",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "868:17:66",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "falseBody": {
+                    "id": 37826,
+                    "nodeType": "Block",
+                    "src": "933:201:66",
+                    "statements": [
+                      {
+                        "expression": {
+                          "id": 37804,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "id": 37795,
+                            "name": "shares",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 37784,
+                            "src": "947:6:66",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "commonType": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            },
+                            "id": 37803,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "leftExpression": {
+                              "components": [
+                                {
+                                  "commonType": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  },
+                                  "id": 37799,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "leftExpression": {
+                                    "id": 37796,
+                                    "name": "amount",
+                                    "nodeType": "Identifier",
+                                    "overloadedDeclarations": [],
+                                    "referencedDeclaration": 37779,
+                                    "src": "957:6:66",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    }
+                                  },
+                                  "nodeType": "BinaryOperation",
+                                  "operator": "*",
+                                  "rightExpression": {
+                                    "expression": {
+                                      "id": 37797,
+                                      "name": "total",
+                                      "nodeType": "Identifier",
+                                      "overloadedDeclarations": [],
+                                      "referencedDeclaration": 37777,
+                                      "src": "966:5:66",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_VaultAccount_$37772_memory_ptr",
+                                        "typeString": "struct VaultAccount memory"
+                                      }
+                                    },
+                                    "id": 37798,
+                                    "isConstant": false,
+                                    "isLValue": true,
+                                    "isPure": false,
+                                    "lValueRequested": false,
+                                    "memberName": "shares",
+                                    "nodeType": "MemberAccess",
+                                    "referencedDeclaration": 37771,
+                                    "src": "966:12:66",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_uint128",
+                                      "typeString": "uint128"
+                                    }
+                                  },
+                                  "src": "957:21:66",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                }
+                              ],
+                              "id": 37800,
+                              "isConstant": false,
+                              "isInlineArray": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "nodeType": "TupleExpression",
+                              "src": "956:23:66",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "nodeType": "BinaryOperation",
+                            "operator": "/",
+                            "rightExpression": {
+                              "expression": {
+                                "id": 37801,
+                                "name": "total",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 37777,
+                                "src": "982:5:66",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_struct$_VaultAccount_$37772_memory_ptr",
+                                  "typeString": "struct VaultAccount memory"
+                                }
+                              },
+                              "id": 37802,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "amount",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": 37769,
+                              "src": "982:12:66",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint128",
+                                "typeString": "uint128"
+                              }
+                            },
+                            "src": "956:38:66",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "src": "947:47:66",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "id": 37805,
+                        "nodeType": "ExpressionStatement",
+                        "src": "947:47:66"
+                      },
+                      {
+                        "condition": {
+                          "commonType": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "id": 37817,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftExpression": {
+                            "id": 37806,
+                            "name": "roundUp",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 37781,
+                            "src": "1012:7:66",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bool",
+                              "typeString": "bool"
+                            }
+                          },
+                          "nodeType": "BinaryOperation",
+                          "operator": "&&",
+                          "rightExpression": {
+                            "commonType": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            },
+                            "id": 37816,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "leftExpression": {
+                              "commonType": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              "id": 37814,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "leftExpression": {
+                                "components": [
+                                  {
+                                    "commonType": {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    },
+                                    "id": 37810,
+                                    "isConstant": false,
+                                    "isLValue": false,
+                                    "isPure": false,
+                                    "lValueRequested": false,
+                                    "leftExpression": {
+                                      "id": 37807,
+                                      "name": "shares",
+                                      "nodeType": "Identifier",
+                                      "overloadedDeclarations": [],
+                                      "referencedDeclaration": 37784,
+                                      "src": "1024:6:66",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                      }
+                                    },
+                                    "nodeType": "BinaryOperation",
+                                    "operator": "*",
+                                    "rightExpression": {
+                                      "expression": {
+                                        "id": 37808,
+                                        "name": "total",
+                                        "nodeType": "Identifier",
+                                        "overloadedDeclarations": [],
+                                        "referencedDeclaration": 37777,
+                                        "src": "1033:5:66",
+                                        "typeDescriptions": {
+                                          "typeIdentifier": "t_struct$_VaultAccount_$37772_memory_ptr",
+                                          "typeString": "struct VaultAccount memory"
+                                        }
+                                      },
+                                      "id": 37809,
+                                      "isConstant": false,
+                                      "isLValue": true,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "memberName": "amount",
+                                      "nodeType": "MemberAccess",
+                                      "referencedDeclaration": 37769,
+                                      "src": "1033:12:66",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_uint128",
+                                        "typeString": "uint128"
+                                      }
+                                    },
+                                    "src": "1024:21:66",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    }
+                                  }
+                                ],
+                                "id": 37811,
+                                "isConstant": false,
+                                "isInlineArray": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "nodeType": "TupleExpression",
+                                "src": "1023:23:66",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "nodeType": "BinaryOperation",
+                              "operator": "/",
+                              "rightExpression": {
+                                "expression": {
+                                  "id": 37812,
+                                  "name": "total",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 37777,
+                                  "src": "1049:5:66",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_struct$_VaultAccount_$37772_memory_ptr",
+                                    "typeString": "struct VaultAccount memory"
+                                  }
+                                },
+                                "id": 37813,
+                                "isConstant": false,
+                                "isLValue": true,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "shares",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": 37771,
+                                "src": "1049:12:66",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint128",
+                                  "typeString": "uint128"
+                                }
+                              },
+                              "src": "1023:38:66",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "nodeType": "BinaryOperation",
+                            "operator": "<",
+                            "rightExpression": {
+                              "id": 37815,
+                              "name": "amount",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 37779,
+                              "src": "1064:6:66",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "src": "1023:47:66",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bool",
+                              "typeString": "bool"
+                            }
+                          },
+                          "src": "1012:58:66",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "id": 37825,
+                        "nodeType": "IfStatement",
+                        "src": "1008:116:66",
+                        "trueBody": {
+                          "id": 37824,
+                          "nodeType": "Block",
+                          "src": "1072:52:66",
+                          "statements": [
+                            {
+                              "expression": {
+                                "id": 37822,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "leftHandSide": {
+                                  "id": 37818,
+                                  "name": "shares",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 37784,
+                                  "src": "1090:6:66",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                },
+                                "nodeType": "Assignment",
+                                "operator": "=",
+                                "rightHandSide": {
+                                  "commonType": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  },
+                                  "id": 37821,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "leftExpression": {
+                                    "id": 37819,
+                                    "name": "shares",
+                                    "nodeType": "Identifier",
+                                    "overloadedDeclarations": [],
+                                    "referencedDeclaration": 37784,
+                                    "src": "1099:6:66",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    }
+                                  },
+                                  "nodeType": "BinaryOperation",
+                                  "operator": "+",
+                                  "rightExpression": {
+                                    "hexValue": "31",
+                                    "id": 37820,
+                                    "isConstant": false,
+                                    "isLValue": false,
+                                    "isPure": true,
+                                    "kind": "number",
+                                    "lValueRequested": false,
+                                    "nodeType": "Literal",
+                                    "src": "1108:1:66",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_rational_1_by_1",
+                                      "typeString": "int_const 1"
+                                    },
+                                    "value": "1"
+                                  },
+                                  "src": "1099:10:66",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                },
+                                "src": "1090:19:66",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "id": 37823,
+                              "nodeType": "ExpressionStatement",
+                              "src": "1090:19:66"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "id": 37827,
+                  "nodeType": "IfStatement",
+                  "src": "864:270:66",
+                  "trueBody": {
+                    "id": 37794,
+                    "nodeType": "Block",
+                    "src": "887:40:66",
+                    "statements": [
+                      {
+                        "expression": {
+                          "id": 37792,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "id": 37790,
+                            "name": "shares",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 37784,
+                            "src": "901:6:66",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "id": 37791,
+                            "name": "amount",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 37779,
+                            "src": "910:6:66",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "src": "901:15:66",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "id": 37793,
+                        "nodeType": "ExpressionStatement",
+                        "src": "901:15:66"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "documentation": {
+              "id": 37774,
+              "nodeType": "StructuredDocumentation",
+              "src": "556:149:66",
+              "text": "@notice Calculates the shares value in relationship to `amount` and `total`\n @dev Given an amount, return the appropriate number of shares"
+            },
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "toShares",
+            "nameLocation": "719:8:66",
+            "parameters": {
+              "id": 37782,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 37777,
+                  "mutability": "mutable",
+                  "name": "total",
+                  "nameLocation": "757:5:66",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 37829,
+                  "src": "737:25:66",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_VaultAccount_$37772_memory_ptr",
+                    "typeString": "struct VaultAccount"
+                  },
+                  "typeName": {
+                    "id": 37776,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 37775,
+                      "name": "VaultAccount",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 37772,
+                      "src": "737:12:66"
+                    },
+                    "referencedDeclaration": 37772,
+                    "src": "737:12:66",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_VaultAccount_$37772_storage_ptr",
+                      "typeString": "struct VaultAccount"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 37779,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "780:6:66",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 37829,
+                  "src": "772:14:66",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 37778,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "772:7:66",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 37781,
+                  "mutability": "mutable",
+                  "name": "roundUp",
+                  "nameLocation": "801:7:66",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 37829,
+                  "src": "796:12:66",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 37780,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "796:4:66",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "727:87:66"
+            },
+            "returnParameters": {
+              "id": 37785,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 37784,
+                  "mutability": "mutable",
+                  "name": "shares",
+                  "nameLocation": "846:6:66",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 37829,
+                  "src": "838:14:66",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 37783,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "838:7:66",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "837:16:66"
+            },
+            "scope": 37886,
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "id": 37885,
+            "nodeType": "FunctionDefinition",
+            "src": "1300:430:66",
+            "body": {
+              "id": 37884,
+              "nodeType": "Block",
+              "src": "1444:286:66",
+              "statements": [
+                {
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    },
+                    "id": 37845,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "expression": {
+                        "id": 37842,
+                        "name": "total",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 37833,
+                        "src": "1458:5:66",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_VaultAccount_$37772_memory_ptr",
+                          "typeString": "struct VaultAccount memory"
+                        }
+                      },
+                      "id": 37843,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "shares",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 37771,
+                      "src": "1458:12:66",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint128",
+                        "typeString": "uint128"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "==",
+                    "rightExpression": {
+                      "hexValue": "30",
+                      "id": 37844,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1474:1:66",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "1458:17:66",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "falseBody": {
+                    "id": 37882,
+                    "nodeType": "Block",
+                    "src": "1523:201:66",
+                    "statements": [
+                      {
+                        "expression": {
+                          "id": 37860,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "id": 37851,
+                            "name": "amount",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 37840,
+                            "src": "1537:6:66",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "commonType": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            },
+                            "id": 37859,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "leftExpression": {
+                              "components": [
+                                {
+                                  "commonType": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  },
+                                  "id": 37855,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "leftExpression": {
+                                    "id": 37852,
+                                    "name": "shares",
+                                    "nodeType": "Identifier",
+                                    "overloadedDeclarations": [],
+                                    "referencedDeclaration": 37835,
+                                    "src": "1547:6:66",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    }
+                                  },
+                                  "nodeType": "BinaryOperation",
+                                  "operator": "*",
+                                  "rightExpression": {
+                                    "expression": {
+                                      "id": 37853,
+                                      "name": "total",
+                                      "nodeType": "Identifier",
+                                      "overloadedDeclarations": [],
+                                      "referencedDeclaration": 37833,
+                                      "src": "1556:5:66",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_VaultAccount_$37772_memory_ptr",
+                                        "typeString": "struct VaultAccount memory"
+                                      }
+                                    },
+                                    "id": 37854,
+                                    "isConstant": false,
+                                    "isLValue": true,
+                                    "isPure": false,
+                                    "lValueRequested": false,
+                                    "memberName": "amount",
+                                    "nodeType": "MemberAccess",
+                                    "referencedDeclaration": 37769,
+                                    "src": "1556:12:66",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_uint128",
+                                      "typeString": "uint128"
+                                    }
+                                  },
+                                  "src": "1547:21:66",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                }
+                              ],
+                              "id": 37856,
+                              "isConstant": false,
+                              "isInlineArray": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "nodeType": "TupleExpression",
+                              "src": "1546:23:66",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "nodeType": "BinaryOperation",
+                            "operator": "/",
+                            "rightExpression": {
+                              "expression": {
+                                "id": 37857,
+                                "name": "total",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 37833,
+                                "src": "1572:5:66",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_struct$_VaultAccount_$37772_memory_ptr",
+                                  "typeString": "struct VaultAccount memory"
+                                }
+                              },
+                              "id": 37858,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "shares",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": 37771,
+                              "src": "1572:12:66",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint128",
+                                "typeString": "uint128"
+                              }
+                            },
+                            "src": "1546:38:66",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "src": "1537:47:66",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "id": 37861,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1537:47:66"
+                      },
+                      {
+                        "condition": {
+                          "commonType": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "id": 37873,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftExpression": {
+                            "id": 37862,
+                            "name": "roundUp",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 37837,
+                            "src": "1602:7:66",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bool",
+                              "typeString": "bool"
+                            }
+                          },
+                          "nodeType": "BinaryOperation",
+                          "operator": "&&",
+                          "rightExpression": {
+                            "commonType": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            },
+                            "id": 37872,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "leftExpression": {
+                              "commonType": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              "id": 37870,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "leftExpression": {
+                                "components": [
+                                  {
+                                    "commonType": {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    },
+                                    "id": 37866,
+                                    "isConstant": false,
+                                    "isLValue": false,
+                                    "isPure": false,
+                                    "lValueRequested": false,
+                                    "leftExpression": {
+                                      "id": 37863,
+                                      "name": "amount",
+                                      "nodeType": "Identifier",
+                                      "overloadedDeclarations": [],
+                                      "referencedDeclaration": 37840,
+                                      "src": "1614:6:66",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                      }
+                                    },
+                                    "nodeType": "BinaryOperation",
+                                    "operator": "*",
+                                    "rightExpression": {
+                                      "expression": {
+                                        "id": 37864,
+                                        "name": "total",
+                                        "nodeType": "Identifier",
+                                        "overloadedDeclarations": [],
+                                        "referencedDeclaration": 37833,
+                                        "src": "1623:5:66",
+                                        "typeDescriptions": {
+                                          "typeIdentifier": "t_struct$_VaultAccount_$37772_memory_ptr",
+                                          "typeString": "struct VaultAccount memory"
+                                        }
+                                      },
+                                      "id": 37865,
+                                      "isConstant": false,
+                                      "isLValue": true,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "memberName": "shares",
+                                      "nodeType": "MemberAccess",
+                                      "referencedDeclaration": 37771,
+                                      "src": "1623:12:66",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_uint128",
+                                        "typeString": "uint128"
+                                      }
+                                    },
+                                    "src": "1614:21:66",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    }
+                                  }
+                                ],
+                                "id": 37867,
+                                "isConstant": false,
+                                "isInlineArray": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "nodeType": "TupleExpression",
+                                "src": "1613:23:66",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "nodeType": "BinaryOperation",
+                              "operator": "/",
+                              "rightExpression": {
+                                "expression": {
+                                  "id": 37868,
+                                  "name": "total",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 37833,
+                                  "src": "1639:5:66",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_struct$_VaultAccount_$37772_memory_ptr",
+                                    "typeString": "struct VaultAccount memory"
+                                  }
+                                },
+                                "id": 37869,
+                                "isConstant": false,
+                                "isLValue": true,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "amount",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": 37769,
+                                "src": "1639:12:66",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint128",
+                                  "typeString": "uint128"
+                                }
+                              },
+                              "src": "1613:38:66",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "nodeType": "BinaryOperation",
+                            "operator": "<",
+                            "rightExpression": {
+                              "id": 37871,
+                              "name": "shares",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 37835,
+                              "src": "1654:6:66",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "src": "1613:47:66",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bool",
+                              "typeString": "bool"
+                            }
+                          },
+                          "src": "1602:58:66",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "id": 37881,
+                        "nodeType": "IfStatement",
+                        "src": "1598:116:66",
+                        "trueBody": {
+                          "id": 37880,
+                          "nodeType": "Block",
+                          "src": "1662:52:66",
+                          "statements": [
+                            {
+                              "expression": {
+                                "id": 37878,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "leftHandSide": {
+                                  "id": 37874,
+                                  "name": "amount",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 37840,
+                                  "src": "1680:6:66",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                },
+                                "nodeType": "Assignment",
+                                "operator": "=",
+                                "rightHandSide": {
+                                  "commonType": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  },
+                                  "id": 37877,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "leftExpression": {
+                                    "id": 37875,
+                                    "name": "amount",
+                                    "nodeType": "Identifier",
+                                    "overloadedDeclarations": [],
+                                    "referencedDeclaration": 37840,
+                                    "src": "1689:6:66",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    }
+                                  },
+                                  "nodeType": "BinaryOperation",
+                                  "operator": "+",
+                                  "rightExpression": {
+                                    "hexValue": "31",
+                                    "id": 37876,
+                                    "isConstant": false,
+                                    "isLValue": false,
+                                    "isPure": true,
+                                    "kind": "number",
+                                    "lValueRequested": false,
+                                    "nodeType": "Literal",
+                                    "src": "1698:1:66",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_rational_1_by_1",
+                                      "typeString": "int_const 1"
+                                    },
+                                    "value": "1"
+                                  },
+                                  "src": "1689:10:66",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                },
+                                "src": "1680:19:66",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              "id": 37879,
+                              "nodeType": "ExpressionStatement",
+                              "src": "1680:19:66"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "id": 37883,
+                  "nodeType": "IfStatement",
+                  "src": "1454:270:66",
+                  "trueBody": {
+                    "id": 37850,
+                    "nodeType": "Block",
+                    "src": "1477:40:66",
+                    "statements": [
+                      {
+                        "expression": {
+                          "id": 37848,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "id": 37846,
+                            "name": "amount",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 37840,
+                            "src": "1491:6:66",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "id": 37847,
+                            "name": "shares",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 37835,
+                            "src": "1500:6:66",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_uint256",
+                              "typeString": "uint256"
+                            }
+                          },
+                          "src": "1491:15:66",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "id": 37849,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1491:15:66"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "documentation": {
+              "id": 37830,
+              "nodeType": "StructuredDocumentation",
+              "src": "1146:149:66",
+              "text": "@notice Calculates the amount value in relationship to `shares` and `total`\n @dev Given a number of shares, returns the appropriate amount"
+            },
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "toAmount",
+            "nameLocation": "1309:8:66",
+            "parameters": {
+              "id": 37838,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 37833,
+                  "mutability": "mutable",
+                  "name": "total",
+                  "nameLocation": "1347:5:66",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 37885,
+                  "src": "1327:25:66",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_VaultAccount_$37772_memory_ptr",
+                    "typeString": "struct VaultAccount"
+                  },
+                  "typeName": {
+                    "id": 37832,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 37831,
+                      "name": "VaultAccount",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 37772,
+                      "src": "1327:12:66"
+                    },
+                    "referencedDeclaration": 37772,
+                    "src": "1327:12:66",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_VaultAccount_$37772_storage_ptr",
+                      "typeString": "struct VaultAccount"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 37835,
+                  "mutability": "mutable",
+                  "name": "shares",
+                  "nameLocation": "1370:6:66",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 37885,
+                  "src": "1362:14:66",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 37834,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1362:7:66",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 37837,
+                  "mutability": "mutable",
+                  "name": "roundUp",
+                  "nameLocation": "1391:7:66",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 37885,
+                  "src": "1386:12:66",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 37836,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1386:4:66",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1317:87:66"
+            },
+            "returnParameters": {
+              "id": 37841,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 37840,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "1436:6:66",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 37885,
+                  "src": "1428:14:66",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 37839,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1428:7:66",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1427:16:66"
+            },
+            "scope": 37886,
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "internal"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "VaultAccountingLibrary",
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": {
+          "id": 37773,
+          "nodeType": "StructuredDocumentation",
+          "src": "212:307:66",
+          "text": "@title VaultAccount Library\n @author Drake Evans (Frax Finance) github.com/drakeevans, modified from work by @Boring_Crypto github.com/boring_crypto\n @notice Provides a library for use with the VaultAccount struct, provides convenient math implementations\n @dev Uses uint128 to save on storage"
+        },
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          37886
+        ],
+        "name": "VaultAccountingLibrary",
+        "nameLocation": "527:22:66",
+        "scope": 37887,
+        "usedErrors": []
+      }
+    ],
+    "license": "ISC"
+  },
+  "id": 66
+}
