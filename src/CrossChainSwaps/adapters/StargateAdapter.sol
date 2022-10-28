@@ -103,7 +103,7 @@ abstract contract StargateAdapter is IStargateReceiver {
     }
 
     function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
-        fee = (amount * 500) / 1e6;
+        fee = amount - ((amount * 9995) / 1e4);
     }
 
     /*//////////////////////////////////////////////////////////////

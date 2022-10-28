@@ -76,9 +76,9 @@ contract SwapsTest is Test {
         routes[0].stable = false;
         uint8[] memory steps = new uint8[](3);
         bytes[] memory data = new bytes[](3);
-        steps[0] = 2;
-        steps[1] = 9;
-        steps[2] = 11;
+        steps[0] = 3;
+        steps[1] = 10;
+        steps[2] = 12;
         data[0] = abi.encode(x);
         data[1] = abi.encode(x, 1, routes, address(swaps), time);
         uint8[] memory steped = new uint8[](1);

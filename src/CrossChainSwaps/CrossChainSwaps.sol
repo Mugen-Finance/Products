@@ -26,6 +26,7 @@ contract CrossChainSwaps is
     using SafeERC20 for IERC20;
 
     error NotEnoughSteps();
+    error MoreThanZero();
 
     struct SrcTransferParams {
         address[] tokens;
@@ -103,7 +104,7 @@ contract CrossChainSwaps is
                     data[i],
                     (address, uint256)
                 );
-
+                if (_amount <= 0) revert MoreThanZero();
                 IERC20(_token).safeTransferFrom(
                     msg.sender,
                     address(this),
@@ -112,15 +113,18 @@ contract CrossChainSwaps is
             } else if (step == BATCH_DEPOSIT) {
                 (address[] memory tokens, uint256[] memory amounts) = abi
                     .decode(data[i], (address[], uint256[]));
-                for (i; i < tokens.length; i++) {
-                    IERC20(tokens[i]).safeTransferFrom(
+
+                for (uint256 j; j < tokens.length; j++) {
+                    if (amounts[j] <= 0) revert MoreThanZero();
+                    IERC20(tokens[j]).safeTransferFrom(
                         msg.sender,
                         address(this),
-                        amounts[i]
+                        amounts[j]
                     );
                 }
             } else if (step == WETH_DEPOSIT) {
                 uint256 _amount = abi.decode(data[i], (uint256));
+                if (_amount <= 0) revert MoreThanZero();
                 IWETH9(weth).deposit{value: _amount}();
             } else if (step == UNISWAP_INPUT_SINGLE) {
                 (
@@ -274,11 +278,12 @@ contract CrossChainSwaps is
                     data[i],
                     (SrcTransferParams)
                 );
-                for (i; i < params.tokens.length; i++) {
-                    address token = params.tokens[i];
-                    uint256 amount = params.amounts[i];
+                for (uint256 k; k < params.tokens.length; k++) {
+                    address token = params.tokens[k];
+                    uint256 amount = IERC20(token).balanceOf(address(this));
                     uint256 fee = calculateFee(amount);
                     amount -= fee;
+                    IERC20(token).safeTransfer(feeCollector, fee);
                     IERC20(token).safeTransfer(params.to, amount);
                     emit FeePaid(token, fee);
                 }
