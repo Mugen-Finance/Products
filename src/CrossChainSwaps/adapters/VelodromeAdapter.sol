@@ -25,8 +25,10 @@ abstract contract VelodromeAdapter is IRouter {
 
     address public immutable veloFactory;
     IWETH public immutable veloWETH;
-    uint256 internal constant MINIMUM_LIQUIDITY = 10**3;
     bytes32 immutable veloPairCodeHash;
+    uint256 internal constant MINIMUM_LIQUIDITY = 10**3;
+    address public constant veloRouter =
+        address(0x9c12939390052919aF3155f41Bf4160Fd3666A6f);
 
     modifier ensure(uint256 deadline) {
         require(deadline >= block.timestamp, "Router: EXPIRED");

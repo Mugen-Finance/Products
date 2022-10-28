@@ -16,41 +16,45 @@ abstract contract SushiLegacyAdapter {
     /// @notice Sushiswap Legacy AMM PairCodeHash
     bytes32 public pairCodeHash;
 
+    struct SushiParams {
+        uint256 amountIn;
+        uint256 amountOutMin;
+        address[] path;
+        bool sendTokens;
+    }
+
     constructor(address _factory, bytes32 _pairCodeHash) {
         factory = _factory;
         pairCodeHash = _pairCodeHash;
     }
 
-    function _swapExactTokensForTokens(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address[] memory path,
-        address to,
-        bool sendTokens
-    ) internal returns (uint256 amountOut) {
+    function _swapExactTokensForTokens(SushiParams memory params)
+        internal
+        returns (uint256 amountOut)
+    {
         uint256[] memory amounts = UniswapV2Library.getAmountsOut(
             factory,
-            amountIn,
-            path,
+            params.amountIn,
+            params.path,
             pairCodeHash
         );
         amountOut = amounts[amounts.length - 1];
 
-        require(amountOut >= amountOutMin, "insufficient-amount-out");
+        require(amountOut >= params.amountOutMin, "insufficient-amount-out");
 
         /// @dev force sends token to the first pair if not already sent
-        if (sendTokens) {
-            IERC20(path[0]).safeTransfer(
+        if (params.sendTokens) {
+            IERC20(params.path[0]).safeTransfer(
                 UniswapV2Library.pairFor(
                     factory,
-                    path[0],
-                    path[1],
+                    params.path[0],
+                    params.path[1],
                     pairCodeHash
                 ),
-                IERC20(path[0]).balanceOf(address(this))
+                IERC20(params.path[0]).balanceOf(address(this))
             );
         }
-        _swap(amounts, path, to);
+        _swap(amounts, params.path, address(this));
     }
 
     /// @dev requires the initial amount to have already been sent to the first pair

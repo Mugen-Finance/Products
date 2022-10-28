@@ -18,12 +18,12 @@ contract SwapsUnitTest is Test {
 
     function setUp() public {
         swaps = new CrossChainSwaps(
-            address(0),
+            address(0x4200000000000000000000000000000000000006),
             ISwapRouter(address(0)),
             0x0000000000000000000000000000000000000000,
             0x0000000000000000000000000000000000000000000000000000000000000000,
-            0x0000000000000000000000000000000000000000,
-            address(0),
+            0x25CbdDb98b35ab1FF77413456B31EC81A6B6B746,
+            address(0x4200000000000000000000000000000000000006),
             IStargateRouter(address(0))
         );
         token1 = new MockERC20(
@@ -128,9 +128,5 @@ contract SwapsUnitTest is Test {
         assertEq(IERC20(token2).balanceOf(address(swaps)), 0);
         assertEq(IERC20(token3).balanceOf(address(swaps)), 0);
         vm.stopPrank();
-    }
-
-    function testSTF() public {
-        IERC20(token1).transfer(address(alice), 0);
     }
 }

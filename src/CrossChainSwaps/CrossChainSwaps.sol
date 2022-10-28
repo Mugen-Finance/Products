@@ -17,6 +17,8 @@ import "./adapters/StargateAdapter.sol";
  *Also interfaces for exchanges to facilitate swaps that do not involve cross-chain messaging.
  */
 
+//change things to an array of structs
+
 contract CrossChainSwaps is
     UniswapAdapter,
     SushiLegacyAdapter,
@@ -28,17 +30,28 @@ contract CrossChainSwaps is
     error NotEnoughSteps();
     error MoreThanZero();
 
+    // =================================================|
+    // ====================== STRUCTS ==================|
+    // =================================================|
+
     struct SrcTransferParams {
         address[] tokens;
         address to;
         uint256[] amounts;
     }
 
+    struct UniV2 {
+        uint256 amountIn;
+        uint256 amountOutMin;
+        address[] path;
+        uint256 deadline;
+    }
+
     /*//////////////////////////////////////////////////////////////
                                CONSTANTS
     //////////////////////////////////////////////////////////////*/
 
-    //Change these for testnet
+    //Router Constants
 
     IJoeRouter02 public constant joeRouter = IJoeRouter02(address(0));
     IPancakeRouter02 public constant pancakeRouter =
@@ -46,21 +59,19 @@ contract CrossChainSwaps is
     IUniswapV2Router02 public constant spookyRouter =
         IUniswapV2Router02(address(0));
 
-    uint8 internal constant DEPOSIT = 1;
-    uint8 internal constant BATCH_DEPOSIT = 2; // Used for multi token and single token deposits
-    uint8 internal constant WETH_DEPOSIT = 3;
-    uint8 internal constant UNISWAP_INPUT_SINGLE = 4;
-    uint8 internal constant UNISWAP_INPUT_MULTI = 5;
-    uint8 internal constant SUSHI_LEGACY = 6;
-    uint8 internal constant TRADERJOE_SWAP = 7;
-    uint8 internal constant PANCAKE_SWAP = 8;
-    uint8 internal constant SPOOKY_SWAP = 9;
-    uint8 internal constant VELODROME = 10;
-    uint8 internal constant SRC_TRANSFER = 11;
-    uint8 internal constant STARGATE = 12;
+    // Step Constants
 
-    address public constant veloRouter =
-        address(0x9c12939390052919aF3155f41Bf4160Fd3666A6f);
+    uint8 internal constant BATCH_DEPOSIT = 1; // Used for multi token and single token deposits
+    uint8 internal constant WETH_DEPOSIT = 2;
+    uint8 internal constant UNISWAP_INPUT_SINGLE = 3;
+    uint8 internal constant UNISWAP_INPUT_MULTI = 4;
+    uint8 internal constant SUSHI_LEGACY = 5;
+    uint8 internal constant TRADERJOE_SWAP = 6;
+    uint8 internal constant PANCAKE_SWAP = 7;
+    uint8 internal constant SPOOKY_SWAP = 8;
+    uint8 internal constant VELODROME = 9;
+    uint8 internal constant SRC_TRANSFER = 10; // Done after all swaps are completed to ease accounting
+    uint8 internal constant STARGATE = 11;
 
     /*//////////////////////////////////////////////////////////////
                                IMMUTABLES
@@ -98,18 +109,7 @@ contract CrossChainSwaps is
     function swaps(uint8[] memory steps, bytes[] memory data) external payable {
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
-            if (step == DEPOSIT) {
-                (address _token, uint256 _amount) = abi.decode(
-                    data[i],
-                    (address, uint256)
-                );
-                if (_amount <= 0) revert MoreThanZero();
-                IERC20(_token).safeTransferFrom(
-                    msg.sender,
-                    address(this),
-                    _amount
-                );
-            } else if (step == BATCH_DEPOSIT) {
+            if (step == BATCH_DEPOSIT) {
                 (address[] memory tokens, uint256[] memory amounts) = abi
                     .decode(data[i], (address[], uint256[]));
 
@@ -126,142 +126,72 @@ contract CrossChainSwaps is
                 if (_amount <= 0) revert MoreThanZero();
                 IWETH9(weth).deposit{value: _amount}();
             } else if (step == UNISWAP_INPUT_SINGLE) {
-                (
-                    uint256[] memory amountIn,
-                    address[] memory token1,
-                    address[] memory token2,
-                    uint24[] memory poolFee
-                ) = abi.decode(
-                        data[i],
-                        (uint256[], address[], address[], uint24[])
-                    );
-                for (uint256 j; j < amountIn.length; j++) {
-                    swapExactInputSingle(
-                        amountIn[j],
-                        token1[j],
-                        token2[j],
-                        poolFee[j],
-                        address(this)
-                    );
+                UniswapV3Single[] memory params = abi.decode(
+                    data[i],
+                    (UniswapV3Single[])
+                );
+                for (uint256 j; j < params.length; j++) {
+                    swapExactInputSingle(params[i]);
                 }
             } else if (step == UNISWAP_INPUT_MULTI) {
-                (
-                    uint256[] memory amountIn,
-                    uint256[] memory amountOutMin,
-                    address[] memory token1,
-                    address[] memory token2,
-                    address[] memory token3,
-                    uint24[] memory fee1,
-                    uint24[] memory fee2
-                ) = abi.decode(
-                        data[i],
-                        (
-                            uint256[],
-                            uint256[],
-                            address[],
-                            address[],
-                            address[],
-                            uint24[],
-                            uint24[]
-                        )
-                    );
-                for (uint256 j; j < amountIn.length; j++) {
-                    swapExactInputMultihop(
-                        amountIn[j],
-                        amountOutMin[j],
-                        token1[j],
-                        token2[j],
-                        token3[j],
-                        fee1[j],
-                        fee2[j]
-                    );
+                UniswapV3Multi[] memory params = abi.decode(
+                    data[i],
+                    (UniswapV3Multi[])
+                );
+                for (uint256 j; j < params.length; j++) {
+                    swapExactInputMultihop(params[j]);
                 }
             } else if (step == SUSHI_LEGACY) {
-                (
-                    uint256[] memory amountIn,
-                    uint256[] memory amountOutMin,
-                    address[][] memory path,
-                    bool[] memory sendTokens
-                ) = abi.decode(
-                        data[i],
-                        (uint256[], uint256[], address[][], bool[])
-                    );
-                for (uint256 j; j < amountIn.length; j++) {
-                    _swapExactTokensForTokens(
-                        amountIn[j],
-                        amountOutMin[j],
-                        path[j],
-                        address(this),
-                        sendTokens[j]
-                    );
+                SushiParams[] memory params = abi.decode(
+                    data[i],
+                    (SushiParams[])
+                );
+                for (uint256 j; j < params.length; j++) {
+                    _swapExactTokensForTokens(params[j]);
                 }
             } else if (step == TRADERJOE_SWAP) {
-                (
-                    uint256[] memory amountIn,
-                    uint256[] memory amountOutMin,
-                    address[][] memory path,
-                    uint256[] memory deadline
-                ) = abi.decode(
-                        data[i],
-                        (uint256[], uint256[], address[][], uint256[])
-                    );
-                for (uint256 j; j < amountIn.length; j++) {
-                    IERC20(path[j][0]).safeIncreaseAllowance(
+                UniV2[] memory params = abi.decode(data[i], (UniV2[]));
+                for (uint256 j; j < params.length; j++) {
+                    IERC20(params[j].path[0]).safeIncreaseAllowance(
                         address(joeRouter),
-                        amountIn[j]
+                        params[j].amountIn
                     );
                     IJoeRouter02(joeRouter).swapExactTokensForTokens(
-                        amountIn[j],
-                        amountOutMin[j],
-                        path[j],
+                        params[j].amountIn,
+                        params[j].amountOutMin,
+                        params[j].path,
                         address(this),
-                        deadline[j]
+                        params[j].deadline
                     );
                 }
             } else if (step == PANCAKE_SWAP) {
-                (
-                    uint256[] memory amountIn,
-                    uint256[] memory amountOutMin,
-                    address[][] memory path,
-                    uint256[] memory deadline
-                ) = abi.decode(
-                        data[i],
-                        (uint256[], uint256[], address[][], uint256[])
-                    );
-                for (uint256 j; j < amountIn.length; j++) {
-                    IERC20(path[j][0]).safeIncreaseAllowance(
+                UniV2[] memory params = abi.decode(data[i], (UniV2[]));
+                for (uint256 j; j < params.length; j++) {
+                    IERC20(params[j].path[0]).safeIncreaseAllowance(
                         address(pancakeRouter),
-                        amountIn[j]
+                        params[j].amountIn
                     );
                     IPancakeRouter02(pancakeRouter).swapExactTokensForTokens(
-                        amountIn[j],
-                        amountOutMin[j],
-                        path[j],
+                        params[j].amountIn,
+                        params[j].amountOutMin,
+                        params[j].path,
                         address(this),
-                        deadline[j]
+                        params[j].deadline
                     );
                 }
             } else if (step == SPOOKY_SWAP) {
-                (
-                    uint256[] memory amountIn,
-                    uint256[] memory amountOutMin,
-                    address[][] memory path,
-                    uint256[] memory deadline
-                ) = abi.decode(
-                        data[i],
-                        (uint256[], uint256[], address[][], uint256[])
-                    );
-                for (uint256 j; j < amountIn.length; j++) {
-                    IERC20(path[j][0]).safeIncreaseAllowance(
+                UniV2[] memory params = abi.decode(data[i], (UniV2[]));
+                for (uint256 j; j < params.length; j++) {
+                    IERC20(params[j].path[0]).safeIncreaseAllowance(
                         address(spookyRouter),
-                        amountIn[j]
+                        params[j].amountIn
                     );
                     IUniswapV2Router02(spookyRouter).swapExactTokensForTokens(
-                        amountIn[j],
-                        amountOutMin[j],
-                        path[j],
+                        params[j].amountIn,
+                        params[j].amountOutMin,
+                        params[j].path,
                         address(this),
-                        deadline[j]
+                        params[j].deadline
                     );
                 }
             } else if (step == VELODROME) {
