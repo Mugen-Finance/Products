@@ -10,6 +10,13 @@ import "velodrome/contracts/interfaces/IRouter.sol";
 import "velodrome/contracts/interfaces/IWETH.sol";
 
 abstract contract VelodromeAdapter is IRouter {
+    struct VeloParams {
+        uint256 amountIn;
+        uint256 amountOutMin;
+        route[] routes;
+        uint256 deadline;
+    }
+
     struct route {
         address from;
         address to;
@@ -229,25 +236,27 @@ abstract contract VelodromeAdapter is IRouter {
         }
     }
 
-    function veloSwapExactTokensForTokens(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        route[] memory routes,
-        address to,
-        uint256 deadline
-    ) internal ensure(deadline) returns (uint256[] memory amounts) {
-        amounts = getAmountsOut(amountIn, routes);
+    function veloSwapExactTokensForTokens(VeloParams memory params)
+        internal
+        ensure(params.deadline)
+        returns (uint256[] memory amounts)
+    {
+        amounts = getAmountsOut(params.amountIn, params.routes);
         require(
-            amounts[amounts.length - 1] >= amountOutMin,
+            amounts[amounts.length - 1] >= params.amountOutMin,
             "Router: INSUFFICIENT_OUTPUT_AMOUNT"
         );
         _safeTransferFrom(
-            routes[0].from,
+            params.routes[0].from,
             address(this),
-            pairFor(routes[0].from, routes[0].to, routes[0].stable),
+            pairFor(
+                params.routes[0].from,
+                params.routes[0].to,
+                params.routes[0].stable
+            ),
             amounts[0]
         );
-        _swap(amounts, routes, to);
+        _swap(amounts, params.routes, address(this));
     }
 
     function _safeTransferETH(address to, uint256 value) internal {

@@ -14,6 +14,7 @@ contract SwapsUnitTest is Test {
     MockERC20 token1;
     MockERC20 token2;
     MockERC20 token3;
+    address alice = address(0x124);
 
     function setUp() public {
         swaps = new CrossChainSwaps(
@@ -45,7 +46,7 @@ contract SwapsUnitTest is Test {
         );
     }
 
-    // Gas: 35661
+    //Gas: 35661
     function testSingleDeposits(uint256 x, address _addr) public {
         vm.assume(x > 1);
         vm.assume(x < type(uint216).max);
@@ -127,5 +128,9 @@ contract SwapsUnitTest is Test {
         assertEq(IERC20(token2).balanceOf(address(swaps)), 0);
         assertEq(IERC20(token3).balanceOf(address(swaps)), 0);
         vm.stopPrank();
+    }
+
+    function testSTF() public {
+        IERC20(token1).transfer(address(alice), 0);
     }
 }

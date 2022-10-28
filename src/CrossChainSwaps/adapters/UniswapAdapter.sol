@@ -56,8 +56,7 @@ abstract contract UniswapAdapter {
         address token2,
         address token3,
         uint24 fee1,
-        uint24 fee2,
-        address to
+        uint24 fee2
     ) internal returns (uint256 amountOut) {
         // Approve the router to spend token1.
         TransferHelper.safeApprove(
@@ -71,7 +70,7 @@ abstract contract UniswapAdapter {
         ISwapRouter.ExactInputParams memory params = ISwapRouter
             .ExactInputParams({
                 path: abi.encodePacked(token1, fee1, token2, fee2, token3),
-                recipient: to,
+                recipient: address(this),
                 deadline: block.timestamp,
                 amountIn: amountIn,
                 amountOutMinimum: amountOutMin

@@ -28,7 +28,8 @@ abstract contract StargateAdapter is IStargateReceiver {
     event ReceivedOnDestination(
         address indexed token,
         uint256 amountLD,
-        bool failed
+        bool failed,
+        bool dustSent
     );
     event FeePaid(address _token, uint256 _fee);
 
@@ -134,9 +135,9 @@ abstract contract StargateAdapter is IStargateReceiver {
             IERC20(_token).safeTransfer(to, amountLD);
             failed = true;
         }
-
+        bool dustSent;
         if (address(this).balance > 0)
-            to.call{value: (address(this).balance)}("");
-        emit ReceivedOnDestination(_token, amountLD, failed);
+            (dustSent, ) = to.call{value: address(this).balance}("");
+        emit ReceivedOnDestination(_token, amountLD, failed, dustSent);
     }
 }
