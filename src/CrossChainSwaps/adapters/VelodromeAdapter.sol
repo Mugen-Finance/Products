@@ -3,7 +3,7 @@
 pragma solidity 0.8.15;
 
 import "velodrome/contracts/libraries/Math.sol";
-import "velodrome/contracts/interfaces/IERC20.sol";
+import "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "velodrome/contracts/interfaces/IPair.sol";
 import "velodrome/contracts/interfaces/IPairFactory.sol";
 import "velodrome/contracts/interfaces/IRouter.sol";
@@ -76,32 +76,6 @@ abstract contract VelodromeAdapter is IRouter {
         );
     }
 
-    // given some amount of an asset and pair reserves, returns an equivalent amount of the other asset
-    function quoteLiquidity(
-        uint256 amountA,
-        uint256 reserveA,
-        uint256 reserveB
-    ) internal pure returns (uint256 amountB) {
-        require(amountA > 0, "Router: INSUFFICIENT_AMOUNT");
-        require(reserveA > 0 && reserveB > 0, "Router: INSUFFICIENT_LIQUIDITY");
-        amountB = (amountA * reserveB) / reserveA;
-    }
-
-    // fetches and sorts the reserves for a pair
-    function getReserves(
-        address tokenA,
-        address tokenB,
-        bool stable
-    ) public view returns (uint256 reserveA, uint256 reserveB) {
-        (address token0, ) = sortTokens(tokenA, tokenB);
-        (uint256 reserve0, uint256 reserve1, ) = IPair(
-            pairFor(tokenA, tokenB, stable)
-        ).getReserves();
-        (reserveA, reserveB) = tokenA == token0
-            ? (reserve0, reserve1)
-            : (reserve1, reserve0);
-    }
-
     // performs chained getAmountOut calculations on any number of pairs
     function getAmountOut(
         uint256 amountIn,
@@ -150,63 +124,6 @@ abstract contract VelodromeAdapter is IRouter {
 
     function isPair(address pair) external view returns (bool) {
         return IPairFactory(veloFactory).isPair(pair);
-    }
-
-    function quoteAddLiquidity(
-        address tokenA,
-        address tokenB,
-        bool stable,
-        uint256 amountADesired,
-        uint256 amountBDesired
-    )
-        external
-        view
-        returns (
-            uint256 amountA,
-            uint256 amountB,
-            uint256 liquidity
-        )
-    {
-        // create the pair if it doesn't exist yet
-        address _pair = IPairFactory(veloFactory).getPair(
-            tokenA,
-            tokenB,
-            stable
-        );
-        (uint256 reserveA, uint256 reserveB) = (0, 0);
-        uint256 _totalSupply = 0;
-        if (_pair != address(0)) {
-            _totalSupply = IERC20(_pair).totalSupply();
-            (reserveA, reserveB) = getReserves(tokenA, tokenB, stable);
-        }
-        if (reserveA == 0 && reserveB == 0) {
-            (amountA, amountB) = (amountADesired, amountBDesired);
-            liquidity = Math.sqrt(amountA * amountB) - MINIMUM_LIQUIDITY;
-        } else {
-            uint256 amountBOptimal = quoteLiquidity(
-                amountADesired,
-                reserveA,
-                reserveB
-            );
-            if (amountBOptimal <= amountBDesired) {
-                (amountA, amountB) = (amountADesired, amountBOptimal);
-                liquidity = Math.min(
-                    (amountA * _totalSupply) / reserveA,
-                    (amountB * _totalSupply) / reserveB
-                );
-            } else {
-                uint256 amountAOptimal = quoteLiquidity(
-                    amountBDesired,
-                    reserveB,
-                    reserveA
-                );
-                (amountA, amountB) = (amountAOptimal, amountBDesired);
-                liquidity = Math.min(
-                    (amountA * _totalSupply) / reserveA,
-                    (amountB * _totalSupply) / reserveB
-                );
-            }
-        }
     }
 
     // **** SWAP ****

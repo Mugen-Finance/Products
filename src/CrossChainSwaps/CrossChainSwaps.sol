@@ -18,6 +18,7 @@ import "./adapters/StargateAdapter.sol";
  */
 
 //change things to an array of structs
+// Pack structs
 
 contract CrossChainSwaps is
     UniswapAdapter,
@@ -35,12 +36,12 @@ contract CrossChainSwaps is
     // =================================================|
 
     struct SrcTransferParams {
-        address[] tokens;
-        address to;
-        uint256[] amounts;
+        address token;
+        address receiver;
+        uint256 amount;
     }
 
-    struct UniV2 {
+    struct UniswapV2Params {
         uint256 amountIn;
         uint256 amountOutMin;
         address[] path;
@@ -106,7 +107,10 @@ contract CrossChainSwaps is
 
     ///@param steps one way array mapping steps with actions
     ///@param data one way array of data to perform at each called step
-    function swaps(uint8[] memory steps, bytes[] memory data) external payable {
+    function swaps(uint8[] calldata steps, bytes[] calldata data)
+        external
+        payable
+    {
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {
@@ -150,7 +154,10 @@ contract CrossChainSwaps is
                     _swapExactTokensForTokens(params[j]);
                 }
             } else if (step == TRADERJOE_SWAP) {
-                UniV2[] memory params = abi.decode(data[i], (UniV2[]));
+                UniswapV2Params[] memory params = abi.decode(
+                    data[i],
+                    (UniswapV2Params[])
+                );
                 for (uint256 j; j < params.length; j++) {
                     IERC20(params[j].path[0]).safeIncreaseAllowance(
                         address(joeRouter),
@@ -165,7 +172,10 @@ contract CrossChainSwaps is
                     );
                 }
             } else if (step == PANCAKE_SWAP) {
-                UniV2[] memory params = abi.decode(data[i], (UniV2[]));
+                UniswapV2Params[] memory params = abi.decode(
+                    data[i],
+                    (UniswapV2Params[])
+                );
                 for (uint256 j; j < params.length; j++) {
                     IERC20(params[j].path[0]).safeIncreaseAllowance(
                         address(pancakeRouter),
@@ -180,7 +190,10 @@ contract CrossChainSwaps is
                     );
                 }
             } else if (step == SPOOKY_SWAP) {
-                UniV2[] memory params = abi.decode(data[i], (UniV2[]));
+                UniswapV2Params[] memory params = abi.decode(
+                    data[i],
+                    (UniswapV2Params[])
+                );
                 for (uint256 j; j < params.length; j++) {
                     IERC20(params[j].path[0]).safeIncreaseAllowance(
                         address(spookyRouter),
@@ -207,17 +220,22 @@ contract CrossChainSwaps is
                     veloSwapExactTokensForTokens(params[j]);
                 }
             } else if (step == SRC_TRANSFER) {
-                SrcTransferParams memory params = abi.decode(
+                SrcTransferParams[] memory params = abi.decode(
                     data[i],
-                    (SrcTransferParams)
+                    (SrcTransferParams[])
                 );
-                for (uint256 k; k < params.tokens.length; k++) {
-                    address token = params.tokens[k];
-                    uint256 amount = IERC20(token).balanceOf(address(this));
+
+                for (uint256 k; k < params.length; k++) {
+                    address token = params[k].token;
+                    uint256 amount = params[k].amount;
+                    amount = amount != 0
+                        ? amount
+                        : IERC20(token).balanceOf(address(this));
+                    address to = params[k].receiver;
                     uint256 fee = calculateFee(amount);
                     amount -= fee;
                     IERC20(token).safeTransfer(feeCollector, fee);
-                    IERC20(token).safeTransfer(params.to, amount);
+                    IERC20(token).safeTransfer(to, amount);
                     emit FeePaid(token, fee);
                 }
             } else if (step == STARGATE) {

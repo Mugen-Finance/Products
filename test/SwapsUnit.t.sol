@@ -4,10 +4,11 @@ pragma solidity ^0.8.13;
 import "forge-std/Test.sol";
 import "../src/CrossChainSwaps/CrossChainSwaps.sol";
 import "../src/mocks/MockERC20.sol";
-import "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../src/CrossChainSwaps/adapters/StargateAdapter.sol";
+import "../src/CrossChainSwaps/adapters/VelodromeAdapter.sol";
+import "../src/CrossChainSwaps/adapters/UniswapAdapter.sol";
 
-//Check fee calc again
+//Fork Tests
 
 contract SwapsUnitTest is Test {
     CrossChainSwaps swaps;
@@ -17,14 +18,14 @@ contract SwapsUnitTest is Test {
     address alice = address(0x124);
 
     function setUp() public {
-        swaps = new CrossChainSwaps(
+        swaps = new CrossChainSwaps( //Optimism Setup
             address(0x4200000000000000000000000000000000000006),
-            ISwapRouter(address(0)),
+            ISwapRouter(address(0xE592427A0AEce92De3Edee1F18E0157C05861564)),
             0x0000000000000000000000000000000000000000,
             0x0000000000000000000000000000000000000000000000000000000000000000,
             0x25CbdDb98b35ab1FF77413456B31EC81A6B6B746,
             address(0x4200000000000000000000000000000000000006),
-            IStargateRouter(address(0))
+            IStargateRouter(address(0xB0D502E938ed5f4df2E681fE6E419ff29631d62b))
         );
         token1 = new MockERC20(
             "Token 1",
@@ -46,87 +47,53 @@ contract SwapsUnitTest is Test {
         );
     }
 
-    //Gas: 35661
-    function testSingleDeposits(uint256 x, address _addr) public {
-        vm.assume(x > 1);
-        vm.assume(x < type(uint216).max);
-        vm.assume(_addr != address(0));
-        vm.assume(_addr != address(this));
-        IERC20(token1).transfer(_addr, type(uint256).max);
-        vm.startPrank(_addr);
-        IERC20(token1).approve(address(swaps), type(uint256).max);
-        uint8[] memory steps = new uint8[](2);
-        bytes[] memory data = new bytes[](2);
-        address[] memory tokens = new address[](1);
-        uint256[] memory amounts = new uint256[](1);
-        tokens[0] = address(token1);
-        amounts[0] = x;
-        steps[0] = 1;
-        steps[1] = 11;
-        data[0] = abi.encode(address(token1), x);
-        CrossChainSwaps.SrcTransferParams memory params = CrossChainSwaps
-            .SrcTransferParams(tokens, address(_addr), amounts);
-        data[1] = abi.encode(params);
-        uint256 fee = x - ((x * 9995) / 1e4); // calculate fee for missing value
-
-        swaps.swaps(steps, data);
-
-        assertEq(
-            IERC20(token1).balanceOf(address(_addr)),
-            (type(uint256).max - fee)
-        );
-        assertEq(IERC20(token1).balanceOf(address(swaps)), 0);
-        vm.stopPrank();
-    }
-
-    //Gas:  100857
-    function testBatchDeposits(uint256 x, address _addr) public {
-        vm.assume(x > 1);
-        vm.assume(x < type(uint216).max);
-        vm.assume(_addr != address(0));
-        vm.assume(_addr != address(this));
-        IERC20(token1).transfer(_addr, type(uint256).max);
-        IERC20(token2).transfer(_addr, type(uint256).max);
-        IERC20(token3).transfer(_addr, type(uint256).max);
-        vm.startPrank(_addr);
-        IERC20(token1).approve(address(swaps), type(uint256).max);
-        IERC20(token2).approve(address(swaps), type(uint256).max);
-        IERC20(token3).approve(address(swaps), type(uint256).max);
-        uint8[] memory steps = new uint8[](2);
-        bytes[] memory data = new bytes[](2);
-        address[] memory tokens = new address[](3);
-        uint256[] memory amounts = new uint256[](3);
-        tokens[0] = address(token1);
-        tokens[1] = address(token2);
-        tokens[2] = address(token3);
-        amounts[0] = x;
-        amounts[1] = x;
-        amounts[2] = x;
+    function testOptimismExchangeVelo() public {
+        uint256 time = block.timestamp + 20 days;
+        uint8[] memory steps = new uint8[](3);
         steps[0] = 2;
-        steps[1] = 11;
-        data[0] = abi.encode(tokens, amounts);
-        CrossChainSwaps.SrcTransferParams memory params = CrossChainSwaps
-            .SrcTransferParams(tokens, address(_addr), amounts);
-        data[1] = abi.encode(params);
-        uint256 fee = x - ((x * 9995) / 1e4); // calculate fee for missing value
+        steps[1] = 9;
+        steps[2] = 10;
+        //-------------------------------------------------------------------
+        //-------------------------------------------------------------------
+        VelodromeAdapter.route[] memory routes = new VelodromeAdapter.route[](
+            1
+        );
+        routes[0] = VelodromeAdapter.route(
+            0x4200000000000000000000000000000000000006,
+            0x7F5c764cBc14f9669B88837ca1490cCa17c31607,
+            false
+        );
+        VelodromeAdapter.VeloParams[]
+            memory velo = new VelodromeAdapter.VeloParams[](1);
+        velo[0] = VelodromeAdapter.VeloParams(10 ether, 0, routes, time);
+        //-------------------------------------------------------------------
+        //-------------------------------------------------------------------
+        CrossChainSwaps.SrcTransferParams[]
+            memory srcTransfer = new CrossChainSwaps.SrcTransferParams[](1);
 
-        swaps.swaps(steps, data);
-
-        assertEq(
-            IERC20(token1).balanceOf(address(_addr)),
-            (type(uint256).max - fee)
+        srcTransfer[0] = CrossChainSwaps.SrcTransferParams(
+            address(0x7F5c764cBc14f9669B88837ca1490cCa17c31607),
+            address(this),
+            0
         );
-        assertEq(
-            IERC20(token2).balanceOf(address(_addr)),
-            (type(uint256).max - fee)
+        //-------------------------------------------------------------------
+        //-------------------------------------------------------------------
+        bytes[] memory data = new bytes[](3);
+        data[0] = abi.encode(10 ether);
+        data[1] = abi.encode(velo);
+        data[2] = abi.encode(srcTransfer);
+        //-------------------------------------------------------------------
+        //-------------------------------------------------------------------
+        swaps.swaps{value: 10 ether}(steps, data);
+        assertGt(
+            IERC20(0x7F5c764cBc14f9669B88837ca1490cCa17c31607).balanceOf(
+                address(this)
+            ),
+            15000e6
         );
-        assertEq(
-            IERC20(token3).balanceOf(address(_addr)),
-            (type(uint256).max - fee)
-        );
-        assertEq(IERC20(token1).balanceOf(address(swaps)), 0);
-        assertEq(IERC20(token2).balanceOf(address(swaps)), 0);
-        assertEq(IERC20(token3).balanceOf(address(swaps)), 0);
-        vm.stopPrank();
     }
+
+    function testOptimismExchangeUniSingle() public {}
+
+    function testOptimismExchangeUniMulti() public {}
 }
