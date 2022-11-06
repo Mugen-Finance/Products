@@ -232,4 +232,24 @@ contract SwapsUnitTest is Test {
         assertGt(IERC20(address(0x62edc0692BD897D2295872a9FFCac5425011c661)).balanceOf(address(this)), 2e18);
         assertGt(IERC20(address(0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E)).balanceOf(address(this)), 90e6);
     }
+
+    function testAvaxSushiSingleToSingle() public {
+        uint8[] memory steps = new uint8[](3);
+        steps[0] = 2;
+        steps[1] = 5;
+        steps[2] = 10;
+        SushiLegacyAdapter.SushiParams[] memory sushi = new SushiLegacyAdapter.SushiParams[](1);
+        address[] memory path = new address[](2);
+        path[0] = address(0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7);
+        path[1] = address(0x37B608519F91f70F2EeB0e5Ed9AF4061722e4F76);
+        sushi[0] = SushiLegacyAdapter.SushiParams(10 ether, 0 , path, true);
+         CrossChainSwaps.SrcTransferParams[] memory srcTransfer = new CrossChainSwaps.SrcTransferParams[](1);
+        srcTransfer[0] = CrossChainSwaps.SrcTransferParams(address(0x37B608519F91f70F2EeB0e5Ed9AF4061722e4F76), address(this), 0);
+        bytes[] memory data = new bytes[](3);
+        data[0] = abi.encode(10 ether);
+        data[1] = abi.encode(sushi);
+        data[2] = abi.encode(srcTransfer);
+        avax.swaps{value: 10 ether}(steps, data);
+        assertGt(IERC20(address(0x37B608519F91f70F2EeB0e5Ed9AF4061722e4F76)).balanceOf(address(this)), 90e18);
+    }
 }
