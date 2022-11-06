@@ -54,9 +54,9 @@ contract CrossChainSwaps is
 
     //Router Constants
 
-    IJoeRouter02 public constant joeRouter = IJoeRouter02(address(0));
+    IJoeRouter02 public constant joeRouter = IJoeRouter02(address(0x60aE616a2155Ee3d9A68541Ba4544862310933d4));
     IPancakeRouter02 public constant pancakeRouter =
-        IPancakeRouter02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
+        IPancakeRouter02(address(0));
     IUniswapV2Router02 public constant spookyRouter =
         IUniswapV2Router02(address(0));
 
@@ -135,7 +135,8 @@ contract CrossChainSwaps is
                     (UniswapV3Single[])
                 );
                 for (uint256 j; j < params.length; j++) {
-                    swapExactInputSingle(params[i]);
+                    UniswapV3Single memory swapData = params[j];
+                    swapExactInputSingle(swapData);
                 }
             } else if (step == UNISWAP_INPUT_MULTI) {
                 UniswapV3Multi[] memory params = abi.decode(
@@ -143,6 +144,7 @@ contract CrossChainSwaps is
                     (UniswapV3Multi[])
                 );
                 for (uint256 j; j < params.length; j++) {
+                    
                     swapExactInputMultihop(params[j]);
                 }
             } else if (step == SUSHI_LEGACY) {

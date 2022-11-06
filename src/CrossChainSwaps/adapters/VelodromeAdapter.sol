@@ -25,7 +25,7 @@ abstract contract VelodromeAdapter is IRouter {
 
     address public immutable veloFactory;
     IWETH public immutable veloWETH;
-    bytes32 immutable veloPairCodeHash;
+    //bytes32 immutable veloPairCodeHash;
     uint256 internal constant MINIMUM_LIQUIDITY = 10**3;
     address public constant veloRouter =
         address(0x9c12939390052919aF3155f41Bf4160Fd3666A6f);
@@ -37,7 +37,7 @@ abstract contract VelodromeAdapter is IRouter {
 
     constructor(address _veloFactory, address _veloWETH) {
         veloFactory = _veloFactory;
-        veloPairCodeHash = IPairFactory(_veloFactory).pairCodeHash();
+        //veloPairCodeHash = IPairFactory(_veloFactory).pairCodeHash();
         veloWETH = IWETH(_veloWETH);
     }
 
@@ -60,20 +60,20 @@ abstract contract VelodromeAdapter is IRouter {
         bool stable
     ) public view returns (address pair) {
         (address token0, address token1) = sortTokens(tokenA, tokenB);
-        pair = address(
-            uint160(
-                uint256(
-                    keccak256(
-                        abi.encodePacked(
-                            hex"ff",
-                            veloFactory,
-                            keccak256(abi.encodePacked(token0, token1, stable)),
-                            veloPairCodeHash // init code hash
-                        )
-                    )
-                )
-            )
-        );
+        // pair = address(
+        //     uint160(
+        //         uint256(
+        //             keccak256(
+        //                 abi.encodePacked(
+        //                     hex"ff",
+        //                     veloFactory,
+        //                     keccak256(abi.encodePacked(token0, token1, stable)),
+        //                     veloPairCodeHash // init code hash
+        //                 )
+        //             )
+        //         )
+        //     )
+        // );
     }
 
     // performs chained getAmountOut calculations on any number of pairs
