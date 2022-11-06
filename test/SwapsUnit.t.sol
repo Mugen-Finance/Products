@@ -205,6 +205,31 @@ contract SwapsUnitTest is Test {
         assertGt(IERC20(address(0x62edc0692BD897D2295872a9FFCac5425011c661)).balanceOf(address(this)), 45e17);
         //.0023759693474229510
         //4.749562725498477745
+    }
 
+    function testAvaxUniswapV2LogicSingleToMulti() public {
+        uint8[] memory steps = new uint8[](3);
+        steps[0] = 2;
+        steps[1] = 6;
+        steps[2] = 10;
+        bytes[] memory data = new bytes[](3);
+        address[] memory path = new address[](2);
+        path[0] = address(0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7);
+        path[1] = address(0x62edc0692BD897D2295872a9FFCac5425011c661);
+        address[] memory path2 = new address[](2);
+        path2[0] = address(0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7);
+        path2[1] = address(0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E);
+        CrossChainSwaps.UniswapV2Params[] memory traderJoe = new CrossChainSwaps.UniswapV2Params[](2);
+        traderJoe[0] = CrossChainSwaps.UniswapV2Params(5 ether, 0, path, block.timestamp);
+        traderJoe[1] = CrossChainSwaps.UniswapV2Params(5 ether, 0, path2, block.timestamp);
+        CrossChainSwaps.SrcTransferParams[] memory srcTransfer = new CrossChainSwaps.SrcTransferParams[](2);
+        srcTransfer[0] = CrossChainSwaps.SrcTransferParams(address(0x62edc0692BD897D2295872a9FFCac5425011c661), address(this), 0);
+        srcTransfer[1] = CrossChainSwaps.SrcTransferParams(address(0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E), address(this), 0);
+        data[0] = abi.encode(10 ether);
+        data[1] = abi.encode(traderJoe);
+        data[2] = abi.encode(srcTransfer);
+        avax.swaps{value: 10 ether}(steps, data);
+        assertGt(IERC20(address(0x62edc0692BD897D2295872a9FFCac5425011c661)).balanceOf(address(this)), 2e18);
+        assertGt(IERC20(address(0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E)).balanceOf(address(this)), 90e6);
     }
 }
