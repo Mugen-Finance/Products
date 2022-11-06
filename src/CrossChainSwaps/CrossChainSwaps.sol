@@ -252,7 +252,7 @@ contract CrossChainSwaps is
     }
 
     function version() external pure returns (string memory _version) {
-        _version = "0.0.3";
+        _version = "0.0.4";
     }
 
     receive() external payable {}

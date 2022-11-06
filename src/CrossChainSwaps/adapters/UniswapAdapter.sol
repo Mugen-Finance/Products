@@ -11,6 +11,7 @@ abstract contract UniswapAdapter {
 
     struct UniswapV3Single {
         uint256 amountIn;
+        uint256 amountOutMin;
         address token1;
         address token2;
         uint24 poolFee;
@@ -52,7 +53,7 @@ abstract contract UniswapAdapter {
                 recipient: address(this),
                 deadline: block.timestamp,
                 amountIn: swapParams.amountIn,
-                amountOutMinimum: 0,
+                amountOutMinimum: swapParams.amountOutMin,
                 sqrtPriceLimitX96: 0
             });
 

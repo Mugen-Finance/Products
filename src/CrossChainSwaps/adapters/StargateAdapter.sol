@@ -82,9 +82,6 @@ abstract contract StargateAdapter is IStargateReceiver {
             address(stargateRouter),
             params.amount
         );
-        uint256 fee = calculateFee(params.amount);
-        params.amount -= fee;
-        IERC20(params.token).safeTransfer(feeCollector, fee);
         IStargateRouter(stargateRouter).swap{value: address(this).balance}(
             params.dstChainId,
             params.srcPoolId,
@@ -100,7 +97,7 @@ abstract contract StargateAdapter is IStargateReceiver {
             abi.encodePacked(params.receiver),
             payload
         );
-        emit FeePaid(params.token, fee);
+      
     }
 
     function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
