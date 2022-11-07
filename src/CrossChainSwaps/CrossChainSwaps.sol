@@ -53,8 +53,9 @@ contract CrossChainSwaps is
     //////////////////////////////////////////////////////////////*/
 
     //Router Constants
-
-    IJoeRouter02 public constant joeRouter = IJoeRouter02(address(0x60aE616a2155Ee3d9A68541Ba4544862310933d4));
+    
+    // Testnet Contracts
+    IJoeRouter02 public constant joeRouter = IJoeRouter02(address(0xd7f655E3376cE2D7A2b08fF01Eb3B1023191A901));
     IPancakeRouter02 public constant pancakeRouter =
         IPancakeRouter02(address(0));
     IUniswapV2Router02 public constant spookyRouter =

@@ -118,7 +118,7 @@ contract SwapsUnitTest is Test {
     //     steps[1] = 3;
     //     steps[2] = 10;
     //     UniswapAdapter.UniswapV3Single[] memory uniswap = new UniswapAdapter.UniswapV3Single[](1);
-    //     uniswap[0] = UniswapAdapter.UniswapV3Single(10 ether,0x4200000000000000000000000000000000000006, 0x7F5c764cBc14f9669B88837ca1490cCa17c31607, 500);
+    //     uniswap[0] = UniswapAdapter.UniswapV3Single(10 ether, 0, 0x4200000000000000000000000000000000000006, 0x7F5c764cBc14f9669B88837ca1490cCa17c31607, 500);
     //     CrossChainSwaps.SrcTransferParams[] memory srcTransfer = new CrossChainSwaps.SrcTransferParams[](1);
     //     srcTransfer[0] = CrossChainSwaps.SrcTransferParams(address(0x7F5c764cBc14f9669B88837ca1490cCa17c31607), address(this), 0);
     //     bytes[] memory data = new bytes[](3);
@@ -136,8 +136,8 @@ contract SwapsUnitTest is Test {
     //     steps[1] = 3;
     //     steps[2] = 10;
     //     UniswapAdapter.UniswapV3Single[] memory uniswap = new UniswapAdapter.UniswapV3Single[](2);
-    //     uniswap[0] = UniswapAdapter.UniswapV3Single(5 ether,0x4200000000000000000000000000000000000006, 0x7F5c764cBc14f9669B88837ca1490cCa17c31607, 500);
-    //     uniswap[1] = UniswapAdapter.UniswapV3Single(5 ether,0x4200000000000000000000000000000000000006, 0x4200000000000000000000000000000000000042, 500);
+    //     uniswap[0] = UniswapAdapter.UniswapV3Single(5 ether, 0,0x4200000000000000000000000000000000000006, 0x7F5c764cBc14f9669B88837ca1490cCa17c31607, 500);
+    //     uniswap[1] = UniswapAdapter.UniswapV3Single(5 ether, 0, 0x4200000000000000000000000000000000000006, 0x4200000000000000000000000000000000000042, 500);
     //     CrossChainSwaps.SrcTransferParams[] memory srcTransfer = new CrossChainSwaps.SrcTransferParams[](2);
     //     srcTransfer[0] = CrossChainSwaps.SrcTransferParams(address(0x7F5c764cBc14f9669B88837ca1490cCa17c31607), address(this), 0);
     //     srcTransfer[1] = CrossChainSwaps.SrcTransferParams(address(0x4200000000000000000000000000000000000042), address(this), 0);
