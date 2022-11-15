@@ -11,7 +11,10 @@ import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IArbitrumSwaps} from "./interfaces/IArbitrumSwaps.sol";
 
-contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, StargateArbitrum, IArbitrumSwaps {
+contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, StargateArbitrum, IArbitrumSwaps {
+    using SafeERC20 for IERC20;
+
+    error MoreThanZero();
 
     IWETH9 internal immutable weth;
 
@@ -28,13 +31,13 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, StargateArbitrum, 
     uint8 internal constant WETH_WITHDRAW = 9;
     uint8 internal constant STARGATE = 10;
 
-    constructor(IWETH9 _weth, ISwapRouter _swapRouter, address _factory, bytes32 _pairCodeHash, address _factory, IStargateRouter _stargateRouter) 
+    constructor(address _weth, ISwapRouter _swapRouter, address _factory, bytes32 _pairCodeHash, address _xcalFactory, IStargateRouter _stargateRouter) 
     UniswapAdapter(_swapRouter)
     SushiLegacyAdapter(_factory, _pairCodeHash) 
-    XCaliburAdapter(_factory, _weth)
+    XCaliburAdapter(_xcalFactory, _weth)
     StargateArbitrum(_stargateRouter)
     {
-        weth = _weth;
+        weth = IWETH9(_weth);
     }
 
     function arbitrumSwaps(uint8[] calldata steps, bytes[] calldata data) external payable {
