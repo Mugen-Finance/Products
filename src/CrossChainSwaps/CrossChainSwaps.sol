@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.15;
+pragma solidity ^0.8.13;
 
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
@@ -9,6 +9,7 @@ import {IJoeRouter02} from "traderjoe/contracts/traderjoe/interfaces/IJoeRouter0
 import {IPancakeRouter02} from "pancake/projects/exchange-protocol/contracts/interfaces/IPancakeRouter02.sol";
 import {IUniswapV2Router02} from "spookyswap/contracts/interfaces/IUniswapV2Router02.sol";
 import {VelodromeAdapter} from "./adapters/VelodromeAdapter.sol";
+import {XCaliburAdapter} from "./adapters/XCaliburAdapter.sol";
 import "./adapters/UniswapAdapter.sol";
 import "./adapters/SushiAdapter.sol";
 import "./adapters/StargateAdapter.sol";
@@ -17,14 +18,12 @@ import "./adapters/StargateAdapter.sol";
  *Also interfaces for exchanges to facilitate swaps that do not involve cross-chain messaging.
  */
 
-//change things to an array of structs
-// Pack structs
-
 contract CrossChainSwaps is
     UniswapAdapter,
     SushiLegacyAdapter,
     StargateAdapter,
-    VelodromeAdapter
+    VelodromeAdapter,
+    XCaliburAdapter
 {
     using SafeERC20 for IERC20;
 
@@ -72,8 +71,9 @@ contract CrossChainSwaps is
     uint8 internal constant PANCAKE_SWAP = 7;
     uint8 internal constant SPOOKY_SWAP = 8;
     uint8 internal constant VELODROME = 9;
-    uint8 internal constant SRC_TRANSFER = 10; // Done after all swaps are completed to ease accounting
-    uint8 internal constant STARGATE = 11;
+    uint8 internal constant XCAL = 10;
+    uint8 internal constant SRC_TRANSFER = 11; // Done after all swaps are completed to ease accounting
+    uint8 internal constant STARGATE = 12;
 
     /*//////////////////////////////////////////////////////////////
                                IMMUTABLES
@@ -90,14 +90,12 @@ contract CrossChainSwaps is
         ISwapRouter _swapRouter,
         address _sushiFactory,
         bytes32 _sushiPairCodeHash,
-        address _veloFactory,
-        address _veloWeth,
         IStargateRouter _stargateRouter
     )
         UniswapAdapter(_swapRouter)
         SushiLegacyAdapter(_sushiFactory, _sushiPairCodeHash)
         StargateAdapter(_stargateRouter)
-        VelodromeAdapter(_veloFactory, _veloWeth)
+        VelodromeAdapter()
     {
         weth = _weth;
     }
@@ -221,6 +219,12 @@ contract CrossChainSwaps is
                         params[j].amountIn
                     );
                     veloSwapExactTokensForTokens(params[j]);
+                }
+            } else if (step == XCAL) {
+                XCalParams[] memory params = abi.decode(data[i], (XCalParams[]));
+                for (uint256 j; j < params.length; j++) {
+                    IERC20(params[j].routes[0].from).safeIncreaseAllowance(address(xcalRouter), params[j].amountIn);
+                    // xcalswapExactTokensForTokens(params[j]);
                 }
             } else if (step == SRC_TRANSFER) {
                 SrcTransferParams[] memory params = abi.decode(

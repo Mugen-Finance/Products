@@ -1,0 +1,1024 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountIn",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountOutMin",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "from",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "stable",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct IXcalRouter.xcalRoute[]",
+          "name": "routes",
+          "type": "tuple[]"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "deadline",
+          "type": "uint256"
+        }
+      ],
+      "name": "swapExactTokensForTokens",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "amounts",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "xcalRouter",
+      "outputs": [
+        {
+          "internalType": "contract IXcalRouter",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "swapExactTokensForTokens(uint256,uint256,(address,address,bool)[],address,uint256)": "f41766d8",
+    "xcalRouter()": "aaa3fded"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.15+commit.e14f2714\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMin\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"stable\",\"type\":\"bool\"}],\"internalType\":\"struct IXcalRouter.xcalRoute[]\",\"name\":\"routes\",\"type\":\"tuple[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactTokensForTokens\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"xcalRouter\",\"outputs\":[{\"internalType\":\"contract IXcalRouter\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/CrossChainSwaps/adapters/3xCalibur-Adapter/XCaliburAdapter.sol\":\"XCaliburAdapter\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":LayerZero/=lib/contracts/lib/LayerZero/contracts/\",\":chainlink/=lib/chainlink/\",\":contracts/=lib/contracts/contracts/\",\":create3-factory/=lib/create3-factory/src/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":fraxlend/=lib/fraxlend/\",\":joe-core/=lib/joe-core/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/\",\":pancake-smart-contracts/=lib/pancake-smart-contracts/\",\":pancake/=lib/pancake-smart-contracts/\",\":solmate/=lib/solmate/\",\":spookyswap-core/=lib/spookyswap-core/contracts/\",\":spookyswap/=lib/spookyswap-core/\",\":sushiswap/=lib/sushiswap/\",\":traderjoe/=lib/joe-core/\",\":uniswap/v3-core/=lib/v3-core/\",\":uniswap/v3-periphery/=lib/v3-periphery/\",\":utils/=lib/contracts/test/utils/\",\":v3-core/=lib/v3-core/\",\":v3-periphery/=lib/v3-periphery/contracts/\",\":velodrome/=lib/contracts/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34\",\"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr\"]},\"src/CrossChainSwaps/adapters/3xCalibur-Adapter/XCaliburAdapter.sol\":{\"keccak256\":\"0xc94440409da5692f160bc6a46f4e4d826ed50a8fef041a74598c14746a8d2e7e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://820048ca18e15249dae9f7d23c42af2ad2521ebc569a032ce44643c307bdfe25\",\"dweb:/ipfs/QmactTs4Wc2SDwm9pdfBQwzhiHu4yKD5Co5s2Kga7coaqe\"]},\"src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/ISwapFactory.sol\":{\"keccak256\":\"0x52e5f2b3738287b9cf0017046e59de2e0683f3689b9f5a84ead4b9dc4db1157e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9b54ad6ffee5643b00c13576745b46ed73f7e8a0fc1429eb3681cb658365be94\",\"dweb:/ipfs/Qmd44KFVVK3vjFPD6Qbi9PHuKdysg3T3aBiH4UKRJpHU5o\"]},\"src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/ISwapPair.sol\":{\"keccak256\":\"0xe4e8f78674013ab869a49cb2959c02e7065adff1c4113e983c7bcf085fb0df45\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://15e3885f26959b767ea7dd823c46e85d370260c3e57737afb2a577e6773147cc\",\"dweb:/ipfs/QmdvLkb1FVUAdBWV4RP2eUkEnDaVuM7Cqnc6BEAy4CgSno\"]},\"src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/IWETH.sol\":{\"keccak256\":\"0xe0381c51997ef5170b9472640e486fa7c3807e6424dc977381208de1a31a5fb4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e4c22a5afa58efaab23127293a097ed3abe42be951eaacfe625f004313715d7a\",\"dweb:/ipfs/QmNnfN2gYTw7DmrcmX9w1EtbeVCEEBeCeFgT23DAk5Qw5i\"]},\"src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/IXcalRouter.sol\":{\"keccak256\":\"0x6e6e286ec82e3e28827a6fc2454c999be439cd67d8e3d8316a0e91deec72dc78\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1a2896aaa9243b824b03dd53f56239f890d9a05fce6eaf9656c371167c347b21\",\"dweb:/ipfs/QmPQzqUsLgTUnyfHmdaTrucXq6Yj2JhZyvuyZxyDEv3PcX\"]},\"src/CrossChainSwaps/adapters/3xCalibur-Adapter/libraries/Math.sol\":{\"keccak256\":\"0x2b8ad68dffb80888285561c598f65eebbacbdc0666d965f9a6291cd31a48780c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5842ebb0c79911ff5b0693fc50e24841d556d87880f674638b82aac543783ebf\",\"dweb:/ipfs/QmXycX7FjqK6NKWQcn6ycF91ETgaqCKWVYawYMyNBMWJi8\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.15+commit.e14f2714"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "amountIn",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountOutMin",
+              "type": "uint256"
+            },
+            {
+              "internalType": "struct IXcalRouter.xcalRoute[]",
+              "name": "routes",
+              "type": "tuple[]",
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "from",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "to",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "stable",
+                  "type": "bool"
+                }
+              ]
+            },
+            {
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "deadline",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "swapExactTokensForTokens",
+          "outputs": [
+            {
+              "internalType": "uint256[]",
+              "name": "amounts",
+              "type": "uint256[]"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "xcalRouter",
+          "outputs": [
+            {
+              "internalType": "contract IXcalRouter",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":LayerZero/=lib/contracts/lib/LayerZero/contracts/",
+        ":chainlink/=lib/chainlink/",
+        ":contracts/=lib/contracts/contracts/",
+        ":create3-factory/=lib/create3-factory/src/",
+        ":ds-test/=lib/forge-std/lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/",
+        ":fraxlend/=lib/fraxlend/",
+        ":joe-core/=lib/joe-core/",
+        ":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
+        ":openzeppelin/=lib/openzeppelin-contracts/",
+        ":pancake-smart-contracts/=lib/pancake-smart-contracts/",
+        ":pancake/=lib/pancake-smart-contracts/",
+        ":solmate/=lib/solmate/",
+        ":spookyswap-core/=lib/spookyswap-core/contracts/",
+        ":spookyswap/=lib/spookyswap-core/",
+        ":sushiswap/=lib/sushiswap/",
+        ":traderjoe/=lib/joe-core/",
+        ":uniswap/v3-core/=lib/v3-core/",
+        ":uniswap/v3-periphery/=lib/v3-periphery/",
+        ":utils/=lib/contracts/test/utils/",
+        ":v3-core/=lib/v3-core/",
+        ":v3-periphery/=lib/v3-periphery/contracts/",
+        ":velodrome/=lib/contracts/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/CrossChainSwaps/adapters/3xCalibur-Adapter/XCaliburAdapter.sol": "XCaliburAdapter"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
+        "keccak256": "0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b",
+        "urls": [
+          "bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34",
+          "dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
+        ],
+        "license": "MIT"
+      },
+      "src/CrossChainSwaps/adapters/3xCalibur-Adapter/XCaliburAdapter.sol": {
+        "keccak256": "0xc94440409da5692f160bc6a46f4e4d826ed50a8fef041a74598c14746a8d2e7e",
+        "urls": [
+          "bzz-raw://820048ca18e15249dae9f7d23c42af2ad2521ebc569a032ce44643c307bdfe25",
+          "dweb:/ipfs/QmactTs4Wc2SDwm9pdfBQwzhiHu4yKD5Co5s2Kga7coaqe"
+        ],
+        "license": "MIT"
+      },
+      "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/ISwapFactory.sol": {
+        "keccak256": "0x52e5f2b3738287b9cf0017046e59de2e0683f3689b9f5a84ead4b9dc4db1157e",
+        "urls": [
+          "bzz-raw://9b54ad6ffee5643b00c13576745b46ed73f7e8a0fc1429eb3681cb658365be94",
+          "dweb:/ipfs/Qmd44KFVVK3vjFPD6Qbi9PHuKdysg3T3aBiH4UKRJpHU5o"
+        ],
+        "license": "MIT"
+      },
+      "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/ISwapPair.sol": {
+        "keccak256": "0xe4e8f78674013ab869a49cb2959c02e7065adff1c4113e983c7bcf085fb0df45",
+        "urls": [
+          "bzz-raw://15e3885f26959b767ea7dd823c46e85d370260c3e57737afb2a577e6773147cc",
+          "dweb:/ipfs/QmdvLkb1FVUAdBWV4RP2eUkEnDaVuM7Cqnc6BEAy4CgSno"
+        ],
+        "license": "MIT"
+      },
+      "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/IWETH.sol": {
+        "keccak256": "0xe0381c51997ef5170b9472640e486fa7c3807e6424dc977381208de1a31a5fb4",
+        "urls": [
+          "bzz-raw://e4c22a5afa58efaab23127293a097ed3abe42be951eaacfe625f004313715d7a",
+          "dweb:/ipfs/QmNnfN2gYTw7DmrcmX9w1EtbeVCEEBeCeFgT23DAk5Qw5i"
+        ],
+        "license": "MIT"
+      },
+      "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/IXcalRouter.sol": {
+        "keccak256": "0x6e6e286ec82e3e28827a6fc2454c999be439cd67d8e3d8316a0e91deec72dc78",
+        "urls": [
+          "bzz-raw://1a2896aaa9243b824b03dd53f56239f890d9a05fce6eaf9656c371167c347b21",
+          "dweb:/ipfs/QmPQzqUsLgTUnyfHmdaTrucXq6Yj2JhZyvuyZxyDEv3PcX"
+        ],
+        "license": "MIT"
+      },
+      "src/CrossChainSwaps/adapters/3xCalibur-Adapter/libraries/Math.sol": {
+        "keccak256": "0x2b8ad68dffb80888285561c598f65eebbacbdc0666d965f9a6291cd31a48780c",
+        "urls": [
+          "bzz-raw://5842ebb0c79911ff5b0693fc50e24841d556d87880f674638b82aac543783ebf",
+          "dweb:/ipfs/QmXycX7FjqK6NKWQcn6ycF91ETgaqCKWVYawYMyNBMWJi8"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/CrossChainSwaps/adapters/3xCalibur-Adapter/XCaliburAdapter.sol",
+    "id": 28197,
+    "exportedSymbols": {
+      "IERC20": [
+        24611
+      ],
+      "ISwapFactory": [
+        28267
+      ],
+      "ISwapPair": [
+        28455
+      ],
+      "IWETH": [
+        28471
+      ],
+      "IXcalRouter": [
+        28504
+      ],
+      "Math": [
+        28595
+      ],
+      "XCaliburAdapter": [
+        28196
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "32:608:32",
+    "nodes": [
+      {
+        "id": 28141,
+        "nodeType": "PragmaDirective",
+        "src": "32:24:32",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".11"
+        ]
+      },
+      {
+        "id": 28142,
+        "nodeType": "ImportDirective",
+        "src": "58:38:32",
+        "nodes": [],
+        "absolutePath": "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/IXcalRouter.sol",
+        "file": "./interfaces/IXcalRouter.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 28197,
+        "sourceUnit": 28505,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 28196,
+        "nodeType": "ContractDefinition",
+        "src": "98:542:32",
+        "nodes": [
+          {
+            "id": 28155,
+            "nodeType": "StructDefinition",
+            "src": "154:144:32",
+            "nodes": [],
+            "canonicalName": "XCaliburAdapter.XcalParams",
+            "members": [
+              {
+                "constant": false,
+                "id": 28146,
+                "mutability": "mutable",
+                "name": "amountIn",
+                "nameLocation": "190:8:32",
+                "nodeType": "VariableDeclaration",
+                "scope": 28155,
+                "src": "182:16:32",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 28145,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "182:7:32",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28148,
+                "mutability": "mutable",
+                "name": "amountOutMin",
+                "nameLocation": "216:12:32",
+                "nodeType": "VariableDeclaration",
+                "scope": 28155,
+                "src": "208:20:32",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 28147,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "208:7:32",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28152,
+                "mutability": "mutable",
+                "name": "routes",
+                "nameLocation": "262:6:32",
+                "nodeType": "VariableDeclaration",
+                "scope": 28155,
+                "src": "238:30:32",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_struct$_xcalRoute_$28485_storage_$dyn_storage_ptr",
+                  "typeString": "struct IXcalRouter.xcalRoute[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 28150,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 28149,
+                      "name": "IXcalRouter.xcalRoute",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 28485,
+                      "src": "238:21:32"
+                    },
+                    "referencedDeclaration": 28485,
+                    "src": "238:21:32",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_xcalRoute_$28485_storage_ptr",
+                      "typeString": "struct IXcalRouter.xcalRoute"
+                    }
+                  },
+                  "id": 28151,
+                  "nodeType": "ArrayTypeName",
+                  "src": "238:23:32",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_xcalRoute_$28485_storage_$dyn_storage_ptr",
+                    "typeString": "struct IXcalRouter.xcalRoute[]"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28154,
+                "mutability": "mutable",
+                "name": "deadline",
+                "nameLocation": "283:8:32",
+                "nodeType": "VariableDeclaration",
+                "scope": 28155,
+                "src": "278:13:32",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 28153,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "278:4:32",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "XcalParams",
+            "nameLocation": "161:10:32",
+            "scope": 28196,
+            "visibility": "public"
+          },
+          {
+            "id": 28158,
+            "nodeType": "VariableDeclaration",
+            "src": "304:39:32",
+            "nodes": [],
+            "constant": false,
+            "functionSelector": "aaa3fded",
+            "mutability": "immutable",
+            "name": "xcalRouter",
+            "nameLocation": "333:10:32",
+            "scope": 28196,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_IXcalRouter_$28504",
+              "typeString": "contract IXcalRouter"
+            },
+            "typeName": {
+              "id": 28157,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 28156,
+                "name": "IXcalRouter",
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 28504,
+                "src": "304:11:32"
+              },
+              "referencedDeclaration": 28504,
+              "src": "304:11:32",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IXcalRouter_$28504",
+                "typeString": "contract IXcalRouter"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "id": 28170,
+            "nodeType": "FunctionDefinition",
+            "src": "350:79:32",
+            "nodes": [],
+            "body": {
+              "id": 28169,
+              "nodeType": "Block",
+              "src": "379:50:32",
+              "nodes": [],
+              "statements": [
+                {
+                  "expression": {
+                    "id": 28167,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 28163,
+                      "name": "xcalRouter",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 28158,
+                      "src": "389:10:32",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_IXcalRouter_$28504",
+                        "typeString": "contract IXcalRouter"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "arguments": [
+                        {
+                          "id": 28165,
+                          "name": "_router",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 28160,
+                          "src": "414:7:32",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 28164,
+                        "name": "IXcalRouter",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 28504,
+                        "src": "402:11:32",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_IXcalRouter_$28504_$",
+                          "typeString": "type(contract IXcalRouter)"
+                        }
+                      },
+                      "id": 28166,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "402:20:32",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_IXcalRouter_$28504",
+                        "typeString": "contract IXcalRouter"
+                      }
+                    },
+                    "src": "389:33:32",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IXcalRouter_$28504",
+                      "typeString": "contract IXcalRouter"
+                    }
+                  },
+                  "id": 28168,
+                  "nodeType": "ExpressionStatement",
+                  "src": "389:33:32"
+                }
+              ]
+            },
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "parameters": {
+              "id": 28161,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28160,
+                  "mutability": "mutable",
+                  "name": "_router",
+                  "nameLocation": "370:7:32",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28170,
+                  "src": "362:15:32",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 28159,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "362:7:32",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "361:17:32"
+            },
+            "returnParameters": {
+              "id": 28162,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "379:0:32"
+            },
+            "scope": 28196,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "id": 28195,
+            "nodeType": "FunctionDefinition",
+            "src": "435:203:32",
+            "nodes": [],
+            "body": {
+              "id": 28194,
+              "nodeType": "Block",
+              "src": "488:150:32",
+              "nodes": [],
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "expression": {
+                          "id": 28180,
+                          "name": "params",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 28173,
+                          "src": "547:6:32",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_XcalParams_$28155_memory_ptr",
+                            "typeString": "struct XCaliburAdapter.XcalParams memory"
+                          }
+                        },
+                        "id": 28181,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "amountIn",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 28146,
+                        "src": "547:15:32",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "id": 28182,
+                          "name": "params",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 28173,
+                          "src": "564:6:32",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_XcalParams_$28155_memory_ptr",
+                            "typeString": "struct XCaliburAdapter.XcalParams memory"
+                          }
+                        },
+                        "id": 28183,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "amountOutMin",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 28148,
+                        "src": "564:19:32",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "id": 28184,
+                          "name": "params",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 28173,
+                          "src": "585:6:32",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_XcalParams_$28155_memory_ptr",
+                            "typeString": "struct XCaliburAdapter.XcalParams memory"
+                          }
+                        },
+                        "id": 28185,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "routes",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 28152,
+                        "src": "585:13:32",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_array$_t_struct$_xcalRoute_$28485_memory_ptr_$dyn_memory_ptr",
+                          "typeString": "struct IXcalRouter.xcalRoute memory[] memory"
+                        }
+                      },
+                      {
+                        "arguments": [
+                          {
+                            "id": 28188,
+                            "name": "this",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -28,
+                            "src": "608:4:32",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_XCaliburAdapter_$28196",
+                              "typeString": "contract XCaliburAdapter"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_contract$_XCaliburAdapter_$28196",
+                              "typeString": "contract XCaliburAdapter"
+                            }
+                          ],
+                          "id": 28187,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "nodeType": "ElementaryTypeNameExpression",
+                          "src": "600:7:32",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_address_$",
+                            "typeString": "type(address)"
+                          },
+                          "typeName": {
+                            "id": 28186,
+                            "name": "address",
+                            "nodeType": "ElementaryTypeName",
+                            "src": "600:7:32",
+                            "typeDescriptions": {}
+                          }
+                        },
+                        "id": 28189,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "typeConversion",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "600:13:32",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "id": 28190,
+                          "name": "params",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 28173,
+                          "src": "615:6:32",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_XcalParams_$28155_memory_ptr",
+                            "typeString": "struct XCaliburAdapter.XcalParams memory"
+                          }
+                        },
+                        "id": 28191,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "deadline",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 28154,
+                        "src": "615:15:32",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_array$_t_struct$_xcalRoute_$28485_memory_ptr_$dyn_memory_ptr",
+                          "typeString": "struct IXcalRouter.xcalRoute memory[] memory"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "arguments": [
+                          {
+                            "id": 28177,
+                            "name": "xcalRouter",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 28158,
+                            "src": "510:10:32",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_IXcalRouter_$28504",
+                              "typeString": "contract IXcalRouter"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_contract$_IXcalRouter_$28504",
+                              "typeString": "contract IXcalRouter"
+                            }
+                          ],
+                          "id": 28176,
+                          "name": "IXcalRouter",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 28504,
+                          "src": "498:11:32",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_contract$_IXcalRouter_$28504_$",
+                            "typeString": "type(contract IXcalRouter)"
+                          }
+                        },
+                        "id": 28178,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "typeConversion",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "498:23:32",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_IXcalRouter_$28504",
+                          "typeString": "contract IXcalRouter"
+                        }
+                      },
+                      "id": 28179,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "swapExactTokensForTokens",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 28503,
+                      "src": "498:48:32",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_nonpayable$_t_uint256_$_t_uint256_$_t_array$_t_struct$_xcalRoute_$28485_memory_ptr_$dyn_memory_ptr_$_t_address_$_t_uint256_$returns$_t_array$_t_uint256_$dyn_memory_ptr_$",
+                        "typeString": "function (uint256,uint256,struct IXcalRouter.xcalRoute memory[] memory,address,uint256) external returns (uint256[] memory)"
+                      }
+                    },
+                    "id": 28192,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "498:133:32",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
+                      "typeString": "uint256[] memory"
+                    }
+                  },
+                  "id": 28193,
+                  "nodeType": "ExpressionStatement",
+                  "src": "498:133:32"
+                }
+              ]
+            },
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "xcalSwap",
+            "nameLocation": "444:8:32",
+            "parameters": {
+              "id": 28174,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28173,
+                  "mutability": "mutable",
+                  "name": "params",
+                  "nameLocation": "471:6:32",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28195,
+                  "src": "453:24:32",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_XcalParams_$28155_memory_ptr",
+                    "typeString": "struct XCaliburAdapter.XcalParams"
+                  },
+                  "typeName": {
+                    "id": 28172,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 28171,
+                      "name": "XcalParams",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 28155,
+                      "src": "453:10:32"
+                    },
+                    "referencedDeclaration": 28155,
+                    "src": "453:10:32",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_XcalParams_$28155_storage_ptr",
+                      "typeString": "struct XCaliburAdapter.XcalParams"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "452:26:32"
+            },
+            "returnParameters": {
+              "id": 28175,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "488:0:32"
+            },
+            "scope": 28196,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          }
+        ],
+        "abstract": true,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 28143,
+              "name": "IXcalRouter",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 28504,
+              "src": "135:11:32"
+            },
+            "id": 28144,
+            "nodeType": "InheritanceSpecifier",
+            "src": "135:11:32"
+          }
+        ],
+        "canonicalName": "XCaliburAdapter",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": false,
+        "linearizedBaseContracts": [
+          28196,
+          28504
+        ],
+        "name": "XCaliburAdapter",
+        "nameLocation": "116:15:32",
+        "scope": 28197,
+        "usedErrors": []
+      }
+    ],
+    "license": "MIT"
+  },
+  "id": 32
+}

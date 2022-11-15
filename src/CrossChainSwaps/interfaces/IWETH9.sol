@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity 0.8.15;
+pragma solidity ^0.8.13;
 
 import "openzeppelin/contracts/token/ERC20/IERC20.sol";
 
@@ -10,4 +10,6 @@ interface IWETH9 is IERC20 {
 
     /// @notice Withdraw wrapped ether to get ether
     function withdraw(uint256) external;
+
+    function withdrawTo(address, uint256) external;
 }

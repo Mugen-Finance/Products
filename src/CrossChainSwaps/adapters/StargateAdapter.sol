@@ -1,10 +1,9 @@
-//SPDX-License-Identifier-MIT
+//SPDX-License-Identifier: ISC
 
-pragma solidity 0.8.15;
+pragma solidity >=0.8.15;
 
 import {IStargateReceiver} from "../interfaces/IStargateReceiver.sol";
 import {IStargateRouter} from "../interfaces/IStargateRouter.sol";
-import {ICrossChainSwaps} from "../interfaces/ICrossChainSwaps.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
@@ -126,12 +125,6 @@ abstract contract StargateAdapter is IStargateReceiver {
             (address, uint8[], bytes[])
         );
         bool failed;
-        try
-            ICrossChainSwaps(payable(address(this))).swaps(steps, data)
-        {} catch (bytes memory) {
-            IERC20(_token).safeTransfer(to, amountLD);
-            failed = true;
-        }
         bool dustSent;
         if (address(this).balance > 0)
             (dustSent, ) = to.call{value: address(this).balance}("");

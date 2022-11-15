@@ -1,0 +1,680 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountIn",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountOutMin",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "from",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "stable",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct IXcalRouter.xcalRoute[]",
+          "name": "routes",
+          "type": "tuple[]"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "deadline",
+          "type": "uint256"
+        }
+      ],
+      "name": "swapExactTokensForTokens",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "amounts",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "swapExactTokensForTokens(uint256,uint256,(address,address,bool)[],address,uint256)": "f41766d8"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.15+commit.e14f2714\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMin\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"stable\",\"type\":\"bool\"}],\"internalType\":\"struct IXcalRouter.xcalRoute[]\",\"name\":\"routes\",\"type\":\"tuple[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactTokensForTokens\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/IXcalRouter.sol\":\"IXcalRouter\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":LayerZero/=lib/contracts/lib/LayerZero/contracts/\",\":chainlink/=lib/chainlink/\",\":contracts/=lib/contracts/contracts/\",\":create3-factory/=lib/create3-factory/src/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":fraxlend/=lib/fraxlend/\",\":joe-core/=lib/joe-core/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/\",\":pancake-smart-contracts/=lib/pancake-smart-contracts/\",\":pancake/=lib/pancake-smart-contracts/\",\":solmate/=lib/solmate/\",\":spookyswap-core/=lib/spookyswap-core/contracts/\",\":spookyswap/=lib/spookyswap-core/\",\":sushiswap/=lib/sushiswap/\",\":traderjoe/=lib/joe-core/\",\":uniswap/v3-core/=lib/v3-core/\",\":uniswap/v3-periphery/=lib/v3-periphery/\",\":utils/=lib/contracts/test/utils/\",\":v3-core/=lib/v3-core/\",\":v3-periphery/=lib/v3-periphery/contracts/\",\":velodrome/=lib/contracts/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34\",\"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr\"]},\"src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/ISwapFactory.sol\":{\"keccak256\":\"0x52e5f2b3738287b9cf0017046e59de2e0683f3689b9f5a84ead4b9dc4db1157e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9b54ad6ffee5643b00c13576745b46ed73f7e8a0fc1429eb3681cb658365be94\",\"dweb:/ipfs/Qmd44KFVVK3vjFPD6Qbi9PHuKdysg3T3aBiH4UKRJpHU5o\"]},\"src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/ISwapPair.sol\":{\"keccak256\":\"0xe4e8f78674013ab869a49cb2959c02e7065adff1c4113e983c7bcf085fb0df45\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://15e3885f26959b767ea7dd823c46e85d370260c3e57737afb2a577e6773147cc\",\"dweb:/ipfs/QmdvLkb1FVUAdBWV4RP2eUkEnDaVuM7Cqnc6BEAy4CgSno\"]},\"src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/IWETH.sol\":{\"keccak256\":\"0xe0381c51997ef5170b9472640e486fa7c3807e6424dc977381208de1a31a5fb4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e4c22a5afa58efaab23127293a097ed3abe42be951eaacfe625f004313715d7a\",\"dweb:/ipfs/QmNnfN2gYTw7DmrcmX9w1EtbeVCEEBeCeFgT23DAk5Qw5i\"]},\"src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/IXcalRouter.sol\":{\"keccak256\":\"0x6e6e286ec82e3e28827a6fc2454c999be439cd67d8e3d8316a0e91deec72dc78\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1a2896aaa9243b824b03dd53f56239f890d9a05fce6eaf9656c371167c347b21\",\"dweb:/ipfs/QmPQzqUsLgTUnyfHmdaTrucXq6Yj2JhZyvuyZxyDEv3PcX\"]},\"src/CrossChainSwaps/adapters/3xCalibur-Adapter/libraries/Math.sol\":{\"keccak256\":\"0x2b8ad68dffb80888285561c598f65eebbacbdc0666d965f9a6291cd31a48780c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5842ebb0c79911ff5b0693fc50e24841d556d87880f674638b82aac543783ebf\",\"dweb:/ipfs/QmXycX7FjqK6NKWQcn6ycF91ETgaqCKWVYawYMyNBMWJi8\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.15+commit.e14f2714"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "amountIn",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountOutMin",
+              "type": "uint256"
+            },
+            {
+              "internalType": "struct IXcalRouter.xcalRoute[]",
+              "name": "routes",
+              "type": "tuple[]",
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "from",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "to",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "stable",
+                  "type": "bool"
+                }
+              ]
+            },
+            {
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "deadline",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "swapExactTokensForTokens",
+          "outputs": [
+            {
+              "internalType": "uint256[]",
+              "name": "amounts",
+              "type": "uint256[]"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":LayerZero/=lib/contracts/lib/LayerZero/contracts/",
+        ":chainlink/=lib/chainlink/",
+        ":contracts/=lib/contracts/contracts/",
+        ":create3-factory/=lib/create3-factory/src/",
+        ":ds-test/=lib/forge-std/lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/",
+        ":fraxlend/=lib/fraxlend/",
+        ":joe-core/=lib/joe-core/",
+        ":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
+        ":openzeppelin/=lib/openzeppelin-contracts/",
+        ":pancake-smart-contracts/=lib/pancake-smart-contracts/",
+        ":pancake/=lib/pancake-smart-contracts/",
+        ":solmate/=lib/solmate/",
+        ":spookyswap-core/=lib/spookyswap-core/contracts/",
+        ":spookyswap/=lib/spookyswap-core/",
+        ":sushiswap/=lib/sushiswap/",
+        ":traderjoe/=lib/joe-core/",
+        ":uniswap/v3-core/=lib/v3-core/",
+        ":uniswap/v3-periphery/=lib/v3-periphery/",
+        ":utils/=lib/contracts/test/utils/",
+        ":v3-core/=lib/v3-core/",
+        ":v3-periphery/=lib/v3-periphery/contracts/",
+        ":velodrome/=lib/contracts/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/IXcalRouter.sol": "IXcalRouter"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
+        "keccak256": "0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b",
+        "urls": [
+          "bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34",
+          "dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
+        ],
+        "license": "MIT"
+      },
+      "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/ISwapFactory.sol": {
+        "keccak256": "0x52e5f2b3738287b9cf0017046e59de2e0683f3689b9f5a84ead4b9dc4db1157e",
+        "urls": [
+          "bzz-raw://9b54ad6ffee5643b00c13576745b46ed73f7e8a0fc1429eb3681cb658365be94",
+          "dweb:/ipfs/Qmd44KFVVK3vjFPD6Qbi9PHuKdysg3T3aBiH4UKRJpHU5o"
+        ],
+        "license": "MIT"
+      },
+      "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/ISwapPair.sol": {
+        "keccak256": "0xe4e8f78674013ab869a49cb2959c02e7065adff1c4113e983c7bcf085fb0df45",
+        "urls": [
+          "bzz-raw://15e3885f26959b767ea7dd823c46e85d370260c3e57737afb2a577e6773147cc",
+          "dweb:/ipfs/QmdvLkb1FVUAdBWV4RP2eUkEnDaVuM7Cqnc6BEAy4CgSno"
+        ],
+        "license": "MIT"
+      },
+      "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/IWETH.sol": {
+        "keccak256": "0xe0381c51997ef5170b9472640e486fa7c3807e6424dc977381208de1a31a5fb4",
+        "urls": [
+          "bzz-raw://e4c22a5afa58efaab23127293a097ed3abe42be951eaacfe625f004313715d7a",
+          "dweb:/ipfs/QmNnfN2gYTw7DmrcmX9w1EtbeVCEEBeCeFgT23DAk5Qw5i"
+        ],
+        "license": "MIT"
+      },
+      "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/IXcalRouter.sol": {
+        "keccak256": "0x6e6e286ec82e3e28827a6fc2454c999be439cd67d8e3d8316a0e91deec72dc78",
+        "urls": [
+          "bzz-raw://1a2896aaa9243b824b03dd53f56239f890d9a05fce6eaf9656c371167c347b21",
+          "dweb:/ipfs/QmPQzqUsLgTUnyfHmdaTrucXq6Yj2JhZyvuyZxyDEv3PcX"
+        ],
+        "license": "MIT"
+      },
+      "src/CrossChainSwaps/adapters/3xCalibur-Adapter/libraries/Math.sol": {
+        "keccak256": "0x2b8ad68dffb80888285561c598f65eebbacbdc0666d965f9a6291cd31a48780c",
+        "urls": [
+          "bzz-raw://5842ebb0c79911ff5b0693fc50e24841d556d87880f674638b82aac543783ebf",
+          "dweb:/ipfs/QmXycX7FjqK6NKWQcn6ycF91ETgaqCKWVYawYMyNBMWJi8"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/IXcalRouter.sol",
+    "id": 28505,
+    "exportedSymbols": {
+      "IERC20": [
+        24611
+      ],
+      "ISwapFactory": [
+        28267
+      ],
+      "ISwapPair": [
+        28455
+      ],
+      "IWETH": [
+        28471
+      ],
+      "IXcalRouter": [
+        28504
+      ],
+      "Math": [
+        28595
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "32:527:36",
+    "nodes": [
+      {
+        "id": 28473,
+        "nodeType": "PragmaDirective",
+        "src": "32:24:36",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".11"
+        ]
+      },
+      {
+        "id": 28474,
+        "nodeType": "ImportDirective",
+        "src": "58:28:36",
+        "nodes": [],
+        "absolutePath": "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/ISwapFactory.sol",
+        "file": "./ISwapFactory.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 28505,
+        "sourceUnit": 28268,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 28475,
+        "nodeType": "ImportDirective",
+        "src": "87:21:36",
+        "nodes": [],
+        "absolutePath": "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/IWETH.sol",
+        "file": "./IWETH.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 28505,
+        "sourceUnit": 28472,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 28476,
+        "nodeType": "ImportDirective",
+        "src": "109:55:36",
+        "nodes": [],
+        "absolutePath": "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "file": "openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 28505,
+        "sourceUnit": 24612,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 28477,
+        "nodeType": "ImportDirective",
+        "src": "165:31:36",
+        "nodes": [],
+        "absolutePath": "src/CrossChainSwaps/adapters/3xCalibur-Adapter/libraries/Math.sol",
+        "file": "../libraries/Math.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 28505,
+        "sourceUnit": 28596,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 28478,
+        "nodeType": "ImportDirective",
+        "src": "197:25:36",
+        "nodes": [],
+        "absolutePath": "src/CrossChainSwaps/adapters/3xCalibur-Adapter/interfaces/ISwapPair.sol",
+        "file": "./ISwapPair.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 28505,
+        "sourceUnit": 28456,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 28504,
+        "nodeType": "ContractDefinition",
+        "src": "224:335:36",
+        "nodes": [
+          {
+            "id": 28485,
+            "nodeType": "StructDefinition",
+            "src": "253:87:36",
+            "nodes": [],
+            "canonicalName": "IXcalRouter.xcalRoute",
+            "members": [
+              {
+                "constant": false,
+                "id": 28480,
+                "mutability": "mutable",
+                "name": "from",
+                "nameLocation": "288:4:36",
+                "nodeType": "VariableDeclaration",
+                "scope": 28485,
+                "src": "280:12:36",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 28479,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "280:7:36",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28482,
+                "mutability": "mutable",
+                "name": "to",
+                "nameLocation": "310:2:36",
+                "nodeType": "VariableDeclaration",
+                "scope": 28485,
+                "src": "302:10:36",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 28481,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "302:7:36",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28484,
+                "mutability": "mutable",
+                "name": "stable",
+                "nameLocation": "327:6:36",
+                "nodeType": "VariableDeclaration",
+                "scope": 28485,
+                "src": "322:11:36",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 28483,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "322:4:36",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "xcalRoute",
+            "nameLocation": "260:9:36",
+            "scope": 28504,
+            "visibility": "public"
+          },
+          {
+            "id": 28503,
+            "nodeType": "FunctionDefinition",
+            "src": "346:211:36",
+            "nodes": [],
+            "functionSelector": "f41766d8",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "swapExactTokensForTokens",
+            "nameLocation": "355:24:36",
+            "parameters": {
+              "id": 28498,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28487,
+                  "mutability": "mutable",
+                  "name": "amountIn",
+                  "nameLocation": "394:8:36",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28503,
+                  "src": "389:13:36",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28486,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "389:4:36",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28489,
+                  "mutability": "mutable",
+                  "name": "amountOutMin",
+                  "nameLocation": "417:12:36",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28503,
+                  "src": "412:17:36",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28488,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "412:4:36",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28493,
+                  "mutability": "mutable",
+                  "name": "routes",
+                  "nameLocation": "460:6:36",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28503,
+                  "src": "439:27:36",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_xcalRoute_$28485_calldata_ptr_$dyn_calldata_ptr",
+                    "typeString": "struct IXcalRouter.xcalRoute[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 28491,
+                      "nodeType": "UserDefinedTypeName",
+                      "pathNode": {
+                        "id": 28490,
+                        "name": "xcalRoute",
+                        "nodeType": "IdentifierPath",
+                        "referencedDeclaration": 28485,
+                        "src": "439:9:36"
+                      },
+                      "referencedDeclaration": 28485,
+                      "src": "439:9:36",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_xcalRoute_$28485_storage_ptr",
+                        "typeString": "struct IXcalRouter.xcalRoute"
+                      }
+                    },
+                    "id": 28492,
+                    "nodeType": "ArrayTypeName",
+                    "src": "439:11:36",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_xcalRoute_$28485_storage_$dyn_storage_ptr",
+                      "typeString": "struct IXcalRouter.xcalRoute[]"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28495,
+                  "mutability": "mutable",
+                  "name": "to",
+                  "nameLocation": "484:2:36",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28503,
+                  "src": "476:10:36",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 28494,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "476:7:36",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 28497,
+                  "mutability": "mutable",
+                  "name": "deadline",
+                  "nameLocation": "501:8:36",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28503,
+                  "src": "496:13:36",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 28496,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "496:4:36",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "379:136:36"
+            },
+            "returnParameters": {
+              "id": 28502,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28501,
+                  "mutability": "mutable",
+                  "name": "amounts",
+                  "nameLocation": "548:7:36",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28503,
+                  "src": "534:21:36",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
+                    "typeString": "uint256[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 28499,
+                      "name": "uint",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "534:4:36",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 28500,
+                    "nodeType": "ArrayTypeName",
+                    "src": "534:6:36",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                      "typeString": "uint256[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "533:23:36"
+            },
+            "scope": 28504,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IXcalRouter",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "linearizedBaseContracts": [
+          28504
+        ],
+        "name": "IXcalRouter",
+        "nameLocation": "234:11:36",
+        "scope": 28505,
+        "usedErrors": []
+      }
+    ],
+    "license": "MIT"
+  },
+  "id": 36
+}
