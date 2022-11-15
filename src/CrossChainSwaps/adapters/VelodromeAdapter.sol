@@ -23,9 +23,9 @@ abstract contract VelodromeAdapter is IRouter {
         bool stable;
     }
 
-    // address public constant veloFactory = 0x25CbdDb98b35ab1FF77413456B31EC81A6B6B746;
-    // IWETH public constant veloWETH = IWETH(0x4200000000000000000000000000000000000006);
-    // bytes32 constant veloPairCodeHash = 0xc1ac28b1c4ebe53c0cff67bab5878c4eb68759bb1e9f73977cd266b247d149f0;
+    address public constant veloFactory = 0x25CbdDb98b35ab1FF77413456B31EC81A6B6B746;
+    IWETH public constant veloWETH = IWETH(0x4200000000000000000000000000000000000006);
+    bytes32 constant veloPairCodeHash = 0xc1ac28b1c4ebe53c0cff67bab5878c4eb68759bb1e9f73977cd266b247d149f0;
     uint256 internal constant MINIMUM_LIQUIDITY = 10**3;
     address public constant veloRouter = address(0x9c12939390052919aF3155f41Bf4160Fd3666A6f);
 
@@ -54,21 +54,21 @@ abstract contract VelodromeAdapter is IRouter {
         address tokenB,
         bool stable
     ) public pure returns (address pair) {
-        // (address token0, address token1) = sortTokens(tokenA, tokenB);
-        // pair = address(
-        //     uint160(
-        //         uint256(
-        //             keccak256(
-        //                 abi.encodePacked(
-        //                     hex"ff",
-        //                     veloFactory,
-        //                     keccak256(abi.encodePacked(token0, token1, stable)),
-        //                     veloPairCodeHash // init code hash
-        //                 )
-        //             )
-        //         )
-        //     )
-        // );
+        (address token0, address token1) = sortTokens(tokenA, tokenB);
+        pair = address(
+            uint160(
+                uint256(
+                    keccak256(
+                        abi.encodePacked(
+                            hex"ff",
+                            veloFactory,
+                            keccak256(abi.encodePacked(token0, token1, stable)),
+                            veloPairCodeHash // init code hash
+                        )
+                    )
+                )
+            )
+        );
     }
 
     // performs chained getAmountOut calculations on any number of pairs
@@ -77,20 +77,20 @@ abstract contract VelodromeAdapter is IRouter {
         address tokenIn,
         address tokenOut
     ) external view returns (uint256 amount, bool stable) {
-        // address pair = pairFor(tokenIn, tokenOut, true);
-        // uint256 amountStable;
-        // uint256 amountVolatile;
-        // if (IPairFactory(veloFactory).isPair(pair)) {
-        //     amountStable = IPair(pair).getAmountOut(amountIn, tokenIn);
-        // }
-        // pair = pairFor(tokenIn, tokenOut, false);
-        // if (IPairFactory(veloFactory).isPair(pair)) {
-        //     amountVolatile = IPair(pair).getAmountOut(amountIn, tokenIn);
-        // }
-        // return
-        //     amountStable > amountVolatile
-        //         ? (amountStable, true)
-        //         : (amountVolatile, false);
+        address pair = pairFor(tokenIn, tokenOut, true);
+        uint256 amountStable;
+        uint256 amountVolatile;
+        if (IPairFactory(veloFactory).isPair(pair)) {
+            amountStable = IPair(pair).getAmountOut(amountIn, tokenIn);
+        }
+        pair = pairFor(tokenIn, tokenOut, false);
+        if (IPairFactory(veloFactory).isPair(pair)) {
+            amountVolatile = IPair(pair).getAmountOut(amountIn, tokenIn);
+        }
+        return
+            amountStable > amountVolatile
+                ? (amountStable, true)
+                : (amountVolatile, false);
     }
 
     // performs chained getAmountOut calculations on any number of pairs
@@ -99,26 +99,26 @@ abstract contract VelodromeAdapter is IRouter {
         view
         returns (uint256[] memory amounts)
     {
-        // require(routes.length >= 1, "Router: INVALID_PATH");
-        // amounts = new uint256[](routes.length + 1);
-        // amounts[0] = amountIn;
-        // for (uint256 i = 0; i < routes.length; i++) {
-        //     address pair = pairFor(
-        //         routes[i].from,
-        //         routes[i].to,
-        //         routes[i].stable
-        //     );
-        //     if (IPairFactory(veloFactory).isPair(pair)) {
-        //         amounts[i + 1] = IPair(pair).getAmountOut(
-        //             amounts[i],
-        //             routes[i].from
-        //         );
-        //     }
-        // }
+        require(routes.length >= 1, "Router: INVALID_PATH");
+        amounts = new uint256[](routes.length + 1);
+        amounts[0] = amountIn;
+        for (uint256 i = 0; i < routes.length; i++) {
+            address pair = pairFor(
+                routes[i].from,
+                routes[i].to,
+                routes[i].stable
+            );
+            if (IPairFactory(veloFactory).isPair(pair)) {
+                amounts[i + 1] = IPair(pair).getAmountOut(
+                    amounts[i],
+                    routes[i].from
+                );
+            }
+        }
     }
 
     function isPair(address pair) external view returns (bool) {
-        //return IPairFactory(veloFactory).isPair(pair);
+        return IPairFactory(veloFactory).isPair(pair);
     }
 
     // **** SWAP ****

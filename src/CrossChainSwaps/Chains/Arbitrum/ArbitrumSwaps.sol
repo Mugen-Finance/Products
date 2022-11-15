@@ -18,6 +18,12 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
 
     IWETH9 internal immutable weth;
 
+    struct SrcTransferParams {
+        address token;
+        address receiver;
+        uint256 amount;
+    }
+
     //Constants
 
     uint8 internal constant BATCH_DEPOSIT = 1;
@@ -25,11 +31,10 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
     uint8 internal constant UNI_SINGLE = 3;
     uint8 internal constant UNI_MULTI = 4;
     uint8 internal constant SUSHI_LEGACY = 5;
-    uint8 internal constant SUSHI_TRIDENT = 6;
-    uint8 internal constant XCAL = 7;
+    uint8 internal constant XCAL = 6;
+    uint8 internal constant WETH_WITHDRAW = 7;
     uint8 internal constant SRC_TRANSFER = 8;
-    uint8 internal constant WETH_WITHDRAW = 9;
-    uint8 internal constant STARGATE = 10;
+    uint8 internal constant STARGATE = 9;
 
     constructor(address _weth, ISwapRouter _swapRouter, address _factory, bytes32 _pairCodeHash, address _xcalFactory, IStargateRouter _stargateRouter) 
     UniswapAdapter(_swapRouter)
@@ -85,6 +90,38 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
                 for (uint256 j; j < params.length; j++) {
                     _swapExactTokensForTokens(params[j]);
                 }
+            } else if (step == XCAL) {
+                XcaliburParams[] memory params = abi.decode(data[i], (XcaliburParams[]));
+                for (uint256 j; j < params.length; j++) {
+                    IERC20(params[j].routes[0].from).safeIncreaseAllowance(address(xcalRouter), params[j].amountIn);
+                    swapExactTokensForTokens(params[j]);
+                }
+            } else if ( step == WETH_WITHDRAW) {
+                (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
+                amount = amount != 0 ? amount : IERC20(weth).balanceOf(address(this));
+                weth.withdrawTo(to, amount);
+            } else if (step == SRC_TRANSFER) {
+                SrcTransferParams[] memory params = abi.decode(data[i], (SrcTransferParams[]));
+                for (uint256 k; k < params.length; k++) {
+                    address token = params[k].token;
+                    uint256 amount = params[k].amount;
+                    amount = amount != 0
+                        ? amount
+                        : IERC20(token).balanceOf(address(this));
+                    address to = params[k].receiver;
+                    uint256 fee = calculateFee(amount);
+                    amount -= fee;
+                    IERC20(token).safeTransfer(feeCollector, fee);
+                    IERC20(token).safeTransfer(to, amount);
+                    emit FeePaid(token, fee);
+                }
+            } else if ( step == STARGATE ) {
+                (
+                    StargateParams memory params,
+                    uint8[] memory stepperions,
+                    bytes[] memory datass
+                ) = abi.decode(data[i], (StargateParams, uint8[], bytes[]));
+                stargateSwap(params, stepperions, datass);
             }
         }
     }
