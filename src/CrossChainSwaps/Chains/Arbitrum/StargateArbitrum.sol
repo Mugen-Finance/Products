@@ -8,7 +8,7 @@ import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IArbitrumSwaps} from "./interfaces/IArbitrumSwaps.sol";
 
-abstract contract StargateAdapter is IStargateReceiver {
+abstract contract StargateArbitrum is IStargateReceiver {
     using SafeERC20 for IERC20;
 
     /*//////////////////////////////////////////////////////////////

@@ -8,8 +8,9 @@ import {IWETH9} from "../../interfaces/IWETH9.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IEthereumSwaps} from "./interfaces/IEthereumSwaps.sol";
+import "./StargateEthereum.sol";
 
-contract EthereumSwaps is UniswapAdapter, SushiLegacyAdapter, IEthereumSwaps {
+contract EthereumSwaps is UniswapAdapter, SushiLegacyAdapter, StargateEthereum, IEthereumSwaps {
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
@@ -29,9 +30,10 @@ contract EthereumSwaps is UniswapAdapter, SushiLegacyAdapter, IEthereumSwaps {
     uint8 internal constant WETH_WITHDRAW = 8;
     uint8 internal constant STARGATE = 9;
 
-    constructor(IWETH9 _weth, ISwapRouter _swapRouter, address _factory, bytes32 _pairCodeHash) 
+    constructor(IWETH9 _weth, ISwapRouter _swapRouter, address _factory, bytes32 _pairCodeHash, IStargateRouter _stargateRouter) 
     UniswapAdapter(_swapRouter) 
     SushiLegacyAdapter(_factory, _pairCodeHash) 
+    StargateEthereum(_stargateRouter)
     {
         weth = _weth;
     }

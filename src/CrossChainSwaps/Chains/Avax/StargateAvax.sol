@@ -6,9 +6,9 @@ import {IStargateReceiver} from "../../interfaces/IStargateReceiver.sol";
 import {IStargateRouter} from "../../interfaces/IStargateRouter.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import {IEthereumSwaps} from "./interfaces/IEthereumSwaps.sol";
+import {IAvaxSwaps} from "./interfaces/IAvaxSwaps.sol";
 
-abstract contract StargateEthereum is IStargateReceiver {
+abstract contract StargateAvax is IStargateReceiver {
     using SafeERC20 for IERC20;
 
     /*//////////////////////////////////////////////////////////////
@@ -128,7 +128,7 @@ abstract contract StargateEthereum is IStargateReceiver {
         bool failed;
 
         try
-            IEthereumSwaps(payable(address(this))).ethereumSwaps{gas: 200000}(
+            IAvaxSwaps(payable(address(this))).avaxSwaps{gas: 200000}(
                 steps,
                 data
             )

@@ -5,12 +5,13 @@ pragma solidity ^0.8.13;
 import "../../adapters/UniswapAdapter.sol";
 import "../../adapters/SushiAdapter.sol";
 import "../../adapters/XCaliburAdapter.sol";
+import "./StargateArbitrum.sol";
 import {IWETH9} from "../../interfaces/IWETH9.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IArbitrumSwaps} from "./interfaces/IArbitrumSwaps.sol";
 
-contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, IArbitrumSwaps {
+contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, StargateArbitrum, IArbitrumSwaps {
 
     IWETH9 internal immutable weth;
 
@@ -27,10 +28,11 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, IArbitrumSwaps {
     uint8 internal constant WETH_WITHDRAW = 9;
     uint8 internal constant STARGATE = 10;
 
-    constructor(IWETH9 _weth, ISwapRouter _swapRouter, address _factory, bytes32 _pairCodeHash, address _factory) 
+    constructor(IWETH9 _weth, ISwapRouter _swapRouter, address _factory, bytes32 _pairCodeHash, address _factory, IStargateRouter _stargateRouter) 
     UniswapAdapter(_swapRouter)
     SushiLegacyAdapter(_factory, _pairCodeHash) 
     XCaliburAdapter(_factory, _weth)
+    StargateArbitrum(_stargateRouter)
     {
         weth = _weth;
     }
