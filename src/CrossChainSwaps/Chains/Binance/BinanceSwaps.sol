@@ -8,7 +8,6 @@ import {IBinanceSwaps} from "./interfaces/IBinanceSwaps.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IWETH9} from "../../interfaces/IWETH9.sol";
-import {IJoeRouter02} from "traderjoe/contracts/traderjoe/interfaces/IJoeRouter02.sol";
 import "./StargateBinance.sol";
 
 contract PolygonSwaps is SushiLegacyAdapter, StargateBinance, IBinanceSwaps  {
