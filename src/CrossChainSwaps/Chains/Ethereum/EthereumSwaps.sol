@@ -14,9 +14,18 @@ contract EthereumSwaps is UniswapAdapter, SushiLegacyAdapter, StargateEthereum, 
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
+    error WithdrawFailed();
+
+    event SuccessfulWithdraw(bool success);
 
     IWETH9 internal immutable weth;
+    address public immutable feeCollector;
 
+    struct SrcTransferParams {
+        address token;
+        address receiver;
+        uint256 amount;
+    }
 
     //Constants
 
@@ -25,17 +34,17 @@ contract EthereumSwaps is UniswapAdapter, SushiLegacyAdapter, StargateEthereum, 
     uint8 internal constant UNI_SINGLE = 3;
     uint8 internal constant UNI_MULTI = 4;
     uint8 internal constant SUSHI_LEGACY = 5;
-    uint8 internal constant SUSHI_TRIDENT = 6;
-    uint8 internal constant SRC_TRANSFER = 7;
-    uint8 internal constant WETH_WITHDRAW = 8;
-    uint8 internal constant STARGATE = 9;
+    uint8 internal constant SRC_TRANSFER = 11;
+    uint8 internal constant WETH_WITHDRAW = 12;
+    uint8 internal constant STARGATE = 13;
 
-    constructor(IWETH9 _weth, ISwapRouter _swapRouter, address _factory, bytes32 _pairCodeHash, IStargateRouter _stargateRouter) 
+    constructor(IWETH9 _weth, address _feeCollector, ISwapRouter _swapRouter, address _factory, bytes32 _pairCodeHash, IStargateRouter _stargateRouter) 
     UniswapAdapter(_swapRouter) 
     SushiLegacyAdapter(_factory, _pairCodeHash) 
     StargateEthereum(_stargateRouter)
     {
         weth = _weth;
+        feeCollector = _feeCollector;
     }
 
     function ethereumSwaps(uint8[] calldata steps, bytes[] calldata data) external payable {
@@ -83,6 +92,39 @@ contract EthereumSwaps is UniswapAdapter, SushiLegacyAdapter, StargateEthereum, 
                 for (uint256 j; j < params.length; j++) {
                     _swapExactTokensForTokens(params[j]);
                 }
+            } else if (step == SRC_TRANSFER) {
+                SrcTransferParams[] memory params = abi.decode(
+                    data[i],
+                    (SrcTransferParams[])
+                );
+
+                for (uint256 k; k < params.length; k++) {
+                    address token = params[k].token;
+                    uint256 amount = params[k].amount;
+                    amount = amount != 0
+                        ? amount
+                        : IERC20(token).balanceOf(address(this));
+                    address to = params[k].receiver;
+                    uint256 fee = calculateFee(amount);
+                    amount -= fee;
+                    IERC20(token).safeTransfer(feeCollector, fee);
+                    IERC20(token).safeTransfer(to, amount);
+                    emit FeePaid(token, fee);
+                }
+               } else if (step == WETH_WITHDRAW ) {
+                (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
+                amount = amount != 0 ? amount : IERC20(weth).balanceOf(address(this));
+                weth.withdraw(amount);
+                (bool success, ) = to.call{value: amount}("");
+                if(!success) revert WithdrawFailed();
+                emit SuccessfulWithdraw(success);
+            } else if (step == STARGATE) {
+                (
+                    StargateParams memory params,
+                    uint8[] memory stepperions,
+                    bytes[] memory datass
+                ) = abi.decode(data[i], (StargateParams, uint8[], bytes[]));
+                stargateSwap(params, stepperions, datass);
             }
         }
     }

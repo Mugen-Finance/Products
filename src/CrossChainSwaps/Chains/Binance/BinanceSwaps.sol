@@ -14,9 +14,13 @@ contract PolygonSwaps is SushiLegacyAdapter, StargateBinance, IBinanceSwaps  {
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
+    error WithdrawFailed();
+
+    event SuccessfulWithdraw(bool success);
 
     IWETH9 internal immutable weth;
     IPancakeRouter02 internal immutable pancakeRouter;
+    address public immutable feeCollector;
 
     struct SrcTransferParams {
         address token;
@@ -38,14 +42,16 @@ contract PolygonSwaps is SushiLegacyAdapter, StargateBinance, IBinanceSwaps  {
     uint8 internal constant SUSHI_LEGACY = 5;
     uint8 internal constant PANCAKE_SWAP = 7;
     uint8 internal constant SRC_TRANSFER = 11; // Done after all swaps are completed to ease accounting
-    uint8 internal constant STARGATE = 12;
+    uint8 internal constant WETH_WITHDRAW = 12;
+    uint8 internal constant STARGATE = 13;
 
-    constructor(IWETH9 _weth, address _factory, bytes32 _pairCodeHash, IStargateRouter _stargateRouter, IPancakeRouter02 _pancakeRouter) 
+    constructor(IWETH9 _weth, address _feeCollector, address _factory, bytes32 _pairCodeHash, IStargateRouter _stargateRouter, IPancakeRouter02 _pancakeRouter) 
     SushiLegacyAdapter(_factory, _pairCodeHash) 
     StargateBinance(_stargateRouter) 
     {
         weth = _weth;
         pancakeRouter = _pancakeRouter;
+        feeCollector = _feeCollector;
     }
 
     function binanceSwaps(uint8[] calldata steps, bytes[] calldata data) external payable {
@@ -112,6 +118,13 @@ contract PolygonSwaps is SushiLegacyAdapter, StargateBinance, IBinanceSwaps  {
                     IERC20(token).safeTransfer(to, amount);
                     emit FeePaid(token, fee);
                 }
+               } else if (step == WETH_WITHDRAW ) {
+                (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
+                amount = amount != 0 ? amount : IERC20(weth).balanceOf(address(this));
+                weth.withdraw(amount);
+                (bool success, ) = to.call{value: amount}("");
+                if(!success) revert WithdrawFailed();
+                emit SuccessfulWithdraw(success);
             } else if (step == STARGATE) {
                 (
                     StargateParams memory params,

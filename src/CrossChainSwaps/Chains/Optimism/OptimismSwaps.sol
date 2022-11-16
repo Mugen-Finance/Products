@@ -15,8 +15,12 @@ contract AvaxSwaps is UniswapAdapter, SushiLegacyAdapter, VelodromeAdapter, Star
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
+    error WithdrawFailed();
+
+    event SuccessfulWithdraw(bool success);
 
     IWETH9 internal immutable weth;
+    address public immutable feeCollector;
 
     struct SrcTransferParams {
         address token;
@@ -32,17 +36,19 @@ contract AvaxSwaps is UniswapAdapter, SushiLegacyAdapter, VelodromeAdapter, Star
     uint8 internal constant UNISWAP_INPUT_MULTI = 4;
     uint8 internal constant SUSHI_LEGACY = 5;
     uint8 internal constant VELODROME = 9;
-    uint8 internal constant SRC_TRANSFER = 11; // Done after all swaps are completed to ease accounting
-    uint8 internal constant STARGATE = 12;
+    uint8 internal constant SRC_TRANSFER = 11;
+    uint8 internal constant WETH_WITHDRAW = 12;
+    uint8 internal constant STARGATE = 13;
 
 
-    constructor(IWETH9 _weth, ISwapRouter _swapRouter, address _factory, bytes32 _pairCodeHash, IStargateRouter _stargateRouter) 
+    constructor(IWETH9 _weth, address _feeCollector, ISwapRouter _swapRouter, address _factory, bytes32 _pairCodeHash, IStargateRouter _stargateRouter) 
     UniswapAdapter(_swapRouter) 
     SushiLegacyAdapter(_factory, _pairCodeHash) 
     VelodromeAdapter() 
     StargateOptimism(_stargateRouter)
     {
         weth = _weth;
+        feeCollector = _feeCollector;
     }
 
     function optimismSwaps(uint8[] calldata steps, bytes[] calldata data) external payable {
@@ -121,7 +127,14 @@ contract AvaxSwaps is UniswapAdapter, SushiLegacyAdapter, VelodromeAdapter, Star
                     IERC20(token).safeTransfer(to, amount);
                     emit FeePaid(token, fee);
                 }
-            } else if (step == STARGATE) {
+            }  else if (step == WETH_WITHDRAW ) {
+                (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
+                amount = amount != 0 ? amount : IERC20(weth).balanceOf(address(this));
+                weth.withdraw(amount);
+                (bool success, ) = to.call{value: amount}("");
+                if(!success) revert WithdrawFailed();
+                emit SuccessfulWithdraw(success);
+                } else if (step == STARGATE) {
                 (
                     StargateParams memory params,
                     uint8[] memory stepperions,

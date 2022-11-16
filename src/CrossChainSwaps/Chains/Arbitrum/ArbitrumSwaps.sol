@@ -15,8 +15,11 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
+    error WithdrawFailed();
 
     IWETH9 internal immutable weth;
+
+    address public feeCollector;
 
     struct SrcTransferParams {
         address token;
@@ -36,13 +39,14 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
     uint8 internal constant SRC_TRANSFER = 8;
     uint8 internal constant STARGATE = 9;
 
-    constructor(address _weth, ISwapRouter _swapRouter, address _factory, bytes32 _pairCodeHash, address _xcalFactory, IStargateRouter _stargateRouter) 
+    constructor(address _weth, ISwapRouter _swapRouter, address _feeCollector, address _factory, bytes32 _pairCodeHash, address _xcalFactory, IStargateRouter _stargateRouter) 
     UniswapAdapter(_swapRouter)
     SushiLegacyAdapter(_factory, _pairCodeHash) 
     XCaliburAdapter(_xcalFactory, _weth)
     StargateArbitrum(_stargateRouter)
     {
         weth = IWETH9(_weth);
+        feeCollector = _feeCollector;
     }
 
     function arbitrumSwaps(uint8[] calldata steps, bytes[] calldata data) external payable {
@@ -99,7 +103,9 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
             } else if ( step == WETH_WITHDRAW) {
                 (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
                 amount = amount != 0 ? amount : IERC20(weth).balanceOf(address(this));
-                weth.withdrawTo(to, amount);
+                weth.withdraw(amount);
+                (bool success , ) = to.call{value: amount}("");
+                if(!success) revert WithdrawFailed();
             } else if (step == SRC_TRANSFER) {
                 SrcTransferParams[] memory params = abi.decode(data[i], (SrcTransferParams[]));
                 for (uint256 k; k < params.length; k++) {

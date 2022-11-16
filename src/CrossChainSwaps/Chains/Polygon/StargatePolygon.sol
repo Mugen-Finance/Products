@@ -18,9 +18,6 @@ abstract contract StargatePolygon is IStargateReceiver {
     ///@notice address of the stargate router
     IStargateRouter public immutable stargateRouter;
 
-    ///@notice address of the wallet to collect fees
-    address public immutable feeCollector;
-
     /*//////////////////////////////////////////////////////////////
                                EVENTS
     //////////////////////////////////////////////////////////////*/
@@ -42,7 +39,6 @@ abstract contract StargatePolygon is IStargateReceiver {
 
     constructor(IStargateRouter _stargateRouter) {
         stargateRouter = _stargateRouter;
-        feeCollector = msg.sender;
     }
 
     ///@notice struct to define parameters needed for the swap.

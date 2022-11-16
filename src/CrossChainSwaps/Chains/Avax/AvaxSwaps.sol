@@ -14,9 +14,12 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
+    error WithdrawFailed();
 
     IWETH9 internal immutable weth;
     IJoeRouter02 internal immutable joeRouter;
+
+    address public immutable feeCollector;
 
     struct SrcTransferParams {
         address token;
@@ -41,9 +44,10 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
     uint8 internal constant STARGATE = 9;
     uint8 internal constant TRADER_JOE = 10;
 
-    constructor(IWETH9 _weth, address _joeRouter, address _factory, bytes32 _pairCodeHash, IStargateRouter _stargateRouter) SushiLegacyAdapter(_factory, _pairCodeHash) StargateAvax(_stargateRouter) {
+    constructor(IWETH9 _weth, address _joeRouter, address _feeCollector, address _factory, bytes32 _pairCodeHash, IStargateRouter _stargateRouter) SushiLegacyAdapter(_factory, _pairCodeHash) StargateAvax(_stargateRouter) {
         weth = _weth;
         joeRouter = IJoeRouter02(_joeRouter);
+        feeCollector = _feeCollector;
     }
 
     function avaxSwaps(uint8[] calldata steps, bytes[] calldata data) external payable {
@@ -76,7 +80,9 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
             }  else if ( step == WETH_WITHDRAW) {
                 (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
                 amount = amount != 0 ? amount : IERC20(weth).balanceOf(address(this));
-                weth.withdrawTo(to, amount);
+                weth.withdraw(amount);
+                (bool success , ) = to.call{value: amount}("");
+                if(!success) revert WithdrawFailed();
             } else if (step == SRC_TRANSFER) {
                 SrcTransferParams[] memory params = abi.decode(data[i], (SrcTransferParams[]));
                 for (uint256 k; k < params.length; k++) {

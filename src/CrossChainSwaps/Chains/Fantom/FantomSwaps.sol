@@ -14,8 +14,12 @@ contract PolygonSwaps is SushiLegacyAdapter, StargateFantom, IFantomSwaps  {
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
+    error WithdrawFailed();
+
+    event SuccessfulWithdraw(bool success);
 
     IWETH9 internal immutable weth;
+    address public immutable feeCollector;
     IUniswapV2Router02 internal immutable spookyRouter;
 
     struct SrcTransferParams {
@@ -38,14 +42,16 @@ contract PolygonSwaps is SushiLegacyAdapter, StargateFantom, IFantomSwaps  {
     uint8 internal constant SUSHI_LEGACY = 5;
     uint8 internal constant SPOOKY_SWAP = 8;
     uint8 internal constant SRC_TRANSFER = 11; // Done after all swaps are completed to ease accounting
-    uint8 internal constant STARGATE = 12;
+    uint8 internal constant WETH_WITHDRAW = 12;
+    uint8 internal constant STARGATE = 13;
 
-    constructor(IWETH9 _weth, address _spookyRouter, address _factory, bytes32 _pairCodeHash, IStargateRouter _stargateRouter) 
+    constructor(IWETH9 _weth, address _feeCollector, address _spookyRouter, address _factory, bytes32 _pairCodeHash, IStargateRouter _stargateRouter) 
    
     SushiLegacyAdapter(_factory, _pairCodeHash) 
     StargateFantom(_stargateRouter) 
     {
         weth = _weth;
+        feeCollector = _feeCollector;
         spookyRouter = IUniswapV2Router02(_spookyRouter);
     }
 
@@ -113,6 +119,13 @@ contract PolygonSwaps is SushiLegacyAdapter, StargateFantom, IFantomSwaps  {
                     IERC20(token).safeTransfer(to, amount);
                     emit FeePaid(token, fee);
                 }
+            } else if (step == WETH_WITHDRAW ) {
+                (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
+                amount = amount != 0 ? amount : IERC20(weth).balanceOf(address(this));
+                weth.withdraw(amount);
+                (bool success, ) = to.call{value: amount}("");
+                if(!success) revert WithdrawFailed();
+                emit SuccessfulWithdraw(success);
             } else if (step == STARGATE) {
                 (
                     StargateParams memory params,
