@@ -67,7 +67,7 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
             } else if (step == WETH_DEPOSIT) {
                 uint256 _amount = abi.decode(data[i], (uint256));
                 if (_amount <= 0) revert MoreThanZero();
-                IWETH9(weth).deposit{value: _amount}();
+                weth.deposit{value: _amount}();
             } else if (step == UNI_SINGLE) {
                 UniswapV3Single[] memory params = abi.decode(
                     data[i],
@@ -97,7 +97,7 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
             } else if (step == XCAL) {
                 XcaliburParams[] memory params = abi.decode(data[i], (XcaliburParams[]));
                 for (uint256 j; j < params.length; j++) {
-                    IERC20(params[j].routes[0].from).safeIncreaseAllowance(address(xcalRouter), params[j].amountIn);
+                    IERC20(params[j].routes[0].from).approve(address(xcalRouter), params[j].amountIn);
                     swapExactTokensForTokens(params[j]);
                 }
             } else if ( step == WETH_WITHDRAW) {

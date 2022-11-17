@@ -8,8 +8,10 @@ import "3xcaliswap/contracts/periphery/interfaces/IWETH.sol";
 import "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "3xcaliswap/contracts/periphery/libraries/Math.sol";
 import "3xcaliswap/contracts/core/interfaces/ISwapPair.sol";
+import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 abstract contract XCaliburAdapter is IRouter {
+    using SafeERC20 for IERC20;
 
     struct XcaliburParams {
         uint256 amountIn;
@@ -18,11 +20,17 @@ abstract contract XCaliburAdapter is IRouter {
         uint256 deadline;
     }
 
+    struct route {
+        address from;
+        address to;
+        bool stable;
+    }
+
     address public immutable xcalFactory;
     IWETH public immutable xcalWeth;
     uint internal constant MINIMUM_LIQUIDITY = 10**3;
     bytes32 immutable xcalPairCodeHash;
-    IRouter internal xcalRouter;
+    address internal constant xcalRouter = address(0x8e72bf5A45F800E182362bDF906DFB13d5D5cb5d);
 
     modifier ensure(uint deadline) {
         require(deadline >= block.timestamp, 'BaseV1Router: EXPIRED');
@@ -49,12 +57,20 @@ abstract contract XCaliburAdapter is IRouter {
     // calculates the CREATE2 address for a pair without making any external calls
     function pairFor(address tokenA, address tokenB, bool stable) public view returns (address pair) {
         (address token0, address token1) = sortTokens(tokenA, tokenB);
-        pair = address(uint160(uint256(keccak256(abi.encodePacked(
-            hex'ff',
-            xcalFactory,
-            keccak256(abi.encodePacked(token0, token1, stable)),
-            xcalPairCodeHash // init code hash
-        )))));
+        pair = address(
+            uint160(
+                uint256(
+                    keccak256(
+                        abi.encodePacked(
+                            hex'ff',
+                            xcalFactory,
+                            keccak256(abi.encodePacked(token0, token1, stable)),
+                            xcalPairCodeHash // init code hash
+                            )
+                        )
+                    )
+                )
+            );
     }
 
     // performs chained getAmountOut calculations on any number of pairs
@@ -108,8 +124,8 @@ abstract contract XCaliburAdapter is IRouter {
     ) internal ensure(params.deadline) returns (uint[] memory amounts) {
         amounts = getAmountsOut(params.amountIn, params.routes);
         require(amounts[amounts.length - 1] >= params.amountOutMin, 'BaseV1Router: INSUFFICIENT_OUTPUT_AMOUNT');
-        _safeTransferFrom(
-            params.routes[0].from, msg.sender, pairFor(params.routes[0].from, params.routes[0].to, params.routes[0].stable), amounts[0]
+        _safeTransfer(
+            params.routes[0].from, pairFor(params.routes[0].from, params.routes[0].to, params.routes[0].stable), amounts[0]
         );
         _swap(amounts, params.routes, address(this));
     }
