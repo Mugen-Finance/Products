@@ -16,25 +16,23 @@ contract FeeCollectorTest is Test {
     }
 
     function testEthWithdraw(address addr) public {
-        (bool success, ) = address(feeCollector).call{value: 10 ether}("");
+        (bool success,) = address(feeCollector).call{value: 10 ether}("");
         success;
         vm.assume(addr != address(this) && addr != address(0));
-        
+
         vm.prank(addr);
         vm.expectRevert();
         feeCollector.withdrawNative();
         assertEq(address(feeCollector).balance, 10 ether);
 
-
         feeCollector.withdrawNative();
         assertEq(address(feeCollector).balance, 0);
-       
-    } 
+    }
 
     function testERC20Withdraw(address addr) public {
         IERC20(mock).transfer(address(feeCollector), 1e30);
         vm.assume(addr != address(this) && addr != address(0));
-        
+
         vm.prank(addr);
         vm.expectRevert();
         feeCollector.withdraw(mock);
@@ -45,5 +43,6 @@ contract FeeCollectorTest is Test {
         assertEq(IERC20(mock).balanceOf(address(this)), 1e40);
         assertEq(feeCollector.owner(), address(this));
     }
+
     receive() external payable {}
 }

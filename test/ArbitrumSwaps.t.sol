@@ -52,7 +52,7 @@ contract ArbitrumSwapsTest is Test {
         uint256[] memory amounts = new uint256[](2);
         amounts[0] = 1e7;
         amounts[1] = 5e18;
-        
+
         uint8[] memory steps = new uint8[](1);
         steps[0] = 1;
         bytes[] memory data = new bytes[](1);
@@ -77,7 +77,7 @@ contract ArbitrumSwapsTest is Test {
         UniswapAdapter.UniswapV3Single[] memory params = new UniswapAdapter.UniswapV3Single[](2);
         params[0] = UniswapAdapter.UniswapV3Single(1e7, 0, usdc, weth, 500);
         params[1] = UniswapAdapter.UniswapV3Single(5e18, 0, gmx, weth, 3000);
-        
+
         uint8[] memory steps = new uint8[](2);
         steps[0] = 1;
         steps[1] = 3;
@@ -103,7 +103,7 @@ contract ArbitrumSwapsTest is Test {
         UniswapAdapter.UniswapV3Multi[] memory params = new UniswapAdapter.UniswapV3Multi[](2);
         params[0] = UniswapAdapter.UniswapV3Multi(1e7, 0, usdc, weth, dai, 500, 500);
         params[1] = UniswapAdapter.UniswapV3Multi(5e18, 0, gmx, weth, dai, 3000, 500);
-        
+
         uint8[] memory steps = new uint8[](2);
         steps[0] = 1;
         steps[1] = 4;
@@ -134,7 +134,7 @@ contract ArbitrumSwapsTest is Test {
 
         arbitrumSwaps.arbitrumSwaps{value: 11 ether}(steps, data);
         //assertGt(IERC20(weth).balanceOf(address(arbitrumSwaps)), 0);
-        assertGt(IERC20(xcal).balanceOf(address(arbitrumSwaps)),0);
+        assertGt(IERC20(xcal).balanceOf(address(arbitrumSwaps)), 0);
         emit log_uint(IERC20(xcal).balanceOf(address(arbitrumSwaps)));
     }
 

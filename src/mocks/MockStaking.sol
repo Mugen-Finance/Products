@@ -53,15 +53,8 @@ contract MockStaking is ReentrancyGuard, Ownable, Pausable {
     event RewardPaid(address indexed user, uint256 reward);
     event RewardsDurationUpdated(uint256 newDuration);
     event Recovered(address token, uint256 amount);
-    event YieldDistributorSet(
-        address indexed caller,
-        address indexed _yieldDistributor
-    );
-    event Compounded(
-        address indexed _caller,
-        uint256 _wethClaimed,
-        uint256 _mgnCompounded
-    );
+    event YieldDistributorSet(address indexed caller, address indexed _yieldDistributor);
+    event Compounded(address indexed _caller, uint256 _wethClaimed, uint256 _mgnCompounded);
     event FeeSet(address indexed _caller, uint24 _fee);
 
     /*///////////////////////////////////////////////////////////////
@@ -96,11 +89,7 @@ contract MockStaking is ReentrancyGuard, Ownable, Pausable {
 
     ///@param _rewards amount of yield generated to deposit
 
-    function issuanceRate(uint256 _rewards)
-        public
-        nonReentrant
-        updateReward(address(0))
-    {
+    function issuanceRate(uint256 _rewards) public nonReentrant updateReward(address(0)) {
         if (msg.sender != yieldDistributor) {
             revert NotYield();
         }
@@ -118,11 +107,7 @@ contract MockStaking is ReentrancyGuard, Ownable, Pausable {
         // This keeps the reward rate in the right range, preventing overflows due to
         // very high values of rewardRate in the earned and rewardsPerToken functions;
         // Reward + leftover must be less than 2^256 / 10^18 to avoid overflow.
-        IERC20(rewardsToken).safeTransferFrom(
-            msg.sender,
-            address(this),
-            _rewards
-        );
+        IERC20(rewardsToken).safeTransferFrom(msg.sender, address(this), _rewards);
 
         lastUpdateTime = block.timestamp;
         periodFinish = block.timestamp + rewardsDuration;
@@ -139,17 +124,11 @@ contract MockStaking is ReentrancyGuard, Ownable, Pausable {
             return rewardPerTokenStored;
         }
         return
-            rewardPerTokenStored +
-            (((lastTimeRewardApplicable() - lastUpdateTime) *
-                rewardRate *
-                1e18) / _totalSupply);
+            rewardPerTokenStored + (((lastTimeRewardApplicable() - lastUpdateTime) * rewardRate * 1e18) / _totalSupply);
     }
 
     function earned(address account) public view returns (uint256) {
-        return
-            ((_balances[account] *
-                (rewardPerToken() - userRewardPerTokenPaid[account])) / 1e18) +
-            rewards[account];
+        return ((_balances[account] * (rewardPerToken() - userRewardPerTokenPaid[account])) / 1e18) + rewards[account];
     }
 
     function getRewardForDuration() external view returns (uint256) {
@@ -160,12 +139,7 @@ contract MockStaking is ReentrancyGuard, Ownable, Pausable {
                         User Functions 
     //////////////////////////////////////////////////////////////*/
 
-    function stake(uint256 amount)
-        public
-        nonReentrant
-        whenNotPaused
-        updateReward(msg.sender)
-    {
+    function stake(uint256 amount) public nonReentrant whenNotPaused updateReward(msg.sender) {
         require(amount > 0, "Cannot stake 0");
         _totalSupply += amount;
         _balances[msg.sender] = _balances[msg.sender] + amount;
@@ -173,11 +147,7 @@ contract MockStaking is ReentrancyGuard, Ownable, Pausable {
         emit Staked(msg.sender, amount);
     }
 
-    function withdraw(uint256 amount)
-        public
-        nonReentrant
-        updateReward(msg.sender)
-    {
+    function withdraw(uint256 amount) public nonReentrant updateReward(msg.sender) {
         require(amount > 0, "Cannot withdraw 0");
         _totalSupply = _totalSupply - amount;
         _balances[msg.sender] = _balances[msg.sender] - amount;
@@ -187,32 +157,21 @@ contract MockStaking is ReentrancyGuard, Ownable, Pausable {
 
     ///@notice claims fees, swaps them for Mugen, and stakes that Mugen
 
-    function compound(uint256 amount)
-        external
-        updateReward(msg.sender)
-        returns (uint256)
-    {
+    function compound(uint256 amount) external updateReward(msg.sender) returns (uint256) {
         uint256 claimed = getReward();
         compoundedStake(claimed, msg.sender);
         emit Compounded(msg.sender, claimed, claimed);
         return claimed;
     }
 
-    function compoundedStake(uint256 _amount, address _account)
-        internal
-        nonReentrant
-    {
+    function compoundedStake(uint256 _amount, address _account) internal nonReentrant {
         require(_amount > 0, "Cannot stake 0");
         _totalSupply += _amount;
         _balances[_account] = _balances[_account] + _amount;
         emit Staked(_account, _amount);
     }
 
-    function compoundClaim(address account)
-        internal
-        nonReentrant
-        returns (uint256)
-    {
+    function compoundClaim(address account) internal nonReentrant returns (uint256) {
         uint256 reward = rewards[account];
         if (reward > 0) {
             rewards[account] = 0;
@@ -221,12 +180,7 @@ contract MockStaking is ReentrancyGuard, Ownable, Pausable {
         return reward;
     }
 
-    function getReward()
-        public
-        nonReentrant
-        updateReward(msg.sender)
-        returns (uint256)
-    {
+    function getReward() public nonReentrant updateReward(msg.sender) returns (uint256) {
         uint256 reward = rewards[msg.sender];
         if (reward > 0) {
             rewards[msg.sender] = 0;

@@ -2,8 +2,6 @@
 
 pragma solidity ^0.8.13;
 
-
-
-interface IFantomSwaps  {
+interface IFantomSwaps {
     function fantomSwaps(uint8[] calldata, bytes[] calldata) external payable;
 }

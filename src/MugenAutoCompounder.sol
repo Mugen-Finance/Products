@@ -14,20 +14,16 @@ contract MugenAutoCompounder is ERC4626 {
 
     address public constant MGN = 0xFc77b86F3ADe71793E1EEc1E7944DB074922856e;
     address public constant WETH = 0x82aF49447D8a07e3bd95BD0d56f35241523fBab1;
-    IStake public constant stake =
-        IStake(0x25B9f82D1F1549F97b86bd0873738E30f23D15ea);
+    IStake public constant stake = IStake(0x25B9f82D1F1549F97b86bd0873738E30f23D15ea);
 
     address public immutable pool;
 
     event Staked(uint256 stakedAmount);
 
-    constructor(
-        IERC20 asset,
-        string memory name,
-        string memory symbol,
-        address _factory,
-        uint24 _fee
-    ) ERC4626(asset) ERC20(name, symbol) {
+    constructor(IERC20 asset, string memory name, string memory symbol, address _factory, uint24 _fee)
+        ERC4626(asset)
+        ERC20(name, symbol)
+    {
         address _pool = IUniswapV3Factory(_factory).getPool(MGN, WETH, _fee);
         require(_pool != address(0), "Pool does not exist");
         pool = _pool;
@@ -55,16 +51,11 @@ contract MugenAutoCompounder is ERC4626 {
     //oracle functions
     function estimateAmoutOut() public view returns (uint256 amountOut) {
         uint128 amountIn = uint128(stake.earned(address(this)));
-        (int24 tick, ) = OracleLibrary.consult(pool, 180 seconds);
+        (int24 tick,) = OracleLibrary.consult(pool, 180 seconds);
         amountOut = OracleLibrary.getQuoteAtTick(tick, amountIn, WETH, MGN);
     }
 
-    function _deposit(
-        address caller,
-        address receiver,
-        uint256 assets,
-        uint256 shares
-    ) internal virtual override {
+    function _deposit(address caller, address receiver, uint256 assets, uint256 shares) internal virtual override {
         // slither-disable-next-line reentrancy-no-eth
         SafeERC20.safeTransferFrom(_asset, caller, address(this), assets);
         afterDeposit(assets);
@@ -72,13 +63,11 @@ contract MugenAutoCompounder is ERC4626 {
         emit Deposit(caller, receiver, assets, shares);
     }
 
-    function _withdraw(
-        address caller,
-        address receiver,
-        address owner,
-        uint256 assets,
-        uint256 shares
-    ) internal virtual override {
+    function _withdraw(address caller, address receiver, address owner, uint256 assets, uint256 shares)
+        internal
+        virtual
+        override
+    {
         if (caller != owner) {
             _spendAllowance(owner, caller, shares);
         }

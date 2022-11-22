@@ -20,9 +20,8 @@ contract FeeCollector is Ownable {
     function withdrawNative() external onlyOwner {
         address owner = owner();
         uint256 amount = address(this).balance;
-        (bool success, ) = owner.call{value: amount}("");
-        if(!success) revert TransactionFailed();
-
+        (bool success,) = owner.call{value: amount}("");
+        if (!success) revert TransactionFailed();
     }
 
     receive() external payable {}

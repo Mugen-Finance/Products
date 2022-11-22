@@ -16,12 +16,10 @@ contract MockstMugen is ERC4626 {
 
     IStake public stake;
 
-    constructor(
-        IERC20 asset,
-        string memory name,
-        string memory symbol,
-        address _stake
-    ) ERC4626(asset) ERC20(name, symbol) {
+    constructor(IERC20 asset, string memory name, string memory symbol, address _stake)
+        ERC4626(asset)
+        ERC20(name, symbol)
+    {
         stake = IStake(_stake);
     }
 
@@ -46,12 +44,7 @@ contract MockstMugen is ERC4626 {
         stake.stake(balance);
     }
 
-    function _deposit(
-        address caller,
-        address receiver,
-        uint256 assets,
-        uint256 shares
-    ) internal virtual override {
+    function _deposit(address caller, address receiver, uint256 assets, uint256 shares) internal virtual override {
         // slither-disable-next-line reentrancy-no-eth
         SafeERC20.safeTransferFrom(_asset, caller, address(this), assets);
         _mint(receiver, shares);
@@ -59,13 +52,11 @@ contract MockstMugen is ERC4626 {
         emit Deposit(caller, receiver, assets, shares);
     }
 
-    function _withdraw(
-        address caller,
-        address receiver,
-        address owner,
-        uint256 assets,
-        uint256 shares
-    ) internal virtual override {
+    function _withdraw(address caller, address receiver, address owner, uint256 assets, uint256 shares)
+        internal
+        virtual
+        override
+    {
         if (caller != owner) {
             _spendAllowance(owner, caller, shares);
         }
