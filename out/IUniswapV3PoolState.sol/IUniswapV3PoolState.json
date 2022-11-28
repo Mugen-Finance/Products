@@ -662,17 +662,17 @@
   },
   "ast": {
     "absolutePath": "lib/v3-core/contracts/interfaces/pool/IUniswapV3PoolState.sol",
-    "id": 2240,
+    "id": 3599,
     "exportedSymbols": {
       "IUniswapV3PoolState": [
-        2239
+        3598
       ]
     },
     "nodeType": "SourceUnit",
     "src": "45:6465:17",
     "nodes": [
       {
-        "id": 2133,
+        "id": 3492,
         "nodeType": "PragmaDirective",
         "src": "45:24:17",
         "nodes": [],
@@ -684,17 +684,17 @@
         ]
       },
       {
-        "id": 2239,
+        "id": 3598,
         "nodeType": "ContractDefinition",
         "src": "240:6269:17",
         "nodes": [
           {
-            "id": 2152,
+            "id": 3511,
             "nodeType": "FunctionDefinition",
             "src": "1421:317:17",
             "nodes": [],
             "documentation": {
-              "id": 2135,
+              "id": 3494,
               "nodeType": "StructuredDocumentation",
               "src": "276:1140:17",
               "text": "@notice The 0th storage slot in the pool stores many values, and is exposed as a single method to save gas\n when accessed externally.\n @return sqrtPriceX96 The current price of the pool as a sqrt(token1/token0) Q64.96 value\n tick The current tick of the pool, i.e. according to the last tick transition that was run.\n This value may not always be equal to SqrtTickMath.getTickAtSqrtRatio(sqrtPriceX96) if the price is on a tick\n boundary.\n observationIndex The index of the last oracle observation that was written,\n observationCardinality The current maximum number of observations stored in the pool,\n observationCardinalityNext The next maximum number of observations, to be updated when the observation.\n feeProtocol The protocol fee for both tokens of the pool.\n Encoded as two 4 bit values, where the protocol fee of token1 is shifted 4 bits and the protocol fee of token0\n is the lower 4 bits. Used as the denominator of a fraction of the swap fee, e.g. 4 means 1/4th of the swap fee.\n unlocked Whether the pool is currently locked to reentrancy"
@@ -706,23 +706,23 @@
             "name": "slot0",
             "nameLocation": "1430:5:17",
             "parameters": {
-              "id": 2136,
+              "id": 3495,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1435:2:17"
             },
             "returnParameters": {
-              "id": 2151,
+              "id": 3510,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2138,
+                  "id": 3497,
                   "mutability": "mutable",
                   "name": "sqrtPriceX96",
                   "nameLocation": "1506:12:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2152,
+                  "scope": 3511,
                   "src": "1498:20:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -731,7 +731,7 @@
                     "typeString": "uint160"
                   },
                   "typeName": {
-                    "id": 2137,
+                    "id": 3496,
                     "name": "uint160",
                     "nodeType": "ElementaryTypeName",
                     "src": "1498:7:17",
@@ -744,12 +744,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2140,
+                  "id": 3499,
                   "mutability": "mutable",
                   "name": "tick",
                   "nameLocation": "1538:4:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2152,
+                  "scope": 3511,
                   "src": "1532:10:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -758,7 +758,7 @@
                     "typeString": "int24"
                   },
                   "typeName": {
-                    "id": 2139,
+                    "id": 3498,
                     "name": "int24",
                     "nodeType": "ElementaryTypeName",
                     "src": "1532:5:17",
@@ -771,12 +771,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2142,
+                  "id": 3501,
                   "mutability": "mutable",
                   "name": "observationIndex",
                   "nameLocation": "1563:16:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2152,
+                  "scope": 3511,
                   "src": "1556:23:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -785,7 +785,7 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 2141,
+                    "id": 3500,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
                     "src": "1556:6:17",
@@ -798,12 +798,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2144,
+                  "id": 3503,
                   "mutability": "mutable",
                   "name": "observationCardinality",
                   "nameLocation": "1600:22:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2152,
+                  "scope": 3511,
                   "src": "1593:29:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -812,7 +812,7 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 2143,
+                    "id": 3502,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
                     "src": "1593:6:17",
@@ -825,12 +825,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2146,
+                  "id": 3505,
                   "mutability": "mutable",
                   "name": "observationCardinalityNext",
                   "nameLocation": "1643:26:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2152,
+                  "scope": 3511,
                   "src": "1636:33:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -839,7 +839,7 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 2145,
+                    "id": 3504,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
                     "src": "1636:6:17",
@@ -852,12 +852,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2148,
+                  "id": 3507,
                   "mutability": "mutable",
                   "name": "feeProtocol",
                   "nameLocation": "1689:11:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2152,
+                  "scope": 3511,
                   "src": "1683:17:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -866,7 +866,7 @@
                     "typeString": "uint8"
                   },
                   "typeName": {
-                    "id": 2147,
+                    "id": 3506,
                     "name": "uint8",
                     "nodeType": "ElementaryTypeName",
                     "src": "1683:5:17",
@@ -879,12 +879,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2150,
+                  "id": 3509,
                   "mutability": "mutable",
                   "name": "unlocked",
                   "nameLocation": "1719:8:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2152,
+                  "scope": 3511,
                   "src": "1714:13:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -893,7 +893,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 2149,
+                    "id": 3508,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1714:4:17",
@@ -907,18 +907,18 @@
               ],
               "src": "1484:253:17"
             },
-            "scope": 2239,
+            "scope": 3598,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 2158,
+            "id": 3517,
             "nodeType": "FunctionDefinition",
             "src": "1917:64:17",
             "nodes": [],
             "documentation": {
-              "id": 2153,
+              "id": 3512,
               "nodeType": "StructuredDocumentation",
               "src": "1744:168:17",
               "text": "@notice The fee growth as a Q128.128 fees of token0 collected per unit of liquidity for the entire life of the pool\n @dev This value can overflow the uint256"
@@ -930,23 +930,23 @@
             "name": "feeGrowthGlobal0X128",
             "nameLocation": "1926:20:17",
             "parameters": {
-              "id": 2154,
+              "id": 3513,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1946:2:17"
             },
             "returnParameters": {
-              "id": 2157,
+              "id": 3516,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2156,
+                  "id": 3515,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2158,
+                  "scope": 3517,
                   "src": "1972:7:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -955,7 +955,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2155,
+                    "id": 3514,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1972:7:17",
@@ -969,18 +969,18 @@
               ],
               "src": "1971:9:17"
             },
-            "scope": 2239,
+            "scope": 3598,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 2164,
+            "id": 3523,
             "nodeType": "FunctionDefinition",
             "src": "2160:64:17",
             "nodes": [],
             "documentation": {
-              "id": 2159,
+              "id": 3518,
               "nodeType": "StructuredDocumentation",
               "src": "1987:168:17",
               "text": "@notice The fee growth as a Q128.128 fees of token1 collected per unit of liquidity for the entire life of the pool\n @dev This value can overflow the uint256"
@@ -992,23 +992,23 @@
             "name": "feeGrowthGlobal1X128",
             "nameLocation": "2169:20:17",
             "parameters": {
-              "id": 2160,
+              "id": 3519,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2189:2:17"
             },
             "returnParameters": {
-              "id": 2163,
+              "id": 3522,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2162,
+                  "id": 3521,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2164,
+                  "scope": 3523,
                   "src": "2215:7:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1017,7 +1017,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2161,
+                    "id": 3520,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2215:7:17",
@@ -1031,18 +1031,18 @@
               ],
               "src": "2214:9:17"
             },
-            "scope": 2239,
+            "scope": 3598,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 2172,
+            "id": 3531,
             "nodeType": "FunctionDefinition",
             "src": "2382:79:17",
             "nodes": [],
             "documentation": {
-              "id": 2165,
+              "id": 3524,
               "nodeType": "StructuredDocumentation",
               "src": "2230:147:17",
               "text": "@notice The amounts of token0 and token1 that are owed to the protocol\n @dev Protocol fees will never exceed uint128 max in either token"
@@ -1054,23 +1054,23 @@
             "name": "protocolFees",
             "nameLocation": "2391:12:17",
             "parameters": {
-              "id": 2166,
+              "id": 3525,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2403:2:17"
             },
             "returnParameters": {
-              "id": 2171,
+              "id": 3530,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2168,
+                  "id": 3527,
                   "mutability": "mutable",
                   "name": "token0",
                   "nameLocation": "2437:6:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2172,
+                  "scope": 3531,
                   "src": "2429:14:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1079,7 +1079,7 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 2167,
+                    "id": 3526,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
                     "src": "2429:7:17",
@@ -1092,12 +1092,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2170,
+                  "id": 3529,
                   "mutability": "mutable",
                   "name": "token1",
                   "nameLocation": "2453:6:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2172,
+                  "scope": 3531,
                   "src": "2445:14:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1106,7 +1106,7 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 2169,
+                    "id": 3528,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
                     "src": "2445:7:17",
@@ -1120,18 +1120,18 @@
               ],
               "src": "2428:32:17"
             },
-            "scope": 2239,
+            "scope": 3598,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 2178,
+            "id": 3537,
             "nodeType": "FunctionDefinition",
             "src": "2622:53:17",
             "nodes": [],
             "documentation": {
-              "id": 2173,
+              "id": 3532,
               "nodeType": "StructuredDocumentation",
               "src": "2467:150:17",
               "text": "@notice The currently in range liquidity available to the pool\n @dev This value has no relationship to the total liquidity across all ticks"
@@ -1143,23 +1143,23 @@
             "name": "liquidity",
             "nameLocation": "2631:9:17",
             "parameters": {
-              "id": 2174,
+              "id": 3533,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2640:2:17"
             },
             "returnParameters": {
-              "id": 2177,
+              "id": 3536,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2176,
+                  "id": 3535,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2178,
+                  "scope": 3537,
                   "src": "2666:7:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1168,7 +1168,7 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 2175,
+                    "id": 3534,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
                     "src": "2666:7:17",
@@ -1182,18 +1182,18 @@
               ],
               "src": "2665:9:17"
             },
-            "scope": 2239,
+            "scope": 3598,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 2200,
+            "id": 3559,
             "nodeType": "FunctionDefinition",
             "src": "3930:397:17",
             "nodes": [],
             "documentation": {
-              "id": 2179,
+              "id": 3538,
               "nodeType": "StructuredDocumentation",
               "src": "2681:1244:17",
               "text": "@notice Look up information about a specific tick in the pool\n @param tick The tick to look up\n @return liquidityGross the total amount of position liquidity that uses the pool either as tick lower or\n tick upper,\n liquidityNet how much liquidity changes when the pool price crosses the tick,\n feeGrowthOutside0X128 the fee growth on the other side of the tick from the current tick in token0,\n feeGrowthOutside1X128 the fee growth on the other side of the tick from the current tick in token1,\n tickCumulativeOutside the cumulative tick value on the other side of the tick from the current tick\n secondsPerLiquidityOutsideX128 the seconds spent per liquidity on the other side of the tick from the current tick,\n secondsOutside the seconds spent on the other side of the tick from the current tick,\n initialized Set to true if the tick is initialized, i.e. liquidityGross is greater than 0, otherwise equal to false.\n Outside values can only be used if the tick is initialized, i.e. if liquidityGross is greater than 0.\n In addition, these values are only relative and must be used only in comparison to previous snapshots for\n a specific position."
@@ -1205,17 +1205,17 @@
             "name": "ticks",
             "nameLocation": "3939:5:17",
             "parameters": {
-              "id": 2182,
+              "id": 3541,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2181,
+                  "id": 3540,
                   "mutability": "mutable",
                   "name": "tick",
                   "nameLocation": "3951:4:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2200,
+                  "scope": 3559,
                   "src": "3945:10:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1224,7 +1224,7 @@
                     "typeString": "int24"
                   },
                   "typeName": {
-                    "id": 2180,
+                    "id": 3539,
                     "name": "int24",
                     "nodeType": "ElementaryTypeName",
                     "src": "3945:5:17",
@@ -1239,17 +1239,17 @@
               "src": "3944:12:17"
             },
             "returnParameters": {
-              "id": 2199,
+              "id": 3558,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2184,
+                  "id": 3543,
                   "mutability": "mutable",
                   "name": "liquidityGross",
                   "nameLocation": "4025:14:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2200,
+                  "scope": 3559,
                   "src": "4017:22:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1258,7 +1258,7 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 2183,
+                    "id": 3542,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
                     "src": "4017:7:17",
@@ -1271,12 +1271,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2186,
+                  "id": 3545,
                   "mutability": "mutable",
                   "name": "liquidityNet",
                   "nameLocation": "4060:12:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2200,
+                  "scope": 3559,
                   "src": "4053:19:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1285,7 +1285,7 @@
                     "typeString": "int128"
                   },
                   "typeName": {
-                    "id": 2185,
+                    "id": 3544,
                     "name": "int128",
                     "nodeType": "ElementaryTypeName",
                     "src": "4053:6:17",
@@ -1298,12 +1298,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2188,
+                  "id": 3547,
                   "mutability": "mutable",
                   "name": "feeGrowthOutside0X128",
                   "nameLocation": "4094:21:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2200,
+                  "scope": 3559,
                   "src": "4086:29:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1312,7 +1312,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2187,
+                    "id": 3546,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "4086:7:17",
@@ -1325,12 +1325,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2190,
+                  "id": 3549,
                   "mutability": "mutable",
                   "name": "feeGrowthOutside1X128",
                   "nameLocation": "4137:21:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2200,
+                  "scope": 3559,
                   "src": "4129:29:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1339,7 +1339,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2189,
+                    "id": 3548,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "4129:7:17",
@@ -1352,12 +1352,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2192,
+                  "id": 3551,
                   "mutability": "mutable",
                   "name": "tickCumulativeOutside",
                   "nameLocation": "4178:21:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2200,
+                  "scope": 3559,
                   "src": "4172:27:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1366,7 +1366,7 @@
                     "typeString": "int56"
                   },
                   "typeName": {
-                    "id": 2191,
+                    "id": 3550,
                     "name": "int56",
                     "nodeType": "ElementaryTypeName",
                     "src": "4172:5:17",
@@ -1379,12 +1379,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2194,
+                  "id": 3553,
                   "mutability": "mutable",
                   "name": "secondsPerLiquidityOutsideX128",
                   "nameLocation": "4221:30:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2200,
+                  "scope": 3559,
                   "src": "4213:38:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1393,7 +1393,7 @@
                     "typeString": "uint160"
                   },
                   "typeName": {
-                    "id": 2193,
+                    "id": 3552,
                     "name": "uint160",
                     "nodeType": "ElementaryTypeName",
                     "src": "4213:7:17",
@@ -1406,12 +1406,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2196,
+                  "id": 3555,
                   "mutability": "mutable",
                   "name": "secondsOutside",
                   "nameLocation": "4272:14:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2200,
+                  "scope": 3559,
                   "src": "4265:21:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1420,7 +1420,7 @@
                     "typeString": "uint32"
                   },
                   "typeName": {
-                    "id": 2195,
+                    "id": 3554,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
                     "src": "4265:6:17",
@@ -1433,12 +1433,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2198,
+                  "id": 3557,
                   "mutability": "mutable",
                   "name": "initialized",
                   "nameLocation": "4305:11:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2200,
+                  "scope": 3559,
                   "src": "4300:16:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1447,7 +1447,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 2197,
+                    "id": 3556,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "4300:4:17",
@@ -1461,18 +1461,18 @@
               ],
               "src": "4003:323:17"
             },
-            "scope": 2239,
+            "scope": 3598,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 2208,
+            "id": 3567,
             "nodeType": "FunctionDefinition",
             "src": "4437:72:17",
             "nodes": [],
             "documentation": {
-              "id": 2201,
+              "id": 3560,
               "nodeType": "StructuredDocumentation",
               "src": "4333:99:17",
               "text": "@notice Returns 256 packed tick initialized boolean values. See TickBitmap for more information"
@@ -1484,17 +1484,17 @@
             "name": "tickBitmap",
             "nameLocation": "4446:10:17",
             "parameters": {
-              "id": 2204,
+              "id": 3563,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2203,
+                  "id": 3562,
                   "mutability": "mutable",
                   "name": "wordPosition",
                   "nameLocation": "4463:12:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2208,
+                  "scope": 3567,
                   "src": "4457:18:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1503,7 +1503,7 @@
                     "typeString": "int16"
                   },
                   "typeName": {
-                    "id": 2202,
+                    "id": 3561,
                     "name": "int16",
                     "nodeType": "ElementaryTypeName",
                     "src": "4457:5:17",
@@ -1518,17 +1518,17 @@
               "src": "4456:20:17"
             },
             "returnParameters": {
-              "id": 2207,
+              "id": 3566,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2206,
+                  "id": 3565,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2208,
+                  "scope": 3567,
                   "src": "4500:7:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1537,7 +1537,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2205,
+                    "id": 3564,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "4500:7:17",
@@ -1551,18 +1551,18 @@
               ],
               "src": "4499:9:17"
             },
-            "scope": 2239,
+            "scope": 3598,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 2224,
+            "id": 3583,
             "nodeType": "FunctionDefinition",
             "src": "5220:279:17",
             "nodes": [],
             "documentation": {
-              "id": 2209,
+              "id": 3568,
               "nodeType": "StructuredDocumentation",
               "src": "4515:700:17",
               "text": "@notice Returns the information about a position by the position's key\n @param key The position's key is a hash of a preimage composed by the owner, tickLower and tickUpper\n @return _liquidity The amount of liquidity in the position,\n Returns feeGrowthInside0LastX128 fee growth of token0 inside the tick range as of the last mint/burn/poke,\n Returns feeGrowthInside1LastX128 fee growth of token1 inside the tick range as of the last mint/burn/poke,\n Returns tokensOwed0 the computed amount of token0 owed to the position as of the last mint/burn/poke,\n Returns tokensOwed1 the computed amount of token1 owed to the position as of the last mint/burn/poke"
@@ -1574,17 +1574,17 @@
             "name": "positions",
             "nameLocation": "5229:9:17",
             "parameters": {
-              "id": 2212,
+              "id": 3571,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2211,
+                  "id": 3570,
                   "mutability": "mutable",
                   "name": "key",
                   "nameLocation": "5247:3:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2224,
+                  "scope": 3583,
                   "src": "5239:11:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1593,7 +1593,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 2210,
+                    "id": 3569,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "5239:7:17",
@@ -1608,17 +1608,17 @@
               "src": "5238:13:17"
             },
             "returnParameters": {
-              "id": 2223,
+              "id": 3582,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2214,
+                  "id": 3573,
                   "mutability": "mutable",
                   "name": "_liquidity",
                   "nameLocation": "5320:10:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2224,
+                  "scope": 3583,
                   "src": "5312:18:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1627,7 +1627,7 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 2213,
+                    "id": 3572,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
                     "src": "5312:7:17",
@@ -1640,12 +1640,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2216,
+                  "id": 3575,
                   "mutability": "mutable",
                   "name": "feeGrowthInside0LastX128",
                   "nameLocation": "5352:24:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2224,
+                  "scope": 3583,
                   "src": "5344:32:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1654,7 +1654,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2215,
+                    "id": 3574,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "5344:7:17",
@@ -1667,12 +1667,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2218,
+                  "id": 3577,
                   "mutability": "mutable",
                   "name": "feeGrowthInside1LastX128",
                   "nameLocation": "5398:24:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2224,
+                  "scope": 3583,
                   "src": "5390:32:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1681,7 +1681,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2217,
+                    "id": 3576,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "5390:7:17",
@@ -1694,12 +1694,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2220,
+                  "id": 3579,
                   "mutability": "mutable",
                   "name": "tokensOwed0",
                   "nameLocation": "5444:11:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2224,
+                  "scope": 3583,
                   "src": "5436:19:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1708,7 +1708,7 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 2219,
+                    "id": 3578,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
                     "src": "5436:7:17",
@@ -1721,12 +1721,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2222,
+                  "id": 3581,
                   "mutability": "mutable",
                   "name": "tokensOwed1",
                   "nameLocation": "5477:11:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2224,
+                  "scope": 3583,
                   "src": "5469:19:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1735,7 +1735,7 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 2221,
+                    "id": 3580,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
                     "src": "5469:7:17",
@@ -1749,18 +1749,18 @@
               ],
               "src": "5298:200:17"
             },
-            "scope": 2239,
+            "scope": 3598,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 2238,
+            "id": 3597,
             "nodeType": "FunctionDefinition",
             "src": "6259:248:17",
             "nodes": [],
             "documentation": {
-              "id": 2225,
+              "id": 3584,
               "nodeType": "StructuredDocumentation",
               "src": "5505:749:17",
               "text": "@notice Returns data about a specific observation index\n @param index The element of the observations array to fetch\n @dev You most likely want to use #observe() instead of this method to get an observation as of some amount of time\n ago, rather than at a specific index in the array.\n @return blockTimestamp The timestamp of the observation,\n Returns tickCumulative the tick multiplied by seconds elapsed for the life of the pool as of the observation timestamp,\n Returns secondsPerLiquidityCumulativeX128 the seconds per in range liquidity for the life of the pool as of the observation timestamp,\n Returns initialized whether the observation has been initialized and the values are safe to use"
@@ -1772,17 +1772,17 @@
             "name": "observations",
             "nameLocation": "6268:12:17",
             "parameters": {
-              "id": 2228,
+              "id": 3587,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2227,
+                  "id": 3586,
                   "mutability": "mutable",
                   "name": "index",
                   "nameLocation": "6289:5:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2238,
+                  "scope": 3597,
                   "src": "6281:13:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1791,7 +1791,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2226,
+                    "id": 3585,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "6281:7:17",
@@ -1806,17 +1806,17 @@
               "src": "6280:15:17"
             },
             "returnParameters": {
-              "id": 2237,
+              "id": 3596,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2230,
+                  "id": 3589,
                   "mutability": "mutable",
                   "name": "blockTimestamp",
                   "nameLocation": "6363:14:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2238,
+                  "scope": 3597,
                   "src": "6356:21:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1825,7 +1825,7 @@
                     "typeString": "uint32"
                   },
                   "typeName": {
-                    "id": 2229,
+                    "id": 3588,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
                     "src": "6356:6:17",
@@ -1838,12 +1838,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2232,
+                  "id": 3591,
                   "mutability": "mutable",
                   "name": "tickCumulative",
                   "nameLocation": "6397:14:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2238,
+                  "scope": 3597,
                   "src": "6391:20:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1852,7 +1852,7 @@
                     "typeString": "int56"
                   },
                   "typeName": {
-                    "id": 2231,
+                    "id": 3590,
                     "name": "int56",
                     "nodeType": "ElementaryTypeName",
                     "src": "6391:5:17",
@@ -1865,12 +1865,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2234,
+                  "id": 3593,
                   "mutability": "mutable",
                   "name": "secondsPerLiquidityCumulativeX128",
                   "nameLocation": "6433:33:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2238,
+                  "scope": 3597,
                   "src": "6425:41:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1879,7 +1879,7 @@
                     "typeString": "uint160"
                   },
                   "typeName": {
-                    "id": 2233,
+                    "id": 3592,
                     "name": "uint160",
                     "nodeType": "ElementaryTypeName",
                     "src": "6425:7:17",
@@ -1892,12 +1892,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2236,
+                  "id": 3595,
                   "mutability": "mutable",
                   "name": "initialized",
                   "nameLocation": "6485:11:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2238,
+                  "scope": 3597,
                   "src": "6480:16:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1906,7 +1906,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 2235,
+                    "id": 3594,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "6480:4:17",
@@ -1920,7 +1920,7 @@
               ],
               "src": "6342:164:17"
             },
-            "scope": 2239,
+            "scope": 3598,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
@@ -1932,18 +1932,18 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "documentation": {
-          "id": 2134,
+          "id": 3493,
           "nodeType": "StructuredDocumentation",
           "src": "71:169:17",
           "text": "@title Pool state that can change\n @notice These methods compose the pool's state, and can change with any frequency including multiple times\n per transaction"
         },
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          2239
+          3598
         ],
         "name": "IUniswapV3PoolState",
         "nameLocation": "250:19:17",
-        "scope": 2240,
+        "scope": 3599,
         "usedErrors": []
       }
     ],

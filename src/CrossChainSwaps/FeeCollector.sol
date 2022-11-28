@@ -5,9 +5,11 @@ pragma solidity 0.8.17;
 import {Ownable} from "openzeppelin/contracts/access/Ownable.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {SafeTransferLib} from 'solmate/src/utils/SafeTransferLib.sol';
 
 contract FeeCollector is Ownable {
     using SafeERC20 for IERC20;
+    using SafeTransferLib for *;
 
     error TransactionFailed();
 
@@ -20,8 +22,7 @@ contract FeeCollector is Ownable {
     function withdrawNative() external onlyOwner {
         address owner = owner();
         uint256 amount = address(this).balance;
-        (bool success,) = owner.call{value: amount}("");
-        if (!success) revert TransactionFailed();
+        owner.safeTransferETH(amount);
     }
 
     receive() external payable {}

@@ -120,9 +120,5 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
         }
     }
 
-    function viewThings() external pure returns (uint256 pool) {
-        pool = 8;
-    }
-
     receive() external payable {}
 }
