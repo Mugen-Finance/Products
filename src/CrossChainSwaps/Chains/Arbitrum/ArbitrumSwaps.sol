@@ -19,7 +19,7 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
 
     IWETH9 internal immutable weth;
     address public feeCollector;
-    
+
     uint8 private locked = 1;
 
     modifier lock() {
@@ -110,15 +110,7 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
             } else if (step == SRC_TRANSFER) {
                 SrcTransferParams[] memory params = abi.decode(data[i], (SrcTransferParams[]));
                 for (uint256 k; k < params.length; k++) {
-                    address token = params[k].token;
-                    uint256 amount = params[k].amount;
-                    amount = amount != 0 ? amount : IERC20(token).balanceOf(address(this));
-                    address to = params[k].receiver;
-                    uint256 fee = calculateFee(amount);
-                    amount -= fee;
-                    IERC20(token).safeTransfer(feeCollector, fee);
-                    IERC20(token).safeTransfer(to, amount);
-                    emit FeePaid(token, fee);
+                    _srcTransfer(params[k].token, params[k].amount, params[k].receiver);
                 }
             } else if (step == STARGATE) {
                 (StargateParams memory params, uint8[] memory stepperions, bytes[] memory datass) =
@@ -126,6 +118,15 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
                 stargateSwap(params, stepperions, datass);
             }
         }
+    }
+
+    function _srcTransfer(address _token, uint256 amount, address to) private {
+        amount = amount != 0 ? amount : IERC20(_token).balanceOf(address(this));
+        uint256 fee = calculateFee(amount);
+        amount -= fee;
+        IERC20(_token).safeTransfer(feeCollector, fee);
+        IERC20(_token).safeTransfer(to, amount);
+        emit FeePaid(_token, fee);
     }
 
     receive() external payable {}

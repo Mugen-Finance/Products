@@ -66,7 +66,7 @@ contract AvaxSwaps is UniswapAdapter, SushiLegacyAdapter, VelodromeAdapter, Star
         feeCollector = _feeCollector;
     }
 
-    function optimismSwaps(uint8[] calldata steps, bytes[] calldata data) external payable  lock {
+    function optimismSwaps(uint8[] calldata steps, bytes[] calldata data) external payable lock {
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {
@@ -106,15 +106,7 @@ contract AvaxSwaps is UniswapAdapter, SushiLegacyAdapter, VelodromeAdapter, Star
                 SrcTransferParams[] memory params = abi.decode(data[i], (SrcTransferParams[]));
 
                 for (uint256 k; k < params.length; k++) {
-                    address token = params[k].token;
-                    uint256 amount = params[k].amount;
-                    amount = amount != 0 ? amount : IERC20(token).balanceOf(address(this));
-                    address to = params[k].receiver;
-                    uint256 fee = calculateFee(amount);
-                    amount -= fee;
-                    IERC20(token).safeTransfer(feeCollector, fee);
-                    IERC20(token).safeTransfer(to, amount);
-                    emit FeePaid(token, fee);
+                    _srcTransfer(params[k].token, params[k].amount, params[k].receiver);
                 }
             } else if (step == WETH_WITHDRAW) {
                 (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
@@ -129,6 +121,15 @@ contract AvaxSwaps is UniswapAdapter, SushiLegacyAdapter, VelodromeAdapter, Star
                 stargateSwap(params, stepperions, datass);
             }
         }
+    }
+
+    function _srcTransfer(address _token, uint256 amount, address to) private {
+        amount = amount != 0 ? amount : IERC20(_token).balanceOf(address(this));
+        uint256 fee = calculateFee(amount);
+        amount -= fee;
+        IERC20(_token).safeTransfer(feeCollector, fee);
+        IERC20(_token).safeTransfer(to, amount);
+        emit FeePaid(_token, fee);
     }
 
     receive() external payable {}
