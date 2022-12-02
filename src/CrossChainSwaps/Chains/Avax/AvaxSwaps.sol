@@ -7,7 +7,8 @@ import {IAvaxSwaps} from "./interfaces/IAvaxSwaps.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IWETH9} from "../../interfaces/IWETH9.sol";
-import {IJoeRouter02} from "traderjoe/contracts/traderjoe/interfaces/IJoeRouter02.sol";
+import {IJoeRouter02} from "traderjoe/interfaces/IJoeRouter02.sol";
+import {ILBRouter} from "traderjoe/interfaces/ILBRouter.sol";
 import "./StargateAvax.sol";
 
 contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
@@ -18,6 +19,7 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
 
     IWETH9 internal immutable weth;
     IJoeRouter02 internal immutable joeRouter;
+    ILBRouter internal immutable joeLBRouter;
 
     address public immutable feeCollector;
 
@@ -47,6 +49,7 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
     constructor(
         IWETH9 _weth,
         address _joeRouter,
+        address _joeLBRouter,
         address _feeCollector,
         address _factory,
         bytes32 _pairCodeHash,
@@ -54,6 +57,8 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
     ) SushiLegacyAdapter(_factory, _pairCodeHash) StargateAvax(_stargateRouter) {
         weth = _weth;
         joeRouter = IJoeRouter02(_joeRouter);
+        joeLBRouter = ILBRouter(_joeLBRouter);
+
         feeCollector = _feeCollector;
     }
 
