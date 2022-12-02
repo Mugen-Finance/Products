@@ -22,6 +22,15 @@ contract PolygonSwaps is SushiLegacyAdapter, StargateFantom, IFantomSwaps {
     address public immutable feeCollector;
     IUniswapV2Router02 internal immutable spookyRouter;
 
+    uint8 private locked = 1;
+
+    modifier lock() {
+        require(locked == 1, "REENTRANCY");
+        locked = 2;
+        _;
+        locked = 1;
+    }
+
     struct SrcTransferParams {
         address token;
         address receiver;
@@ -58,7 +67,7 @@ contract PolygonSwaps is SushiLegacyAdapter, StargateFantom, IFantomSwaps {
         spookyRouter = IUniswapV2Router02(_spookyRouter);
     }
 
-    function fantomSwaps(uint8[] calldata steps, bytes[] calldata data) external payable {
+    function fantomSwaps(uint8[] calldata steps, bytes[] calldata data) external payable lock {
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {

@@ -22,6 +22,15 @@ contract PolygonSwaps is SushiLegacyAdapter, StargateBinance, IBinanceSwaps {
     IPancakeRouter02 internal immutable pancakeRouter;
     address public immutable feeCollector;
 
+    uint8 private locked = 1;
+
+    modifier lock() {
+        require(locked == 1, "REENTRANCY");
+        locked = 2;
+        _;
+        locked = 1;
+    }
+
     struct SrcTransferParams {
         address token;
         address receiver;
@@ -58,7 +67,7 @@ contract PolygonSwaps is SushiLegacyAdapter, StargateBinance, IBinanceSwaps {
         feeCollector = _feeCollector;
     }
 
-    function binanceSwaps(uint8[] calldata steps, bytes[] calldata data) external payable {
+    function binanceSwaps(uint8[] calldata steps, bytes[] calldata data) external payable lock {
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {

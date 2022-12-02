@@ -22,6 +22,15 @@ contract AvaxSwaps is UniswapAdapter, SushiLegacyAdapter, VelodromeAdapter, Star
     IWETH9 internal immutable weth;
     address public immutable feeCollector;
 
+    uint8 private locked = 1;
+
+    modifier lock() {
+        require(locked == 1, "REENTRANCY");
+        locked = 2;
+        _;
+        locked = 1;
+    }
+
     struct SrcTransferParams {
         address token;
         address receiver;
@@ -57,7 +66,7 @@ contract AvaxSwaps is UniswapAdapter, SushiLegacyAdapter, VelodromeAdapter, Star
         feeCollector = _feeCollector;
     }
 
-    function optimismSwaps(uint8[] calldata steps, bytes[] calldata data) external payable {
+    function optimismSwaps(uint8[] calldata steps, bytes[] calldata data) external payable  lock {
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {

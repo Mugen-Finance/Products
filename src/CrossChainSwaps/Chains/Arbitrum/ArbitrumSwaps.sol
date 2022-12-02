@@ -18,8 +18,16 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
     error WithdrawFailed();
 
     IWETH9 internal immutable weth;
-
     address public feeCollector;
+    
+    uint8 private locked = 1;
+
+    modifier lock() {
+        require(locked == 1, "REENTRANCY");
+        locked = 2;
+        _;
+        locked = 1;
+    }
 
     struct SrcTransferParams {
         address token;
@@ -57,7 +65,7 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
         feeCollector = _feeCollector;
     }
 
-    function arbitrumSwaps(uint8[] calldata steps, bytes[] calldata data) external payable {
+    function arbitrumSwaps(uint8[] calldata steps, bytes[] calldata data) external payable lock {
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {

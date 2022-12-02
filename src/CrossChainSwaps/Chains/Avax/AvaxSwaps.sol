@@ -17,11 +17,19 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
     error MoreThanZero();
     error WithdrawFailed();
 
+    modifier lock() {
+        require(locked == 1, "REENTRANCY");
+        locked = 2;
+        _;
+        locked = 1;
+    }
+
     IWETH9 internal immutable weth;
     IJoeRouter02 internal immutable joeRouter;
     ILBRouter internal immutable joeLBRouter;
-
     address public immutable feeCollector;
+
+    uint8 private locked = 1;
 
     struct SrcTransferParams {
         address token;
@@ -36,6 +44,13 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
         uint256 deadline;
     }
 
+    struct LiquidityBookParams {
+        uint256 amountIn;
+        uint256 amountOutWithSlippage;
+        uint256[] pairBinSteps;
+        IERC20[] tokenPath;
+    }
+
     // Constants
 
     uint8 internal constant BATCH_DEPOSIT = 1;
@@ -45,6 +60,7 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
     uint8 internal constant SRC_TRANSFER = 8;
     uint8 internal constant STARGATE = 9;
     uint8 internal constant TRADER_JOE = 10;
+    uint8 internal constant TRADER_JOE_LB = 11;
 
     constructor(
         IWETH9 _weth,
@@ -62,7 +78,7 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
         feeCollector = _feeCollector;
     }
 
-    function avaxSwaps(uint8[] calldata steps, bytes[] calldata data) external payable {
+    function avaxSwaps(uint8[] calldata steps, bytes[] calldata data) external payable lock {
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {
@@ -110,6 +126,19 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
                     IERC20(params[j].path[0]).safeIncreaseAllowance(address(joeRouter), params[j].amountIn);
                     IJoeRouter02(joeRouter).swapExactTokensForTokens(
                         params[j].amountIn, params[j].amountOutMin, params[j].path, address(this), params[j].deadline
+                    );
+                }
+            } else if (step == TRADER_JOE_LB) {
+                LiquidityBookParams[] memory params = abi.decode(data[i], (LiquidityBookParams[]));
+                for (uint256 j; j < params.length; j++) {
+                    params[j].tokenPath[0].safeApprove(address(joeLBRouter), params[j].amountIn);
+                    joeLBRouter.swapExactTokensForTokens(
+                        params[j].amountIn,
+                        params[j].amountOutWithSlippage,
+                        params[j].pairBinSteps,
+                        params[j].tokenPath,
+                        address(this),
+                        block.timestamp
                     );
                 }
             }
