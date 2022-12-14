@@ -142,7 +142,35 @@ contract ArbitrumSwapsTest is Test {
 
     function testArbitrumWethWithdraw() public {}
 
-    function testArbitrumStargate() public {}
+    function testArbitrumStargate() public {
+        uint8[] memory steps = new uint8[](2);
+        steps[0] = 1;
+        steps[1] = 9;
+
+        bytes[] memory data = new bytes[](2);
+
+        StargateArbitrum.StargateParams memory stargateParams = StargateArbitrum.StargateParams(1, usdc, 1, 1, 100e6, 99e6, 1e16, address(this), address(this), 1e15, bytes32(0x0));
+        /**
+         * uint16 dstChainId; // stargate dst chain id
+        address token; // token getting bridged
+        uint256 srcPoolId; // stargate src pool id
+        uint256 dstPoolId; // stargate dst pool id
+        uint256 amount; // amount to bridge
+        uint256 amountMin; // amount to bridge minimum
+        uint256 dustAmount; // native token to be received on dst chain
+        address receiver; // Mugen contract on dst chain
+        address to; // receiver bridge token incase of transaction reverts on dst chain
+        uint256 gas; // extra gas to be sent for dst chain operations
+        bytes32 srcContext; //
+         */
+
+        data[0] = abi.encode(address(usdc), 100e6);
+        data[1] = abi.encode(stargateParams, steps, data[0]);
+
+      arbitrumSwaps.arbitrumSwaps{value: 1e18}(steps, data);
+
+
+    }
 
     function tokenApprovals() internal {
         IERC20(gmx).approve(address(arbitrumSwaps), type(uint256).max);
