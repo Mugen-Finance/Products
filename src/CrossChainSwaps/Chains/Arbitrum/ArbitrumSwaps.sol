@@ -43,9 +43,9 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
     uint8 internal constant UNI_MULTI = 4;
     uint8 internal constant SUSHI_LEGACY = 5;
     uint8 internal constant XCAL = 6;
-    uint8 internal constant WETH_WITHDRAW = 7;
-    uint8 internal constant SRC_TRANSFER = 8;
-    uint8 internal constant STARGATE = 9;
+    uint8 internal constant WETH_WITHDRAW = 12;
+    uint8 internal constant SRC_TRANSFER = 13;
+    uint8 internal constant STARGATE = 14;
 
     constructor(
         address _weth,

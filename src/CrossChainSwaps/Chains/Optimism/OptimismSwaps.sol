@@ -45,9 +45,9 @@ contract OptimismSwaps is UniswapAdapter, SushiLegacyAdapter, VelodromeAdapter, 
     uint8 internal constant UNISWAP_INPUT_MULTI = 4;
     uint8 internal constant SUSHI_LEGACY = 5;
     uint8 internal constant VELODROME = 9;
-    uint8 internal constant SRC_TRANSFER = 11;
     uint8 internal constant WETH_WITHDRAW = 12;
-    uint8 internal constant STARGATE = 13;
+    uint8 internal constant SRC_TRANSFER = 13;
+    uint8 internal constant STARGATE = 14;
 
     constructor(
         IWETH9 _weth,
