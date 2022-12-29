@@ -48,7 +48,7 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
         uint256 amountIn;
         uint256 amountOutWithSlippage;
         uint256[] pairBinSteps;
-        IERC20[] tokenPath;
+        address[] tokenPath;
     }
 
     // Constants
@@ -123,12 +123,16 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
             } else if (step == TRADER_JOE_LB) {
                 LiquidityBookParams[] memory params = abi.decode(data[i], (LiquidityBookParams[]));
                 for (uint256 j; j < params.length; j++) {
-                    params[j].tokenPath[0].safeApprove(address(joeLBRouter), params[j].amountIn);
+                    IERC20(params[j].tokenPath[0]).safeApprove(address(joeLBRouter), params[j].amountIn);
+                    IERC20[] memory addressArray = new IERC20[](params[j].tokenPath.length);
+                    for (uint256 k; k < params[j].tokenPath.length; ++k) {
+                        addressArray[k] = IERC20(params[j].tokenPath[k]);
+                    }
                     joeLBRouter.swapExactTokensForTokens(
                         params[j].amountIn,
                         params[j].amountOutWithSlippage,
                         params[j].pairBinSteps,
-                        params[j].tokenPath,
+                        addressArray,
                         address(this),
                         block.timestamp
                     );

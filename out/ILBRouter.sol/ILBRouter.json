@@ -972,10 +972,10 @@
     "sweepLBToken(address,address,uint256[],uint256[])": "e9361c08",
     "wavax()": "117be4c2"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"components\":[{\"internalType\":\"contract IERC20\",\"name\":\"tokenX\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"tokenY\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"binStep\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountX\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountY\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountXMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountYMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"activeIdDesired\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"idSlippage\",\"type\":\"uint256\"},{\"internalType\":\"int256[]\",\"name\":\"deltaIds\",\"type\":\"int256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"distributionX\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"distributionY\",\"type\":\"uint256[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"internalType\":\"struct ILBRouter.LiquidityParameters\",\"name\":\"liquidityParameters\",\"type\":\"tuple\"}],\"name\":\"addLiquidity\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"depositIds\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"liquidityMinted\",\"type\":\"uint256[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"contract IERC20\",\"name\":\"tokenX\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"tokenY\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"binStep\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountX\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountY\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountXMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountYMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"activeIdDesired\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"idSlippage\",\"type\":\"uint256\"},{\"internalType\":\"int256[]\",\"name\":\"deltaIds\",\"type\":\"int256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"distributionX\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"distributionY\",\"type\":\"uint256[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"internalType\":\"struct ILBRouter.LiquidityParameters\",\"name\":\"liquidityParameters\",\"type\":\"tuple\"}],\"name\":\"addLiquidityAVAX\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"depositIds\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"liquidityMinted\",\"type\":\"uint256[]\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"tokenX\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"tokenY\",\"type\":\"address\"},{\"internalType\":\"uint24\",\"name\":\"activeId\",\"type\":\"uint24\"},{\"internalType\":\"uint16\",\"name\":\"binStep\",\"type\":\"uint16\"}],\"name\":\"createLBPair\",\"outputs\":[{\"internalType\":\"contract ILBPair\",\"name\":\"pair\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"factory\",\"outputs\":[{\"internalType\":\"contract ILBFactory\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ILBPair\",\"name\":\"LBPair\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"}],\"name\":\"getIdFromPrice\",\"outputs\":[{\"internalType\":\"uint24\",\"name\":\"\",\"type\":\"uint24\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ILBPair\",\"name\":\"LBPair\",\"type\":\"address\"},{\"internalType\":\"uint24\",\"name\":\"id\",\"type\":\"uint24\"}],\"name\":\"getPriceFromId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ILBPair\",\"name\":\"LBPair\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"swapForY\",\"type\":\"bool\"}],\"name\":\"getSwapIn\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"feesIn\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ILBPair\",\"name\":\"LBPair\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"swapForY\",\"type\":\"bool\"}],\"name\":\"getSwapOut\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"feesIn\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"oldFactory\",\"outputs\":[{\"internalType\":\"contract IJoeFactory\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"tokenX\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"tokenY\",\"type\":\"address\"},{\"internalType\":\"uint16\",\"name\":\"binStep\",\"type\":\"uint16\"},{\"internalType\":\"uint256\",\"name\":\"amountXMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountYMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"ids\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"removeLiquidity\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountX\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountY\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"token\",\"type\":\"address\"},{\"internalType\":\"uint16\",\"name\":\"binStep\",\"type\":\"uint16\"},{\"internalType\":\"uint256\",\"name\":\"amountTokenMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountAVAXMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"ids\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"},{\"internalType\":\"address payable\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"removeLiquidityAVAX\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountToken\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountAVAX\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapAVAXForExactTokens\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"amountsIn\",\"type\":\"uint256[]\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOutMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactAVAXForTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOutMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactAVAXForTokensSupportingFeeOnTransferTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMinAVAX\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address payable\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactTokensForAVAX\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMinAVAX\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address payable\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactTokensForAVAXSupportingFeeOnTransferTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactTokensForTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactTokensForTokensSupportingFeeOnTransferTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountInMax\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address payable\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapTokensForExactAVAX\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"amountsIn\",\"type\":\"uint256[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountInMax\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapTokensForExactTokens\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"amountsIn\",\"type\":\"uint256[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"token\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"sweep\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ILBToken\",\"name\":\"_lbToken\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"uint256[]\",\"name\":\"_ids\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"_amounts\",\"type\":\"uint256[]\"}],\"name\":\"sweepLBToken\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"wavax\",\"outputs\":[{\"internalType\":\"contract IWAVAX\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"Trader Joe\",\"kind\":\"dev\",\"methods\":{},\"title\":\"Liquidity Book Router Interface\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"Required interface of LBRouter contract\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/joe-v2/src/interfaces/ILBRouter.sol\":\"ILBRouter\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":3xcaliSwap/=lib/3xcaliSwap/contracts/\",\":3xcaliswap/=lib/3xcaliswap/\",\":@core/=lib/3xcaliSwap/contracts/core/\",\":@openzeppelin/=lib/3xcaliSwap/node_modules/@openzeppelin/\",\":@solmate/=lib/3xcaliSwap/node_modules/solmate/src/\",\":LayerZero/=lib/contracts/lib/LayerZero/contracts/\",\":chainlink/=lib/chainlink/\",\":contracts/=lib/contracts/contracts/\",\":create3-factory/=lib/create3-factory/src/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":fraxlend/=lib/fraxlend/\",\":joe-v2/=lib/joe-v2/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/\",\":pancake-smart-contracts/=lib/pancake-smart-contracts/\",\":pancake/=lib/pancake-smart-contracts/\",\":solmate/=lib/solmate/\",\":spookyswap-core/=lib/spookyswap-core/contracts/\",\":spookyswap/=lib/spookyswap-core/\",\":sushiswap/=lib/sushiswap/\",\":traderjoe/=lib/joe-v2/src/\",\":uniswap/v3-core/=lib/v3-core/\",\":uniswap/v3-periphery/=lib/v3-periphery/\",\":utils/=lib/contracts/test/utils/\",\":v3-core/=lib/v3-core/\",\":v3-periphery/=lib/v3-periphery/contracts/\",\":velodrome/=lib/contracts/\"]},\"sources\":{\"lib/joe-v2/src/LBErrors.sol\":{\"keccak256\":\"0xca49345b5935606cea5709362f64ed6be41379aaefc3f399e75e32aee927e1fb\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1c54ad3c6e59971afb23f243397f25b0cd376e5abfb0aea7dbb90d6fade567b0\",\"dweb:/ipfs/Qmf1ysYG1ErcfSo63mBPyYDL4yHmfkLaVXRwd98DSRs2J6\"]},\"lib/joe-v2/src/interfaces/IJoeFactory.sol\":{\"keccak256\":\"0xd1f116ee8133101c2c07112dfe871fabdcb182f9b84468765b58a5136d661ba6\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://39e15e3db5f37a23410e6917d0f006390bfe48bb7e1549242e2927c498ee9c70\",\"dweb:/ipfs/QmapjmXv1ouKPGL7vvLYaaFakxZ3YJb55LdNe2nyN8RZaz\"]},\"lib/joe-v2/src/interfaces/ILBFactory.sol\":{\"keccak256\":\"0x46243cde713b1e026ec6dd77638cfbe20032f1dc21f82478da2abfaa162a30c1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f5c2dc5da4d91723e2a5a5bd9a48a85baa176b23c227a8b09157e22e1b9ec1e4\",\"dweb:/ipfs/QmcM4XRxBV57PCXtVdUpN8HtQbV797YHbcRmhQyaftJ5Zm\"]},\"lib/joe-v2/src/interfaces/ILBFlashLoanCallback.sol\":{\"keccak256\":\"0xef5b80d7079c596e2beec22d4a9c416e90a5a65246c2300abb3d5fc3ca24ef92\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4b3e60ef1abba0231870c9c44db0e80e599a8f3b52324f5635fc623067dda931\",\"dweb:/ipfs/QmTXVh2ScSLp3ZAG4yJrKUVwH44DQX1Gocgh8F1LoBGF76\"]},\"lib/joe-v2/src/interfaces/ILBPair.sol\":{\"keccak256\":\"0xaadfbc5ee6e3d6888f99fa4f3de19d01e05f633527b5a575ab1bb65d19a9790e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://12c75d1e7cab8bd1ee8868e28b06a2b209b20deb34b47980bddbeb63e65e9c2a\",\"dweb:/ipfs/QmSeBFpHLNXpe97Nip832fSoPp84wED1ttDqYKMupPnT2a\"]},\"lib/joe-v2/src/interfaces/ILBRouter.sol\":{\"keccak256\":\"0xc71ea4547322d3d101f4f668113992d1dfe185c481ee440d98ecf194d93a2f66\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba414f175bc8df9c8a8ecd3f7fbdc6c3bb67e95c7a22047127cb4d33f2576c56\",\"dweb:/ipfs/QmfHFej5gooAfk64w8LSef4aQq8cKKMuVLLBT7FtFyUiYh\"]},\"lib/joe-v2/src/interfaces/ILBToken.sol\":{\"keccak256\":\"0x9d8eb670a464781b6604a7b33c2cda34630de72f843bfbc72ebe719cdbd8503e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2c5a3d21b0d8fc8fd7520bac2543eaeefe6ed022ee2c5d805e6295efa1d3b26e\",\"dweb:/ipfs/QmPxXfzGLjLEEfQz9MUmp9D8JkhXH8DB7wiWChvfj68tEN\"]},\"lib/joe-v2/src/interfaces/IPendingOwnable.sol\":{\"keccak256\":\"0xd6ffa5a490241627323c3b9898e067e892dc4ef2bd9d0368909036e15d4e44de\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://daf7fc6886c11586abe9785a0985bee88d50a962bc91d95531bffdba7bd4a6d4\",\"dweb:/ipfs/QmYSsC5VU6bcaohYbxZ265HqPfViNFUnh1STqHj31STAAk\"]},\"lib/joe-v2/src/interfaces/IWAVAX.sol\":{\"keccak256\":\"0x1f8ebff6f27034bbca9fa348f926452891b3b7093db1fb754d1c9312ef57ae61\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://bbc0c2d30ef1db99028d2b113600ccae5875ed56b0bc828a1bbad6a2a018001d\",\"dweb:/ipfs/QmZTu9CfaK7ZhbVAgE5U6KUDa1zSKLeTejbJyqSZ1eJAu7\"]},\"lib/joe-v2/src/libraries/Constants.sol\":{\"keccak256\":\"0x98e575af75e763de6a7cd48a01eaf5289e8c6b9ef80de6fc7f571cb5b12002fc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3ef7da2104932c56afb7b0d2cea200c8637ea1d146aba526097aaa69e467cfee\",\"dweb:/ipfs/QmUQJWNRqFzhoW9FwNvZprxoHwL2KUTUvqiHwhCTREtq2B\"]},\"lib/joe-v2/src/libraries/FeeHelper.sol\":{\"keccak256\":\"0x322e5d1d225dc2398083d1cd64ba30a6eea785a9e3ed9d6e8aaf07d61e43c7c8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cff2c4aceeaf0db44ef579387e44c0e5ea572f3fb9d70e75238026c4c5771f8a\",\"dweb:/ipfs/QmVbFrxwJhGFZqUszkCY1GocF985ddUx6oW3UhwFzetKaP\"]},\"lib/joe-v2/src/libraries/SafeCast.sol\":{\"keccak256\":\"0x77ead8b9b70bc9c7b9ad84558fdd33dc02b23e04968c0dcbea103775540ca19f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9b21773b34387a4d9f8c8809558422dbed2f57e608333af4976d7fde9365ab75\",\"dweb:/ipfs/QmepKEKHiXKjwwrdE7k8ESR22zBYujtDzAcCQKDiVpbnmJ\"]},\"lib/joe-v2/src/libraries/SafeMath.sol\":{\"keccak256\":\"0x27eef85c25e2ade4742b1b69926cad838261637a7202ac8b8fa40e990aa2223f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://614f875588e48380d48848b8fc5a048c13470a6f06af13f8eee4ccf3bcacbe32\",\"dweb:/ipfs/QmbZ8qKgqAnQuZZJpAb9XPr1pr5aFD1qS5Cu4vcojPrDQq\"]},\"lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34\",\"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr\"]},\"lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol\":{\"keccak256\":\"0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://be161e54f24e5c6fae81a12db1a8ae87bc5ae1b0ddc805d82a1440a68455088f\",\"dweb:/ipfs/QmP7C3CHdY9urF4dEMb9wmsp1wMxHF6nhA2yQE5SKiPAdy\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.15+commit.e14f2714\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"components\":[{\"internalType\":\"contract IERC20\",\"name\":\"tokenX\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"tokenY\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"binStep\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountX\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountY\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountXMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountYMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"activeIdDesired\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"idSlippage\",\"type\":\"uint256\"},{\"internalType\":\"int256[]\",\"name\":\"deltaIds\",\"type\":\"int256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"distributionX\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"distributionY\",\"type\":\"uint256[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"internalType\":\"struct ILBRouter.LiquidityParameters\",\"name\":\"liquidityParameters\",\"type\":\"tuple\"}],\"name\":\"addLiquidity\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"depositIds\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"liquidityMinted\",\"type\":\"uint256[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"contract IERC20\",\"name\":\"tokenX\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"tokenY\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"binStep\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountX\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountY\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountXMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountYMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"activeIdDesired\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"idSlippage\",\"type\":\"uint256\"},{\"internalType\":\"int256[]\",\"name\":\"deltaIds\",\"type\":\"int256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"distributionX\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"distributionY\",\"type\":\"uint256[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"internalType\":\"struct ILBRouter.LiquidityParameters\",\"name\":\"liquidityParameters\",\"type\":\"tuple\"}],\"name\":\"addLiquidityAVAX\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"depositIds\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"liquidityMinted\",\"type\":\"uint256[]\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"tokenX\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"tokenY\",\"type\":\"address\"},{\"internalType\":\"uint24\",\"name\":\"activeId\",\"type\":\"uint24\"},{\"internalType\":\"uint16\",\"name\":\"binStep\",\"type\":\"uint16\"}],\"name\":\"createLBPair\",\"outputs\":[{\"internalType\":\"contract ILBPair\",\"name\":\"pair\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"factory\",\"outputs\":[{\"internalType\":\"contract ILBFactory\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ILBPair\",\"name\":\"LBPair\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"}],\"name\":\"getIdFromPrice\",\"outputs\":[{\"internalType\":\"uint24\",\"name\":\"\",\"type\":\"uint24\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ILBPair\",\"name\":\"LBPair\",\"type\":\"address\"},{\"internalType\":\"uint24\",\"name\":\"id\",\"type\":\"uint24\"}],\"name\":\"getPriceFromId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ILBPair\",\"name\":\"LBPair\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"swapForY\",\"type\":\"bool\"}],\"name\":\"getSwapIn\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"feesIn\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ILBPair\",\"name\":\"LBPair\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"swapForY\",\"type\":\"bool\"}],\"name\":\"getSwapOut\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"feesIn\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"oldFactory\",\"outputs\":[{\"internalType\":\"contract IJoeFactory\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"tokenX\",\"type\":\"address\"},{\"internalType\":\"contract IERC20\",\"name\":\"tokenY\",\"type\":\"address\"},{\"internalType\":\"uint16\",\"name\":\"binStep\",\"type\":\"uint16\"},{\"internalType\":\"uint256\",\"name\":\"amountXMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountYMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"ids\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"removeLiquidity\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountX\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountY\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"token\",\"type\":\"address\"},{\"internalType\":\"uint16\",\"name\":\"binStep\",\"type\":\"uint16\"},{\"internalType\":\"uint256\",\"name\":\"amountTokenMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountAVAXMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"ids\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"},{\"internalType\":\"address payable\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"removeLiquidityAVAX\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountToken\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountAVAX\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapAVAXForExactTokens\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"amountsIn\",\"type\":\"uint256[]\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOutMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactAVAXForTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOutMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactAVAXForTokensSupportingFeeOnTransferTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMinAVAX\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address payable\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactTokensForAVAX\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMinAVAX\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address payable\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactTokensForAVAXSupportingFeeOnTransferTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactTokensForTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMin\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapExactTokensForTokensSupportingFeeOnTransferTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountInMax\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address payable\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapTokensForExactAVAX\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"amountsIn\",\"type\":\"uint256[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountInMax\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"pairBinSteps\",\"type\":\"uint256[]\"},{\"internalType\":\"contract IERC20[]\",\"name\":\"tokenPath\",\"type\":\"address[]\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"}],\"name\":\"swapTokensForExactTokens\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"amountsIn\",\"type\":\"uint256[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"token\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"sweep\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ILBToken\",\"name\":\"_lbToken\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"uint256[]\",\"name\":\"_ids\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"_amounts\",\"type\":\"uint256[]\"}],\"name\":\"sweepLBToken\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"wavax\",\"outputs\":[{\"internalType\":\"contract IWAVAX\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"Trader Joe\",\"kind\":\"dev\",\"methods\":{},\"title\":\"Liquidity Book Router Interface\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"Required interface of LBRouter contract\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/joe-v2/src/interfaces/ILBRouter.sol\":\"ILBRouter\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":3xcaliSwap/=lib/3xcaliSwap/contracts/\",\":3xcaliswap/=lib/3xcaliswap/\",\":@core/=lib/3xcaliSwap/contracts/core/\",\":@openzeppelin/=lib/3xcaliSwap/node_modules/@openzeppelin/\",\":@solmate/=lib/3xcaliSwap/node_modules/solmate/src/\",\":LayerZero/=lib/contracts/lib/LayerZero/contracts/\",\":chainlink/=lib/chainlink/\",\":contracts/=lib/contracts/contracts/\",\":create3-factory/=lib/create3-factory/src/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":fraxlend/=lib/fraxlend/\",\":joe-v2/=lib/joe-v2/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/\",\":pancake-smart-contracts/=lib/pancake-smart-contracts/\",\":pancake/=lib/pancake-smart-contracts/\",\":solmate/=lib/solmate/\",\":spookyswap-core/=lib/spookyswap-core/contracts/\",\":spookyswap/=lib/spookyswap-core/\",\":sushiswap/=lib/sushiswap/\",\":traderjoe/=lib/joe-v2/src/\",\":uniswap/v3-core/=lib/v3-core/\",\":uniswap/v3-periphery/=lib/v3-periphery/\",\":utils/=lib/contracts/test/utils/\",\":v3-core/=lib/v3-core/\",\":v3-periphery/=lib/v3-periphery/contracts/\",\":velodrome/=lib/contracts/\"]},\"sources\":{\"lib/joe-v2/src/LBErrors.sol\":{\"keccak256\":\"0xca49345b5935606cea5709362f64ed6be41379aaefc3f399e75e32aee927e1fb\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1c54ad3c6e59971afb23f243397f25b0cd376e5abfb0aea7dbb90d6fade567b0\",\"dweb:/ipfs/Qmf1ysYG1ErcfSo63mBPyYDL4yHmfkLaVXRwd98DSRs2J6\"]},\"lib/joe-v2/src/interfaces/IJoeFactory.sol\":{\"keccak256\":\"0xd1f116ee8133101c2c07112dfe871fabdcb182f9b84468765b58a5136d661ba6\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://39e15e3db5f37a23410e6917d0f006390bfe48bb7e1549242e2927c498ee9c70\",\"dweb:/ipfs/QmapjmXv1ouKPGL7vvLYaaFakxZ3YJb55LdNe2nyN8RZaz\"]},\"lib/joe-v2/src/interfaces/ILBFactory.sol\":{\"keccak256\":\"0x46243cde713b1e026ec6dd77638cfbe20032f1dc21f82478da2abfaa162a30c1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f5c2dc5da4d91723e2a5a5bd9a48a85baa176b23c227a8b09157e22e1b9ec1e4\",\"dweb:/ipfs/QmcM4XRxBV57PCXtVdUpN8HtQbV797YHbcRmhQyaftJ5Zm\"]},\"lib/joe-v2/src/interfaces/ILBFlashLoanCallback.sol\":{\"keccak256\":\"0xef5b80d7079c596e2beec22d4a9c416e90a5a65246c2300abb3d5fc3ca24ef92\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4b3e60ef1abba0231870c9c44db0e80e599a8f3b52324f5635fc623067dda931\",\"dweb:/ipfs/QmTXVh2ScSLp3ZAG4yJrKUVwH44DQX1Gocgh8F1LoBGF76\"]},\"lib/joe-v2/src/interfaces/ILBPair.sol\":{\"keccak256\":\"0xaadfbc5ee6e3d6888f99fa4f3de19d01e05f633527b5a575ab1bb65d19a9790e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://12c75d1e7cab8bd1ee8868e28b06a2b209b20deb34b47980bddbeb63e65e9c2a\",\"dweb:/ipfs/QmSeBFpHLNXpe97Nip832fSoPp84wED1ttDqYKMupPnT2a\"]},\"lib/joe-v2/src/interfaces/ILBRouter.sol\":{\"keccak256\":\"0xc71ea4547322d3d101f4f668113992d1dfe185c481ee440d98ecf194d93a2f66\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba414f175bc8df9c8a8ecd3f7fbdc6c3bb67e95c7a22047127cb4d33f2576c56\",\"dweb:/ipfs/QmfHFej5gooAfk64w8LSef4aQq8cKKMuVLLBT7FtFyUiYh\"]},\"lib/joe-v2/src/interfaces/ILBToken.sol\":{\"keccak256\":\"0x9d8eb670a464781b6604a7b33c2cda34630de72f843bfbc72ebe719cdbd8503e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2c5a3d21b0d8fc8fd7520bac2543eaeefe6ed022ee2c5d805e6295efa1d3b26e\",\"dweb:/ipfs/QmPxXfzGLjLEEfQz9MUmp9D8JkhXH8DB7wiWChvfj68tEN\"]},\"lib/joe-v2/src/interfaces/IPendingOwnable.sol\":{\"keccak256\":\"0xd6ffa5a490241627323c3b9898e067e892dc4ef2bd9d0368909036e15d4e44de\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://daf7fc6886c11586abe9785a0985bee88d50a962bc91d95531bffdba7bd4a6d4\",\"dweb:/ipfs/QmYSsC5VU6bcaohYbxZ265HqPfViNFUnh1STqHj31STAAk\"]},\"lib/joe-v2/src/interfaces/IWAVAX.sol\":{\"keccak256\":\"0x1f8ebff6f27034bbca9fa348f926452891b3b7093db1fb754d1c9312ef57ae61\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://bbc0c2d30ef1db99028d2b113600ccae5875ed56b0bc828a1bbad6a2a018001d\",\"dweb:/ipfs/QmZTu9CfaK7ZhbVAgE5U6KUDa1zSKLeTejbJyqSZ1eJAu7\"]},\"lib/joe-v2/src/libraries/Constants.sol\":{\"keccak256\":\"0x98e575af75e763de6a7cd48a01eaf5289e8c6b9ef80de6fc7f571cb5b12002fc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3ef7da2104932c56afb7b0d2cea200c8637ea1d146aba526097aaa69e467cfee\",\"dweb:/ipfs/QmUQJWNRqFzhoW9FwNvZprxoHwL2KUTUvqiHwhCTREtq2B\"]},\"lib/joe-v2/src/libraries/FeeHelper.sol\":{\"keccak256\":\"0x322e5d1d225dc2398083d1cd64ba30a6eea785a9e3ed9d6e8aaf07d61e43c7c8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cff2c4aceeaf0db44ef579387e44c0e5ea572f3fb9d70e75238026c4c5771f8a\",\"dweb:/ipfs/QmVbFrxwJhGFZqUszkCY1GocF985ddUx6oW3UhwFzetKaP\"]},\"lib/joe-v2/src/libraries/SafeCast.sol\":{\"keccak256\":\"0x77ead8b9b70bc9c7b9ad84558fdd33dc02b23e04968c0dcbea103775540ca19f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9b21773b34387a4d9f8c8809558422dbed2f57e608333af4976d7fde9365ab75\",\"dweb:/ipfs/QmepKEKHiXKjwwrdE7k8ESR22zBYujtDzAcCQKDiVpbnmJ\"]},\"lib/joe-v2/src/libraries/SafeMath.sol\":{\"keccak256\":\"0x27eef85c25e2ade4742b1b69926cad838261637a7202ac8b8fa40e990aa2223f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://614f875588e48380d48848b8fc5a048c13470a6f06af13f8eee4ccf3bcacbe32\",\"dweb:/ipfs/QmbZ8qKgqAnQuZZJpAb9XPr1pr5aFD1qS5Cu4vcojPrDQq\"]},\"lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34\",\"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr\"]},\"lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol\":{\"keccak256\":\"0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://be161e54f24e5c6fae81a12db1a8ae87bc5ae1b0ddc805d82a1440a68455088f\",\"dweb:/ipfs/QmP7C3CHdY9urF4dEMb9wmsp1wMxHF6nhA2yQE5SKiPAdy\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
-      "version": "0.8.17+commit.8df45f5f"
+      "version": "0.8.15+commit.e14f2714"
     },
     "language": "Solidity",
     "output": {
@@ -2630,9 +2630,6 @@
                   "pathNode": {
                     "id": 25717,
                     "name": "IERC20",
-                    "nameLocations": [
-                      "1274:6:24"
-                    ],
                     "nodeType": "IdentifierPath",
                     "referencedDeclaration": 28393,
                     "src": "1274:6:24"
@@ -2667,9 +2664,6 @@
                   "pathNode": {
                     "id": 25720,
                     "name": "IERC20",
-                    "nameLocations": [
-                      "1297:6:24"
-                    ],
                     "nodeType": "IdentifierPath",
                     "referencedDeclaration": 28393,
                     "src": "1297:6:24"
@@ -3083,9 +3077,6 @@
                     "pathNode": {
                       "id": 25752,
                       "name": "ILBFactory",
-                      "nameLocations": [
-                        "1696:10:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25308,
                       "src": "1696:10:24"
@@ -3149,9 +3140,6 @@
                     "pathNode": {
                       "id": 25758,
                       "name": "IJoeFactory",
-                      "nameLocations": [
-                        "1759:11:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 24544,
                       "src": "1759:11:24"
@@ -3215,9 +3203,6 @@
                     "pathNode": {
                       "id": 25764,
                       "name": "IWAVAX",
-                      "nameLocations": [
-                        "1818:6:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 26285,
                       "src": "1818:6:24"
@@ -3275,9 +3260,6 @@
                     "pathNode": {
                       "id": 25769,
                       "name": "ILBPair",
-                      "nameLocations": [
-                        "1856:7:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25709,
                       "src": "1856:7:24"
@@ -3396,9 +3378,6 @@
                     "pathNode": {
                       "id": 25779,
                       "name": "ILBPair",
-                      "nameLocations": [
-                        "1948:7:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25709,
                       "src": "1948:7:24"
@@ -3517,9 +3496,6 @@
                     "pathNode": {
                       "id": 25789,
                       "name": "ILBPair",
-                      "nameLocations": [
-                        "2041:7:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25709,
                       "src": "2041:7:24"
@@ -3692,9 +3668,6 @@
                     "pathNode": {
                       "id": 25803,
                       "name": "ILBPair",
-                      "nameLocations": [
-                        "2204:7:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25709,
                       "src": "2204:7:24"
@@ -3867,9 +3840,6 @@
                     "pathNode": {
                       "id": 25817,
                       "name": "IERC20",
-                      "nameLocations": [
-                        "2369:6:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 28393,
                       "src": "2369:6:24"
@@ -3904,9 +3874,6 @@
                     "pathNode": {
                       "id": 25820,
                       "name": "IERC20",
-                      "nameLocations": [
-                        "2392:6:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 28393,
                       "src": "2392:6:24"
@@ -4002,9 +3969,6 @@
                     "pathNode": {
                       "id": 25828,
                       "name": "ILBPair",
-                      "nameLocations": [
-                        "2479:7:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25709,
                       "src": "2479:7:24"
@@ -4062,9 +4026,6 @@
                     "pathNode": {
                       "id": 25833,
                       "name": "LiquidityParameters",
-                      "nameLocations": [
-                        "2521:19:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25750,
                       "src": "2521:19:24"
@@ -4201,9 +4162,6 @@
                     "pathNode": {
                       "id": 25845,
                       "name": "LiquidityParameters",
-                      "nameLocations": [
-                        "2700:19:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25750,
                       "src": "2700:19:24"
@@ -4340,9 +4298,6 @@
                     "pathNode": {
                       "id": 25857,
                       "name": "IERC20",
-                      "nameLocations": [
-                        "2903:6:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 28393,
                       "src": "2903:6:24"
@@ -4377,9 +4332,6 @@
                     "pathNode": {
                       "id": 25860,
                       "name": "IERC20",
-                      "nameLocations": [
-                        "2926:6:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 28393,
                       "src": "2926:6:24"
@@ -4706,9 +4658,6 @@
                     "pathNode": {
                       "id": 25886,
                       "name": "IERC20",
-                      "nameLocations": [
-                        "3232:6:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 28393,
                       "src": "3232:6:24"
@@ -5126,9 +5075,6 @@
                       "pathNode": {
                         "id": 25919,
                         "name": "IERC20",
-                        "nameLocations": [
-                          "3659:6:24"
-                        ],
                         "nodeType": "IdentifierPath",
                         "referencedDeclaration": 28393,
                         "src": "3659:6:24"
@@ -5374,9 +5320,6 @@
                       "pathNode": {
                         "id": 25939,
                         "name": "IERC20",
-                        "nameLocations": [
-                          "3920:6:24"
-                        ],
                         "nodeType": "IdentifierPath",
                         "referencedDeclaration": 28393,
                         "src": "3920:6:24"
@@ -5595,9 +5538,6 @@
                       "pathNode": {
                         "id": 25957,
                         "name": "IERC20",
-                        "nameLocations": [
-                          "4159:6:24"
-                        ],
                         "nodeType": "IdentifierPath",
                         "referencedDeclaration": 28393,
                         "src": "4159:6:24"
@@ -5843,9 +5783,6 @@
                       "pathNode": {
                         "id": 25977,
                         "name": "IERC20",
-                        "nameLocations": [
-                          "4426:6:24"
-                        ],
                         "nodeType": "IdentifierPath",
                         "referencedDeclaration": 28393,
                         "src": "4426:6:24"
@@ -6100,9 +6037,6 @@
                       "pathNode": {
                         "id": 25998,
                         "name": "IERC20",
-                        "nameLocations": [
-                          "4692:6:24"
-                        ],
                         "nodeType": "IdentifierPath",
                         "referencedDeclaration": 28393,
                         "src": "4692:6:24"
@@ -6330,9 +6264,6 @@
                       "pathNode": {
                         "id": 26017,
                         "name": "IERC20",
-                        "nameLocations": [
-                          "4937:6:24"
-                        ],
                         "nodeType": "IdentifierPath",
                         "referencedDeclaration": 28393,
                         "src": "4937:6:24"
@@ -6587,9 +6518,6 @@
                       "pathNode": {
                         "id": 26038,
                         "name": "IERC20",
-                        "nameLocations": [
-                          "5242:6:24"
-                        ],
                         "nodeType": "IdentifierPath",
                         "referencedDeclaration": 28393,
                         "src": "5242:6:24"
@@ -6835,9 +6763,6 @@
                       "pathNode": {
                         "id": 26058,
                         "name": "IERC20",
-                        "nameLocations": [
-                          "5532:6:24"
-                        ],
                         "nodeType": "IdentifierPath",
                         "referencedDeclaration": 28393,
                         "src": "5532:6:24"
@@ -7056,9 +6981,6 @@
                       "pathNode": {
                         "id": 26076,
                         "name": "IERC20",
-                        "nameLocations": [
-                          "5800:6:24"
-                        ],
                         "nodeType": "IdentifierPath",
                         "referencedDeclaration": 28393,
                         "src": "5800:6:24"
@@ -7213,9 +7135,6 @@
                     "pathNode": {
                       "id": 26089,
                       "name": "IERC20",
-                      "nameLocations": [
-                        "5953:6:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 28393,
                       "src": "5953:6:24"
@@ -7334,9 +7253,6 @@
                     "pathNode": {
                       "id": 26099,
                       "name": "ILBToken",
-                      "nameLocations": [
-                        "6062:8:24"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 26232,
                       "src": "6062:8:24"
