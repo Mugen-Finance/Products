@@ -9,14 +9,14 @@ import "../src/CrossChainSwaps/FeeCollector.sol";
 contract ArbitrumSwapsTest is Test {
     ArbitrumSwaps arbitrumSwaps;
     FeeCollector feeCollector;
-    address USDCWhale = address(0x62ED28802362bB79eF4cEe858d4F7aCA5eDd0490); // 1.6 million USDC
-    address GMXWhale = address(0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a); //25k GMX
+    address USDCWhale = address(0x7B7B957c284C2C227C980d6E2F804311947b84d0); // 1.6 million USDC
+    address GMXWhale = address(0x921e374c304e681ff4b87b9e239cB6C03147C3E1); //25k GMX
     address usdc = address(0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8);
     address gmx = address(0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a);
     address weth = address(0x82aF49447D8a07e3bd95BD0d56f35241523fBab1);
     address dai = address(0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1);
     address xcal = address(0xd2568acCD10A4C98e87c44E9920360031ad89fCB);
-
+    
     function setUp() public {
         feeCollector = new FeeCollector();
         arbitrumSwaps = new ArbitrumSwaps(0x82aF49447D8a07e3bd95BD0d56f35241523fBab1, 
@@ -27,7 +27,7 @@ contract ArbitrumSwapsTest is Test {
         0xD158bd9E8b6efd3ca76830B66715Aa2b7Bad2218,
         IStargateRouter(0x53Bf833A5d6c4ddA888F69c22C88C9f356a41614));
         vm.prank(USDCWhale);
-        IERC20(usdc).transfer(address(this), 1e7);
+        IERC20(usdc).transfer(address(this), 10000e7);
         vm.prank(GMXWhale);
         IERC20(gmx).transfer(address(this), 5e18);
     }
@@ -143,17 +143,18 @@ contract ArbitrumSwapsTest is Test {
     function testArbitrumWethWithdraw() public {}
 
     function testArbitrumStargate() public {
+        tokenApprovals();
         uint8[] memory steps = new uint8[](2);
         steps[0] = 1;
-        steps[1] = 9;
+        steps[1] = 14;
 
         bytes[] memory data = new bytes[](2);
 
         StargateArbitrum.StargateParams memory stargateParams = StargateArbitrum.StargateParams(
-            1, usdc, 1, 1, 100e6, 99e6, 1e16, address(this), address(this), 1e15, bytes32(0x0)
+            101, address(usdc), 1, 2, 10000e7, 0, 1e15, address(this), address(this), 1000000, bytes32(0x0)
         );
         /**
-         * uint16 dstChainId; // stargate dst chain id
+         *     uint16 dstChainId; // stargate dst chain id
          *     address token; // token getting bridged
          *     uint256 srcPoolId; // stargate src pool id
          *     uint256 dstPoolId; // stargate dst pool id
@@ -166,10 +167,14 @@ contract ArbitrumSwapsTest is Test {
          *     bytes32 srcContext; //
          */
 
-        data[0] = abi.encode(address(usdc), 100e6);
-        data[1] = abi.encode(stargateParams, steps, data[0]);
+        uint256[] memory amounts = new uint256[](1);
+        address[] memory tokens = new address[](1);
+        amounts[0] = 10000e7;
+        tokens[0] = address(usdc);
+        data[0] = abi.encode(tokens, amounts);
+        data[1] = abi.encode(stargateParams, steps, data);
 
-        arbitrumSwaps.arbitrumSwaps{value: 1e18}(steps, data);
+        arbitrumSwaps.arbitrumSwaps{value: 1 ether}(steps, data);
     }
 
     function tokenApprovals() internal {

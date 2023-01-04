@@ -31,9 +31,9 @@ contract AvaxSwapsTest is Test {
         steps[1] = 11;
         steps[2] = 13;
 
-        address[] memory path = new address[](2);
-        path[0] = address(0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7);
-        path[1] = address(0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E);
+        IERC20[] memory path = new IERC20[](2);
+        path[0] = IERC20(0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7);
+        path[1] = IERC20(0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E);
 
         uint256[] memory binSteps = new uint256[](1);
         binSteps[0] = 20;
