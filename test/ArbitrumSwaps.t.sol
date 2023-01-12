@@ -4,6 +4,7 @@ pragma solidity ^0.8.10;
 
 import "forge-std/Test.sol";
 import "../src/CrossChainSwaps/Chains/Arbitrum/ArbitrumSwaps.sol";
+import "../src/CrossChainSwaps/adapters/SushiAdapter.sol";
 import "../src/CrossChainSwaps/FeeCollector.sol";
 
 contract ArbitrumSwapsTest is Test {
@@ -22,7 +23,7 @@ contract ArbitrumSwapsTest is Test {
         arbitrumSwaps = new ArbitrumSwaps(0x82aF49447D8a07e3bd95BD0d56f35241523fBab1, 
         ISwapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564), 
         address(feeCollector), 
-        0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac, 
+        0xc35DADB65012eC5796536bD9864eD8773aBc74C4, 
         0xe18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303, 
         0xD158bd9E8b6efd3ca76830B66715Aa2b7Bad2218,
         IStargateRouter(0x53Bf833A5d6c4ddA888F69c22C88C9f356a41614));
@@ -115,7 +116,34 @@ contract ArbitrumSwapsTest is Test {
         assertGt(IERC20(dai).balanceOf(address(arbitrumSwaps)), 0);
     }
 
-    function testArbitrumSushi() public {}
+    function testArbitrumSushi() public {
+        uint8[] memory steps = new uint8[](3);
+        bytes[] memory data = new bytes[](3);
+
+        steps[0] = 2;
+        steps[1] = 5;
+        steps[2] = 13;
+
+        address[] memory route = new address[](2);
+        route[0] = address(weth);
+        route[1] = address(usdc);
+
+        SushiLegacyAdapter.SushiParams[] memory params = new ArbitrumSwaps.SushiParams[](1);
+
+        params[0] = SushiLegacyAdapter.SushiParams(10 ether, 13e8, route, true);
+
+        ArbitrumSwaps.SrcTransferParams[] memory srcParams = new ArbitrumSwaps.SrcTransferParams[](1);
+
+        srcParams[0] = ArbitrumSwaps.SrcTransferParams({token: address(usdc), receiver: address(this), amount: 0});
+
+        data[0] = abi.encode(10 ether);
+        data[1] = abi.encode(params);
+        data[2] = abi.encode(srcParams);
+
+        arbitrumSwaps.arbitrumSwaps{value: 10 ether}(steps, data);
+        assertGt(IERC20(address(usdc)).balanceOf(address(this)), 13e8);
+        assertEq(IERC20(address(usdc)).balanceOf(address(arbitrumSwaps)), 0);
+    }
 
     function testArbitrumXcal() public {
         uint8[] memory steps = new uint8[](2);
@@ -138,9 +166,39 @@ contract ArbitrumSwapsTest is Test {
         emit log_uint(IERC20(xcal).balanceOf(address(arbitrumSwaps)));
     }
 
-    function testArbitrumSRCTransfer() public {}
+    function testArbitrumSRCTransfer() public {
+        uint8[] memory steps = new uint8[](2);
+        bytes[] memory data = new bytes[](2);
+        ArbitrumSwaps.SrcTransferParams[] memory params = new ArbitrumSwaps.SrcTransferParams[](1);
 
-    function testArbitrumWethWithdraw() public {}
+        //params[0] = ArbitrumSwaps.SrcTransferParams({token: address(weth), receiver: address(this), amount: 0});
+        params[0] = ArbitrumSwaps.SrcTransferParams({token: address(weth), receiver: address(this), amount: 10 ether});
+
+        steps[0] = 2;
+        steps[1] = 13;
+
+        data[0] = abi.encode(10 ether);
+        data[1] = abi.encode(params);
+
+        arbitrumSwaps.arbitrumSwaps{value: 10 ether}(steps, data);
+        assertEq(IERC20(address(weth)).balanceOf(address(this)), (10 ether * .9995));
+    }
+
+    function testArbitrumWethWithdraw() public {
+        uint8[] memory steps = new uint8[](2);
+        bytes[] memory data = new bytes[](2);
+        uint256 balanceBefore = address(this).balance;
+
+        steps[0] = 2;
+        steps[1] = 12; 
+
+        data[0] = abi.encode(10 ether);
+        data[1] = abi.encode(address(this), 0);
+
+        arbitrumSwaps.arbitrumSwaps{value: 10 ether}(steps, data);
+        assertEq(address(this).balance, balanceBefore);
+        assertEq(IERC20(address(weth)).balanceOf(address(arbitrumSwaps)), 0 ether);
+    }
 
     function testArbitrumStargate() public {
         tokenApprovals();
@@ -151,7 +209,7 @@ contract ArbitrumSwapsTest is Test {
         bytes[] memory data = new bytes[](2);
 
         StargateArbitrum.StargateParams memory stargateParams = StargateArbitrum.StargateParams(
-            101, address(usdc), 1, 2, 10000e7, 0, 1e15, address(this), address(this), 1000000, bytes32(0x0)
+            101, address(usdc), 1, 2, 10000e7, 0, 1e15, address(this), address(this), 500000, bytes32(0x0)
         );
         /**
          *     uint16 dstChainId; // stargate dst chain id
