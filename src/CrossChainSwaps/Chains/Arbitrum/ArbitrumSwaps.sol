@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: ISC
 
-pragma solidity ^0.8.13;
+pragma solidity 0.8.15;
 
 import "../../adapters/UniswapAdapter.sol";
 import "../../adapters/SushiAdapter.sol";
@@ -11,11 +11,13 @@ import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IArbitrumSwaps} from "./interfaces/IArbitrumSwaps.sol";
 
-contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, StargateArbitrum, IArbitrumSwaps {
+contract ArbitrumSwaps is UniswapAdapter, SushiAdapter, XCaliburAdapter, StargateArbitrum, IArbitrumSwaps {
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
     error WithdrawFailed();
+
+    event FeePaid(address _token, uint256 _fee);
 
     IWETH9 internal immutable weth;
     address public feeCollector;
@@ -57,7 +59,7 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
         IStargateRouter _stargateRouter
     )
         UniswapAdapter(_swapRouter)
-        SushiLegacyAdapter(_factory, _pairCodeHash)
+        SushiAdapter(_factory, _pairCodeHash)
         XCaliburAdapter(_xcalFactory, _weth)
         StargateArbitrum(_stargateRouter)
     {
@@ -65,7 +67,7 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
         feeCollector = _feeCollector;
     }
 
-    function arbitrumSwaps(uint8[] calldata steps, bytes[] calldata data) external payable lock {
+    function arbitrumSwaps(uint8[] calldata steps, bytes[] calldata data) external payable override lock {
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {
@@ -127,6 +129,10 @@ contract ArbitrumSwaps is UniswapAdapter, SushiLegacyAdapter, XCaliburAdapter, S
         IERC20(_token).safeTransfer(feeCollector, fee);
         IERC20(_token).safeTransfer(to, amount);
         emit FeePaid(_token, fee);
+    }
+
+     function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
+        fee = amount - ((amount * 9995) / 1e4);
     }
 
     receive() external payable {}

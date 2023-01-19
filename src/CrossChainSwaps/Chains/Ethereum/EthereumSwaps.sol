@@ -10,7 +10,7 @@ import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
 import {IEthereumSwaps} from "./interfaces/IEthereumSwaps.sol";
 import "./StargateEthereum.sol";
 
-contract EthereumSwaps is UniswapAdapter, SushiLegacyAdapter, StargateEthereum, IEthereumSwaps {
+contract EthereumSwaps is UniswapAdapter, SushiAdapter, StargateEthereum, IEthereumSwaps {
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
@@ -54,7 +54,7 @@ contract EthereumSwaps is UniswapAdapter, SushiLegacyAdapter, StargateEthereum, 
         address _factory,
         bytes32 _pairCodeHash,
         IStargateRouter _stargateRouter
-    ) UniswapAdapter(_swapRouter) SushiLegacyAdapter(_factory, _pairCodeHash) StargateEthereum(_stargateRouter) {
+    ) UniswapAdapter(_swapRouter) SushiAdapter(_factory, _pairCodeHash) StargateEthereum(_stargateRouter) {
         weth = _weth;
         feeCollector = _feeCollector;
     }

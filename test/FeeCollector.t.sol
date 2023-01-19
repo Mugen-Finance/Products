@@ -29,7 +29,6 @@ contract FeeCollectorTest is Test {
         feeCollector.withdrawNative();
         assertEq(address(feeCollector).balance, 0);
         assertEq(address(this).balance, balanceBefore + 10 ether);
-
     }
 
     function testERC20Withdraw(address addr) public {

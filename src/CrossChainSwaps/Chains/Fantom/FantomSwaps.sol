@@ -10,7 +10,7 @@ import {IWETH9} from "../../interfaces/IWETH9.sol";
 import {IUniswapV2Router02} from "spookyswap/contracts/interfaces/IUniswapV2Router02.sol";
 import "./StargateFantom.sol";
 
-contract PolygonSwaps is SushiLegacyAdapter, StargateFantom, IFantomSwaps {
+contract PolygonSwaps is SushiAdapter, StargateFantom, IFantomSwaps {
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
@@ -61,7 +61,7 @@ contract PolygonSwaps is SushiLegacyAdapter, StargateFantom, IFantomSwaps {
         address _factory,
         bytes32 _pairCodeHash,
         IStargateRouter _stargateRouter
-    ) SushiLegacyAdapter(_factory, _pairCodeHash) StargateFantom(_stargateRouter) {
+    ) SushiAdapter(_factory, _pairCodeHash) StargateFantom(_stargateRouter) {
         weth = _weth;
         feeCollector = _feeCollector;
         spookyRouter = IUniswapV2Router02(_spookyRouter);

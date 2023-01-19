@@ -11,7 +11,7 @@ import {IJoeRouter02} from "traderjoe/interfaces/IJoeRouter02.sol";
 import {ILBRouter} from "traderjoe/interfaces/ILBRouter.sol";
 import "./StargateAvax.sol";
 
-contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
+contract AvaxSwaps is IAvaxSwaps, SushiAdapter, StargateAvax {
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
@@ -70,7 +70,7 @@ contract AvaxSwaps is IAvaxSwaps, SushiLegacyAdapter, StargateAvax {
         address _factory,
         bytes32 _pairCodeHash,
         IStargateRouter _stargateRouter
-    ) SushiLegacyAdapter(_factory, _pairCodeHash) StargateAvax(_stargateRouter) {
+    ) SushiAdapter(_factory, _pairCodeHash) StargateAvax(_stargateRouter) {
         weth = _weth;
         joeRouter = IJoeRouter02(_joeRouter);
         joeLBRouter = ILBRouter(_joeLBRouter);

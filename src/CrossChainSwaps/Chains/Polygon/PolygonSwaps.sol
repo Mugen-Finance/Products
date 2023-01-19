@@ -10,7 +10,7 @@ import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
 import {IWETH9} from "../../interfaces/IWETH9.sol";
 import "./StargatePolygon.sol";
 
-contract PolygonSwaps is UniswapAdapter, SushiLegacyAdapter, StargatePolygon, IPolygonSwaps {
+contract PolygonSwaps is UniswapAdapter, SushiAdapter, StargatePolygon, IPolygonSwaps {
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
@@ -54,7 +54,7 @@ contract PolygonSwaps is UniswapAdapter, SushiLegacyAdapter, StargatePolygon, IP
         address _factory,
         bytes32 _pairCodeHash,
         IStargateRouter _stargateRouter
-    ) UniswapAdapter(_swapRouter) SushiLegacyAdapter(_factory, _pairCodeHash) StargatePolygon(_stargateRouter) {
+    ) UniswapAdapter(_swapRouter) SushiAdapter(_factory, _pairCodeHash) StargatePolygon(_stargateRouter) {
         weth = _weth;
         feeCollector = _feeCollector;
     }

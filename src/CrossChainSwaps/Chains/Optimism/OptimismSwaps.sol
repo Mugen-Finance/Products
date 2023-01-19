@@ -11,7 +11,7 @@ import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IWETH9} from "../../interfaces/IWETH9.sol";
 
-contract OptimismSwaps is UniswapAdapter, SushiLegacyAdapter, VelodromeAdapter, StargateOptimism, IOptimismSwaps {
+contract OptimismSwaps is UniswapAdapter, SushiAdapter, VelodromeAdapter, StargateOptimism, IOptimismSwaps {
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
@@ -58,7 +58,7 @@ contract OptimismSwaps is UniswapAdapter, SushiLegacyAdapter, VelodromeAdapter, 
         IStargateRouter _stargateRouter
     )
         UniswapAdapter(_swapRouter)
-        SushiLegacyAdapter(_factory, _pairCodeHash)
+        SushiAdapter(_factory, _pairCodeHash)
         VelodromeAdapter()
         StargateOptimism(_stargateRouter)
     {

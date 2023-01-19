@@ -17,7 +17,7 @@ contract ArbitrumSwapsTest is Test {
     address weth = address(0x82aF49447D8a07e3bd95BD0d56f35241523fBab1);
     address dai = address(0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1);
     address xcal = address(0xd2568acCD10A4C98e87c44E9920360031ad89fCB);
-    
+
     function setUp() public {
         feeCollector = new FeeCollector();
         arbitrumSwaps = new ArbitrumSwaps(0x82aF49447D8a07e3bd95BD0d56f35241523fBab1, 
@@ -128,9 +128,9 @@ contract ArbitrumSwapsTest is Test {
         route[0] = address(weth);
         route[1] = address(usdc);
 
-        SushiLegacyAdapter.SushiParams[] memory params = new ArbitrumSwaps.SushiParams[](1);
+        SushiAdapter.SushiParams[] memory params = new ArbitrumSwaps.SushiParams[](1);
 
-        params[0] = SushiLegacyAdapter.SushiParams(10 ether, 13e8, route, true);
+        params[0] = SushiAdapter.SushiParams(10 ether, 13e8, route, true);
 
         ArbitrumSwaps.SrcTransferParams[] memory srcParams = new ArbitrumSwaps.SrcTransferParams[](1);
 
@@ -181,7 +181,7 @@ contract ArbitrumSwapsTest is Test {
         data[1] = abi.encode(params);
 
         arbitrumSwaps.arbitrumSwaps{value: 10 ether}(steps, data);
-        assertEq(IERC20(address(weth)).balanceOf(address(this)), (10 ether * .9995));
+        assertEq(IERC20(address(weth)).balanceOf(address(this)), (10 ether * 0.9995));
     }
 
     function testArbitrumWethWithdraw() public {
@@ -190,7 +190,7 @@ contract ArbitrumSwapsTest is Test {
         uint256 balanceBefore = address(this).balance;
 
         steps[0] = 2;
-        steps[1] = 12; 
+        steps[1] = 12;
 
         data[0] = abi.encode(10 ether);
         data[1] = abi.encode(address(this), 0);

@@ -10,7 +10,7 @@ import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
 import {IWETH9} from "../../interfaces/IWETH9.sol";
 import "./StargateBinance.sol";
 
-contract PolygonSwaps is SushiLegacyAdapter, StargateBinance, IBinanceSwaps {
+contract PolygonSwaps is SushiAdapter, StargateBinance, IBinanceSwaps {
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
@@ -61,7 +61,7 @@ contract PolygonSwaps is SushiLegacyAdapter, StargateBinance, IBinanceSwaps {
         bytes32 _pairCodeHash,
         IStargateRouter _stargateRouter,
         IPancakeRouter02 _pancakeRouter
-    ) SushiLegacyAdapter(_factory, _pairCodeHash) StargateBinance(_stargateRouter) {
+    ) SushiAdapter(_factory, _pairCodeHash) StargateBinance(_stargateRouter) {
         weth = _weth;
         pancakeRouter = _pancakeRouter;
         feeCollector = _feeCollector;

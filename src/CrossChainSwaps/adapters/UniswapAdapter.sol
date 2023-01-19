@@ -35,9 +35,7 @@ abstract contract UniswapAdapter {
         // msg.sender must approve this contract
 
         // Approve the router to spend token1.
-        TransferHelper.safeApprove(
-            swapParams.token1, address(swapRouter), IERC20(swapParams.token1).balanceOf(address(this))
-        );
+        TransferHelper.safeApprove(swapParams.token1, address(swapRouter), swapParams.amountIn);
 
         // set the sqrtPriceLimitx96 to be 0 to ensure we swap our exact input amount.
         ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams({
@@ -58,9 +56,7 @@ abstract contract UniswapAdapter {
     /// @dev The calling address must approve this contract to spend at least `amountIn` worth of its token1 for this function to succeed.
     function swapExactInputMultihop(UniswapV3Multi memory multiParams) internal returns (uint256 amountOut) {
         // Approve the router to spend token1.
-        TransferHelper.safeApprove(
-            multiParams.token1, address(swapRouter), IERC20(multiParams.token1).balanceOf(address(this))
-        );
+        TransferHelper.safeApprove(multiParams.token1, address(swapRouter), multiParams.amountIn);
 
         // Multiple pool swaps are encoded through bytes called a `path`. A path is a sequence of token addresses and poolFees that define the pools used in the swaps.
         // The format for pool encoding is (tokenIn, fee, tokenOut/tokenIn, fee, tokenOut) where tokenIn/tokenOut parameter is the shared token across the pools.

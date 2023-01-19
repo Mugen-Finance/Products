@@ -7,7 +7,7 @@ import "sushiswap/protocols/sushixswap/contracts/libraries/UniswapV2Library.sol"
 
 /// @title SushiLegacyAdapter
 /// @notice Adapter for functions used to swap using Sushiswap Legacy AMM.
-abstract contract SushiLegacyAdapter {
+abstract contract SushiAdapter {
     using SafeERC20 for IERC20;
 
     /// @notice Sushiswap Legacy AMM Factory

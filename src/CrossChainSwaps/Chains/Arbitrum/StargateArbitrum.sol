@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: ISC
 
-pragma solidity ^0.8.13;
+pragma solidity 0.8.15;
 
 import {IStargateReceiver} from "../../interfaces/IStargateReceiver.sol";
 import {IStargateRouter} from "../../interfaces/IStargateRouter.sol";
@@ -56,7 +56,7 @@ abstract contract StargateArbitrum is IStargateReceiver {
     //////////////////////////////////////////////////////////////*/
 
     /// @param params parameters for the stargate router defined in StargateParams
-    /// @param stepsDst an arrat of steps to be performed on the dst chain
+    /// @param stepsDst an array of steps to be performed on the dst chain
     /// @param dataDst an array of data to be performed on the dst chain
     function stargateSwap(StargateParams memory params, uint8[] memory stepsDst, bytes[] memory dataDst) internal {
         if (msg.value <= 0) revert MustBeGt0();
@@ -68,7 +68,7 @@ abstract contract StargateArbitrum is IStargateReceiver {
             params.dstChainId,
             params.srcPoolId,
             params.dstPoolId,
-            payable(address(this)),
+            payable(params.to),
             params.amount,
             params.amountMin,
             IStargateRouter.lzTxObj(params.gas, params.dustAmount, abi.encodePacked(params.receiver)),
@@ -77,9 +77,7 @@ abstract contract StargateArbitrum is IStargateReceiver {
         );
     }
 
-    function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
-        fee = amount - ((amount * 9995) / 1e4);
-    }
+   
 
     /*//////////////////////////////////////////////////////////////
                                STARGATE LOGIC
