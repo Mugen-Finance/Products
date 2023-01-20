@@ -23,10 +23,10 @@ abstract contract StargateArbitrum is IStargateReceiver {
     //////////////////////////////////////////////////////////////*/
 
     event ReceivedOnDestination(address indexed token, uint256 amountLD, bool failed, bool dustSent);
-    event FeePaid(address _token, uint256 _fee);
 
     error NotStgRouter();
-    error MustBeGt0();
+    error NotEnoughGas();
+    error MismatchedLengths();
 
     /*//////////////////////////////////////////////////////////////
                                CONSTRUCTOR
@@ -59,16 +59,17 @@ abstract contract StargateArbitrum is IStargateReceiver {
     /// @param stepsDst an array of steps to be performed on the dst chain
     /// @param dataDst an array of data to be performed on the dst chain
     function stargateSwap(StargateParams memory params, uint8[] memory stepsDst, bytes[] memory dataDst) internal {
-        if (msg.value <= 0) revert MustBeGt0();
+        if (stepsDst.length != dataDst.length) revert MismatchedLengths();
         bytes memory payload = abi.encode(params.to, stepsDst, dataDst);
-
+        uint256 feeWei = getFee(params, payload);
+        if(address(this).balance < feeWei) revert NotEnoughGas();
         params.amount = params.amount != 0 ? params.amount : IERC20(params.token).balanceOf(address(this));
         IERC20(params.token).safeIncreaseAllowance(address(stargateRouter), params.amount);
         IStargateRouter(stargateRouter).swap{value: address(this).balance}(
             params.dstChainId,
             params.srcPoolId,
             params.dstPoolId,
-            payable(params.to),
+            payable(msg.sender),
             params.amount,
             params.amountMin,
             IStargateRouter.lzTxObj(params.gas, params.dustAmount, abi.encodePacked(params.receiver)),
@@ -77,7 +78,16 @@ abstract contract StargateArbitrum is IStargateReceiver {
         );
     }
 
-   
+    function getFee(StargateParams memory params, bytes memory payload) internal view returns (uint256 _fee) {
+        bytes memory toAddress = abi.encode(params.receiver);
+        (_fee,) = IStargateRouter(stargateRouter).quoteLayerZeroFee(
+            params.dstChainId,
+            1,
+            toAddress,
+            payload,
+            IStargateRouter.lzTxObj(params.gas, params.dustAmount, abi.encodePacked(params.receiver))
+        );
+    }
 
     /*//////////////////////////////////////////////////////////////
                                STARGATE LOGIC
@@ -92,17 +102,20 @@ abstract contract StargateArbitrum is IStargateReceiver {
     {
         if (msg.sender != address(stargateRouter)) revert NotStgRouter();
 
+        uint256 reserveGas = 100000;
+        uint256 limit = gasleft() - reserveGas;
+
         (address to, uint8[] memory steps, bytes[] memory data) = abi.decode(_payload, (address, uint8[], bytes[]));
         bool failed;
 
-        try IArbitrumSwaps(payable(address(this))).arbitrumSwaps{gas: 200000}(steps, data) {}
+        try IArbitrumSwaps(payable(address(this))).arbitrumSwaps{gas: limit}(steps, data) {}
         catch (bytes memory) {
             IERC20(_token).safeTransfer(to, amountLD);
             failed = true;
         }
         bool dustSent;
         if (address(this).balance > 0) {
-            (dustSent,) = to.call{value: address(this).balance}("");
+            (dustSent, ) = to.call{value: address(this).balance}("");
         }
         emit ReceivedOnDestination(_token, amountLD, failed, dustSent);
     }

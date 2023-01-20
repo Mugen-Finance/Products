@@ -68,6 +68,7 @@ contract ArbitrumSwaps is UniswapAdapter, SushiAdapter, XCaliburAdapter, Stargat
     }
 
     function arbitrumSwaps(uint8[] calldata steps, bytes[] calldata data) external payable override lock {
+        if(steps.length != data.length) revert MismatchedLengths();
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {
@@ -131,7 +132,7 @@ contract ArbitrumSwaps is UniswapAdapter, SushiAdapter, XCaliburAdapter, Stargat
         emit FeePaid(_token, fee);
     }
 
-     function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
+    function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
         fee = amount - ((amount * 9995) / 1e4);
     }
 
