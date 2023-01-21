@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: ISC
 
-pragma solidity ^0.8.13;
+pragma solidity 0.8.17;
 
 import "3xcaliswap/contracts/periphery/interfaces/IRouter.sol";
 import "3xcaliswap/contracts/core/interfaces/ISwapFactory.sol";

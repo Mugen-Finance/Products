@@ -7,6 +7,8 @@ import "../src/CrossChainSwaps/Chains/Arbitrum/ArbitrumSwaps.sol";
 import "../src/CrossChainSwaps/adapters/SushiAdapter.sol";
 import "../src/CrossChainSwaps/FeeCollector.sol";
 
+//Tests need to be updated for the change is step order and for the adjustment to the camelot adapter.
+
 contract ArbitrumSwapsTest is Test {
     ArbitrumSwaps arbitrumSwaps;
     FeeCollector feeCollector;
@@ -26,6 +28,7 @@ contract ArbitrumSwapsTest is Test {
         0xc35DADB65012eC5796536bD9864eD8773aBc74C4, 
         0xe18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303, 
         0xD158bd9E8b6efd3ca76830B66715Aa2b7Bad2218,
+        0xc873fEcbd354f5A56E00E710B90EF4201db2448d,
         IStargateRouter(0x53Bf833A5d6c4ddA888F69c22C88C9f356a41614));
         vm.prank(USDCWhale);
         IERC20(usdc).transfer(address(this), 10000e7);
@@ -233,6 +236,34 @@ contract ArbitrumSwapsTest is Test {
         data[1] = abi.encode(stargateParams, steps, data);
 
         arbitrumSwaps.arbitrumSwaps{value: 1 ether}(steps, data);
+    }
+
+    function testCamelot() public {
+        uint8[] memory steps = new uint8[](2);
+        bytes[] memory data = new bytes[](2);
+
+        steps[0] = 2;
+        steps[1] = 15;
+
+        address[] memory path = new address[](2);
+        path[0] = address(0x82aF49447D8a07e3bd95BD0d56f35241523fBab1);
+        path[1] = address(0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8);
+
+        data[0] = abi.encode(10 ether);
+        data[1] = abi.encode(10 ether, path, address(this), address(this), block.timestamp);
+
+        arbitrumSwaps.arbitrumSwaps{value: 10 ether}(steps, data);
+        assertGt(IERC20(0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8).balanceOf(address(this)), 10e10);
+    }
+
+    function testInvalidStep() public {
+        uint8[] memory steps = new uint8[](1);
+        bytes[] memory data = new bytes[](1);
+
+        steps[0] = 100;
+        data[0] = abi.encode(200 ether);
+        vm.expectRevert();
+        arbitrumSwaps.arbitrumSwaps(steps, data);
     }
 
     function tokenApprovals() internal {

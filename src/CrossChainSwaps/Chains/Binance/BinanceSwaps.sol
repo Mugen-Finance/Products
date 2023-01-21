@@ -49,10 +49,10 @@ contract PolygonSwaps is SushiAdapter, StargateBinance, IBinanceSwaps {
     uint8 internal constant BATCH_DEPOSIT = 1; // Used for multi token and single token deposits
     uint8 internal constant WETH_DEPOSIT = 2;
     uint8 internal constant SUSHI_LEGACY = 5;
-    uint8 internal constant PANCAKE_SWAP = 7;
-    uint8 internal constant WETH_WITHDRAW = 12;
-    uint8 internal constant SRC_TRANSFER = 13; // Done after all swaps are completed to ease accounting
-    uint8 internal constant STARGATE = 14;
+    uint8 internal constant PANCAKE_SWAP = 8;
+    uint8 internal constant WETH_WITHDRAW = 13;
+    uint8 internal constant SRC_TRANSFER = 14; // Done after all swaps are completed to ease accounting
+    uint8 internal constant STARGATE = 15;
 
     constructor(
         IWETH9 _weth,

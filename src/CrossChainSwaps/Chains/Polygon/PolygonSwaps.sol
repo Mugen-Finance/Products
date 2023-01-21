@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: ISC
 
-pragma solidity 0.8.15;
+pragma solidity 0.8.17;
 
 import "../../adapters/SushiAdapter.sol";
 import "../../adapters/UniswapAdapter.sol";
@@ -43,9 +43,9 @@ contract PolygonSwaps is UniswapAdapter, SushiAdapter, StargatePolygon, IPolygon
     uint8 internal constant UNISWAP_INPUT_SINGLE = 3;
     uint8 internal constant UNISWAP_INPUT_MULTI = 4;
     uint8 internal constant SUSHI_LEGACY = 5;
-    uint8 internal constant WETH_WITHDRAW = 12;
-    uint8 internal constant SRC_TRANSFER = 13; // Done after all swaps are completed to ease accounting
-    uint8 internal constant STARGATE = 14;
+    uint8 internal constant WETH_WITHDRAW = 13;
+    uint8 internal constant SRC_TRANSFER = 14; // Done after all swaps are completed to ease accounting
+    uint8 internal constant STARGATE = 15;
 
     constructor(
         IWETH9 _weth,

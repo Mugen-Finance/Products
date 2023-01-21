@@ -1,21 +1,30 @@
 //SPDX-License-Identifier: ISC
 
-pragma solidity 0.8.15;
+pragma solidity 0.8.17;
 
 import "../../adapters/UniswapAdapter.sol";
 import "../../adapters/SushiAdapter.sol";
 import "../../adapters/XCaliburAdapter.sol";
 import "./StargateArbitrum.sol";
+import {CamelotAdapter} from "../../adapters/CamelotAdapter.sol";
 import {IWETH9} from "../../interfaces/IWETH9.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IArbitrumSwaps} from "./interfaces/IArbitrumSwaps.sol";
 
-contract ArbitrumSwaps is UniswapAdapter, SushiAdapter, XCaliburAdapter, StargateArbitrum, IArbitrumSwaps {
+contract ArbitrumSwaps is
+    UniswapAdapter,
+    SushiAdapter,
+    XCaliburAdapter,
+    StargateArbitrum,
+    CamelotAdapter,
+    IArbitrumSwaps
+{
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
     error WithdrawFailed();
+    error InvaldStep();
 
     event FeePaid(address _token, uint256 _fee);
 
@@ -45,9 +54,11 @@ contract ArbitrumSwaps is UniswapAdapter, SushiAdapter, XCaliburAdapter, Stargat
     uint8 internal constant UNI_MULTI = 4;
     uint8 internal constant SUSHI_LEGACY = 5;
     uint8 internal constant XCAL = 6;
-    uint8 internal constant WETH_WITHDRAW = 12;
-    uint8 internal constant SRC_TRANSFER = 13;
-    uint8 internal constant STARGATE = 14;
+     uint8 internal constant CAMELOT = 7;
+    uint8 internal constant WETH_WITHDRAW = 13;
+    uint8 internal constant SRC_TRANSFER = 14;
+    uint8 internal constant STARGATE = 15;
+   
 
     constructor(
         address _weth,
@@ -56,19 +67,23 @@ contract ArbitrumSwaps is UniswapAdapter, SushiAdapter, XCaliburAdapter, Stargat
         address _factory,
         bytes32 _pairCodeHash,
         address _xcalFactory,
+        address _camelotRouter,
         IStargateRouter _stargateRouter
     )
         UniswapAdapter(_swapRouter)
         SushiAdapter(_factory, _pairCodeHash)
         XCaliburAdapter(_xcalFactory, _weth)
+        CamelotAdapter(_camelotRouter)
         StargateArbitrum(_stargateRouter)
     {
         weth = IWETH9(_weth);
         feeCollector = _feeCollector;
     }
+    ///@param steps the steps taken to accomplish the necessary desired actions for the transaction. Available steps are listed above.
+    ///@param data the necessary data that goes with each transaction.
 
     function arbitrumSwaps(uint8[] calldata steps, bytes[] calldata data) external payable override lock {
-        if(steps.length != data.length) revert MismatchedLengths();
+        if (steps.length != data.length) revert MismatchedLengths();
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {
@@ -104,6 +119,11 @@ contract ArbitrumSwaps is UniswapAdapter, SushiAdapter, XCaliburAdapter, Stargat
                     IERC20(params[j].routes[0].from).approve(address(xcalRouter), params[j].amountIn);
                     swapExactTokensForTokens(params[j]);
                 }
+            } else if (step == CAMELOT) {
+                (uint256 amountIn, address[] memory path, address referrer, uint256 deadline) =
+                    abi.decode(data[i], (uint256, address[], address, uint256));
+
+                camelotSwap(amountIn, path, referrer, deadline);
             } else if (step == WETH_WITHDRAW) {
                 (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
                 amount = amount != 0 ? amount : IERC20(weth).balanceOf(address(this));
@@ -119,6 +139,8 @@ contract ArbitrumSwaps is UniswapAdapter, SushiAdapter, XCaliburAdapter, Stargat
                 (StargateParams memory params, uint8[] memory stepperions, bytes[] memory datass) =
                     abi.decode(data[i], (StargateParams, uint8[], bytes[]));
                 stargateSwap(params, stepperions, datass);
+            } else {
+                revert InvaldStep();
             }
         }
     }

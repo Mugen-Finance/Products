@@ -43,9 +43,9 @@ contract EthereumSwaps is UniswapAdapter, SushiAdapter, StargateEthereum, IEther
     uint8 internal constant UNI_SINGLE = 3;
     uint8 internal constant UNI_MULTI = 4;
     uint8 internal constant SUSHI_LEGACY = 5;
-    uint8 internal constant WETH_WITHDRAW = 12;
-    uint8 internal constant SRC_TRANSFER = 13;
-    uint8 internal constant STARGATE = 14;
+    uint8 internal constant WETH_WITHDRAW = 13;
+    uint8 internal constant SRC_TRANSFER = 14;
+    uint8 internal constant STARGATE = 15;
 
     constructor(
         IWETH9 _weth,

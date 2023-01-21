@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: ISC
 
-pragma solidity 0.8.15;
+pragma solidity 0.8.17;
 
 import {IStargateReceiver} from "../../interfaces/IStargateReceiver.sol";
 import {IStargateRouter} from "../../interfaces/IStargateRouter.sol";
@@ -62,7 +62,7 @@ abstract contract StargateArbitrum is IStargateReceiver {
         if (stepsDst.length != dataDst.length) revert MismatchedLengths();
         bytes memory payload = abi.encode(params.to, stepsDst, dataDst);
         uint256 feeWei = getFee(params, payload);
-        if(address(this).balance < feeWei) revert NotEnoughGas();
+        if (address(this).balance < feeWei) revert NotEnoughGas();
         params.amount = params.amount != 0 ? params.amount : IERC20(params.token).balanceOf(address(this));
         IERC20(params.token).safeIncreaseAllowance(address(stargateRouter), params.amount);
         IStargateRouter(stargateRouter).swap{value: address(this).balance}(
@@ -115,7 +115,7 @@ abstract contract StargateArbitrum is IStargateReceiver {
         }
         bool dustSent;
         if (address(this).balance > 0) {
-            (dustSent, ) = to.call{value: address(this).balance}("");
+            (dustSent,) = to.call{value: address(this).balance}("");
         }
         emit ReceivedOnDestination(_token, amountLD, failed, dustSent);
     }
