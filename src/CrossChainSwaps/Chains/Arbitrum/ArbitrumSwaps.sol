@@ -95,7 +95,7 @@ contract ArbitrumSwaps is
                 }
             } else if (step == WETH_DEPOSIT) {
                 uint256 _amount = abi.decode(data[i], (uint256));
-                if (_amount <= 0) revert MoreThanZero();
+                if (_amount == 0) revert MoreThanZero();
                 weth.deposit{value: _amount}();
             } else if (step == UNI_SINGLE) {
                 UniswapV3Single[] memory params = abi.decode(data[i], (UniswapV3Single[]));

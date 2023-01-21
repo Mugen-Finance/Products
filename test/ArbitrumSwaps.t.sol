@@ -266,6 +266,17 @@ contract ArbitrumSwapsTest is Test {
         arbitrumSwaps.arbitrumSwaps(steps, data);
     }
 
+    function testZero() public {
+        uint8[] memory steps = new uint8[](1);
+        bytes[] memory data = new bytes[](1);
+
+        steps[0] = 2;
+        data[0] = abi.encode(0);
+
+        vm.expectRevert();
+        arbitrumSwaps.arbitrumSwaps(steps, data);
+    }
+
     function tokenApprovals() internal {
         IERC20(gmx).approve(address(arbitrumSwaps), type(uint256).max);
         IERC20(usdc).approve(address(arbitrumSwaps), type(uint256).max);
