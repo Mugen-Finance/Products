@@ -68,6 +68,7 @@ contract OptimismSwaps is UniswapAdapter, SushiAdapter, VelodromeAdapter, Starga
     }
 
     function optimismSwaps(uint8[] calldata steps, bytes[] calldata data) external payable lock {
+        if (steps.length != data.length) revert MismatchedLengths();
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {
