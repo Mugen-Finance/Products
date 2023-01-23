@@ -207,12 +207,12 @@ contract ArbitrumSwapsTest is Test {
         tokenApprovals();
         uint8[] memory steps = new uint8[](2);
         steps[0] = 1;
-        steps[1] = 14;
+        steps[1] = 15;
 
         bytes[] memory data = new bytes[](2);
 
         StargateArbitrum.StargateParams memory stargateParams = StargateArbitrum.StargateParams(
-            101, address(usdc), 1, 2, 10000e7, 0, 1e15, address(this), address(this), 500000, bytes32(0x0)
+            101, address(usdc), 1, 1, 100e7, 0, 1e15, address(this), address(this), 500000, bytes32(0x0)
         );
         /**
          *     uint16 dstChainId; // stargate dst chain id

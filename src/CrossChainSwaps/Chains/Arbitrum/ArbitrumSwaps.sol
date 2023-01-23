@@ -6,6 +6,7 @@ import "../../adapters/UniswapAdapter.sol";
 import "../../adapters/SushiAdapter.sol";
 import "../../adapters/XCaliburAdapter.sol";
 import "./StargateArbitrum.sol";
+import {SafeTransferLib} from "solmate/src/utils/SafeTransferLib.sol";
 import {CamelotAdapter} from "../../adapters/CamelotAdapter.sol";
 import {IWETH9} from "../../interfaces/IWETH9.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -54,11 +55,10 @@ contract ArbitrumSwaps is
     uint8 internal constant UNI_MULTI = 4;
     uint8 internal constant SUSHI_LEGACY = 5;
     uint8 internal constant XCAL = 6;
-     uint8 internal constant CAMELOT = 7;
+    uint8 internal constant CAMELOT = 7;
     uint8 internal constant WETH_WITHDRAW = 13;
     uint8 internal constant SRC_TRANSFER = 14;
     uint8 internal constant STARGATE = 15;
-   
 
     constructor(
         address _weth,
@@ -128,8 +128,9 @@ contract ArbitrumSwaps is
                 (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
                 amount = amount != 0 ? amount : IERC20(weth).balanceOf(address(this));
                 weth.withdraw(amount);
-                (bool success,) = to.call{value: amount}("");
-                if (!success) revert WithdrawFailed();
+                uint256 ethFee = calculateFee(amount);
+                SafeTransferLib.safeTransferETH(to, (amount - ethFee));
+                SafeTransferLib.safeTransferETH(feeCollector, ethFee);
             } else if (step == SRC_TRANSFER) {
                 SrcTransferParams[] memory params = abi.decode(data[i], (SrcTransferParams[]));
                 for (uint256 k; k < params.length; k++) {

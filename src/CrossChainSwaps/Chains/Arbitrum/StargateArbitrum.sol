@@ -7,6 +7,7 @@ import {IStargateRouter} from "../../interfaces/IStargateRouter.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IArbitrumSwaps} from "./interfaces/IArbitrumSwaps.sol";
+import {SafeTransferLib} from "solmate/src/utils/SafeTransferLib.sol";
 
 abstract contract StargateArbitrum is IStargateReceiver {
     using SafeERC20 for IERC20;
@@ -60,9 +61,8 @@ abstract contract StargateArbitrum is IStargateReceiver {
     /// @param dataDst an array of data to be performed on the dst chain
     function stargateSwap(StargateParams memory params, uint8[] memory stepsDst, bytes[] memory dataDst) internal {
         if (stepsDst.length != dataDst.length) revert MismatchedLengths();
+        if (params.gas < 100000) revert NotEnoughGas();
         bytes memory payload = abi.encode(params.to, stepsDst, dataDst);
-        uint256 feeWei = getFee(params, payload);
-        if (address(this).balance < feeWei) revert NotEnoughGas();
         params.amount = params.amount != 0 ? params.amount : IERC20(params.token).balanceOf(address(this));
         IERC20(params.token).safeIncreaseAllowance(address(stargateRouter), params.amount);
         IStargateRouter(stargateRouter).swap{value: address(this).balance}(
@@ -78,8 +78,8 @@ abstract contract StargateArbitrum is IStargateReceiver {
         );
     }
 
-    function getFee(StargateParams memory params, bytes memory payload) internal view returns (uint256 _fee) {
-        bytes memory toAddress = abi.encode(params.receiver);
+    function getFee(StargateParams memory params, bytes memory payload) external view returns (uint256 _fee) {
+        bytes memory toAddress = abi.encodePacked(params.receiver);
         (_fee,) = IStargateRouter(stargateRouter).quoteLayerZeroFee(
             params.dstChainId,
             1,
@@ -102,20 +102,30 @@ abstract contract StargateArbitrum is IStargateReceiver {
     {
         if (msg.sender != address(stargateRouter)) revert NotStgRouter();
 
+        bool failed;
+        bool dustSent;
+
         uint256 reserveGas = 100000;
         uint256 limit = gasleft() - reserveGas;
 
         (address to, uint8[] memory steps, bytes[] memory data) = abi.decode(_payload, (address, uint8[], bytes[]));
-        bool failed;
+
+        if (gasleft() < reserveGas) {
+            IERC20(_token).safeTransfer(to, amountLD);
+            /// @dev transfer any native token received as dust to the to address
+            if (address(this).balance > 0) {
+                SafeTransferLib.safeTransferETH(to, address(this).balance);
+            }
+        }
 
         try IArbitrumSwaps(payable(address(this))).arbitrumSwaps{gas: limit}(steps, data) {}
         catch (bytes memory) {
             IERC20(_token).safeTransfer(to, amountLD);
             failed = true;
         }
-        bool dustSent;
+
         if (address(this).balance > 0) {
-            (dustSent,) = to.call{value: address(this).balance}("");
+            SafeTransferLib.safeTransferETH(to, address(this).balance);
         }
         emit ReceivedOnDestination(_token, amountLD, failed, dustSent);
     }
