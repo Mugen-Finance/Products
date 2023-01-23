@@ -6,6 +6,7 @@ import "../../adapters/SushiAdapter.sol";
 import "../../adapters/VelodromeAdapter.sol";
 import "../../adapters/UniswapAdapter.sol";
 import "./StargateOptimism.sol";
+import {SafeTransferLib} from "solmate/src/utils/SafeTransferLib.sol";
 import {IOptimismSwaps} from "./interfaces/IOptimismSwaps.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
@@ -17,7 +18,7 @@ contract OptimismSwaps is UniswapAdapter, SushiAdapter, VelodromeAdapter, Starga
     error MoreThanZero();
     error WithdrawFailed();
 
-    event SuccessfulWithdraw(bool success);
+    event FeePaid(address _token, uint256 _fee);
 
     IWETH9 internal immutable weth;
     address public immutable feeCollector;
@@ -112,9 +113,9 @@ contract OptimismSwaps is UniswapAdapter, SushiAdapter, VelodromeAdapter, Starga
                 (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
                 amount = amount != 0 ? amount : IERC20(weth).balanceOf(address(this));
                 weth.withdraw(amount);
-                (bool success,) = to.call{value: amount}("");
-                if (!success) revert WithdrawFailed();
-                emit SuccessfulWithdraw(success);
+                uint256 ethFee = calculateFee(amount);
+                SafeTransferLib.safeTransferETH(to, (amount - ethFee));
+                SafeTransferLib.safeTransferETH(feeCollector, ethFee);
             } else if (step == STARGATE) {
                 (StargateParams memory params, uint8[] memory stepperions, bytes[] memory datass) =
                     abi.decode(data[i], (StargateParams, uint8[], bytes[]));
@@ -130,6 +131,10 @@ contract OptimismSwaps is UniswapAdapter, SushiAdapter, VelodromeAdapter, Starga
         IERC20(_token).safeTransfer(feeCollector, fee);
         IERC20(_token).safeTransfer(to, amount);
         emit FeePaid(_token, fee);
+    }
+
+    function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
+        fee = amount - ((amount * 9995) / 1e4);
     }
 
     receive() external payable {}
