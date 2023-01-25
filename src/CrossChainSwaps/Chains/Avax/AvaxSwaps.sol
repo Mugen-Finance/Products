@@ -48,7 +48,11 @@ contract AvaxSwaps is IAvaxSwaps, SushiAdapter, StargateAvax {
         uint256 amountIn;
         uint256 amountOutWithSlippage;
         uint256[] pairBinSteps;
-        IERC20[] tokenPath;
+        address[] tokenPath;
+    }
+
+    struct Arrays {
+        IERC20[] path;
     }
 
     // Constants
@@ -108,10 +112,22 @@ contract AvaxSwaps is IAvaxSwaps, SushiAdapter, StargateAvax {
                 for (uint256 k; k < params.length; k++) {
                     _srcTransfer(params[k].token, params[k].amount, params[k].receiver);
                 }
-            } else if (step == STARGATE) {
-                (StargateParams memory params, uint8[] memory stepperions, bytes[] memory datass) =
-                    abi.decode(data[i], (StargateParams, uint8[], bytes[]));
-                stargateSwap(params, stepperions, datass);
+            } else if (step == TRADER_JOE_LB) {
+                Arrays memory array;
+                LiquidityBookParams[] memory params = abi.decode(data[i], (LiquidityBookParams[]));
+                for (uint256 j = 0; j < params.length; j++) {
+                    IERC20(params[j].tokenPath[0]).safeApprove(address(joeLBRouter), params[j].amountIn);
+                    address[] memory tokens = params[j].tokenPath;
+                    array.path = convertor(tokens, tokens.length);
+                    joeLBRouter.swapExactTokensForTokens(
+                        params[j].amountIn,
+                        params[j].amountOutWithSlippage,
+                        params[j].pairBinSteps,
+                        array.path,
+                        address(this),
+                        block.timestamp
+                    );
+                }
             } else if (step == TRADER_JOE) {
                 UniswapV2Params[] memory params = abi.decode(data[i], (UniswapV2Params[]));
                 for (uint256 j; j < params.length; j++) {
@@ -120,25 +136,20 @@ contract AvaxSwaps is IAvaxSwaps, SushiAdapter, StargateAvax {
                         params[j].amountIn, params[j].amountOutMin, params[j].path, address(this), params[j].deadline
                     );
                 }
-            } else if (step == TRADER_JOE_LB) {
-                LiquidityBookParams[] memory params = abi.decode(data[i], (LiquidityBookParams[]));
-                for (uint256 j; j < params.length; j++) {
-                    IERC20(params[j].tokenPath[0]).safeApprove(address(joeLBRouter), params[j].amountIn);
-                    // IERC20[] memory addressArray = new IERC20[](params[j].tokenPath.length);
-                    // for (uint256 k; k < params[j].tokenPath.length; ++k) {
-                    //     addressArray[k] = IERC20(params[j].tokenPath[k]);
-                    // }
-                    joeLBRouter.swapExactTokensForTokens(
-                        params[j].amountIn,
-                        params[j].amountOutWithSlippage,
-                        params[j].pairBinSteps,
-                        params[j].tokenPath,
-                        address(this),
-                        block.timestamp
-                    );
-                }
+            } else if (step == STARGATE) {
+                (StargateParams memory params, uint8[] memory stepperions, bytes[] memory datass) =
+                    abi.decode(data[i], (StargateParams, uint8[], bytes[]));
+                stargateSwap(params, stepperions, datass);
             }
         }
+    }
+
+    function convertor(address[] memory _addr, uint256 length) private pure returns (IERC20[] memory) {
+        IERC20[] memory path = new IERC20[](length);
+        for (uint256 j; j < length; j++) {
+            path[j] = IERC20(_addr[j]);
+        }
+        return path;
     }
 
     function _srcTransfer(address _token, uint256 amount, address to) private {

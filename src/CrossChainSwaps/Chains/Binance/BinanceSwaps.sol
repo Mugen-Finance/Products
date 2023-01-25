@@ -10,13 +10,14 @@ import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
 import {IWETH9} from "../../interfaces/IWETH9.sol";
 import "./StargateBinance.sol";
 
-contract PolygonSwaps is SushiAdapter, StargateBinance, IBinanceSwaps {
+contract BinanceSwaps is SushiAdapter, StargateBinance, IBinanceSwaps {
     using SafeERC20 for IERC20;
 
     error MoreThanZero();
     error WithdrawFailed();
 
     event SuccessfulWithdraw(bool success);
+    event FeePaid(address _token, uint256 _fee);
 
     IWETH9 internal immutable weth;
     IPancakeRouter02 internal immutable pancakeRouter;
@@ -68,6 +69,7 @@ contract PolygonSwaps is SushiAdapter, StargateBinance, IBinanceSwaps {
     }
 
     function binanceSwaps(uint8[] calldata steps, bytes[] calldata data) external payable lock {
+        if(steps.length != data.length) revert MismatchedLengths();
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {
@@ -122,6 +124,10 @@ contract PolygonSwaps is SushiAdapter, StargateBinance, IBinanceSwaps {
         IERC20(_token).safeTransfer(feeCollector, fee);
         IERC20(_token).safeTransfer(to, amount);
         emit FeePaid(_token, fee);
+    }
+
+    function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
+        fee = amount - ((amount * 9995) / 1e4);
     }
 
     receive() external payable {}
