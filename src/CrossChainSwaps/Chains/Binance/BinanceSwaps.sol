@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: ISC
 
-pragma solidity ^0.8.13;
+pragma solidity 0.8.17;
 
 import "../../adapters/SushiAdapter.sol";
 import {IPancakeRouter02} from "pancake/projects/exchange-protocol/contracts/interfaces/IPancakeRouter02.sol";
