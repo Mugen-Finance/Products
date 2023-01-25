@@ -15,7 +15,8 @@ contract BinanceSwapsTest is Test {
         // bytes32 _pairCodeHash,
         // IStargateRouter _stargateRouter,
         // IPancakeRouter02 _pancakeRouter
-        swaps = new BinanceSwaps(IWETH9(0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c), address(this), 0xc35DADB65012eC5796536bD9864eD8773aBc74C4 , 0xe18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303,IStargateRouter(0x4a364f8c717cAAD9A442737Eb7b8A55cc6cf18D8), IPancakeRouter02(0x10ED43C718714eb63d5aA57B78B54704E256024E));
+        swaps =
+        new BinanceSwaps(IWETH9(0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c), address(this), 0xc35DADB65012eC5796536bD9864eD8773aBc74C4 , 0xe18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303,IStargateRouter(0x4a364f8c717cAAD9A442737Eb7b8A55cc6cf18D8), IPancakeRouter02(0x10ED43C718714eb63d5aA57B78B54704E256024E));
     }
 
     function testPancakeSwap() public {
@@ -28,12 +29,17 @@ contract BinanceSwapsTest is Test {
 
         BinanceSwaps.UniswapV2Params[] memory params = new  BinanceSwaps.UniswapV2Params[](1);
         address[] memory path = new address[](2);
-        path[0] =address(0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c);
+        path[0] = address(0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c);
         path[1] = address(0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56);
-        params[0] = BinanceSwaps.UniswapV2Params({amountIn: 10 ether, amountOutMin: 0, path: path, deadline: block.timestamp});
+        params[0] =
+            BinanceSwaps.UniswapV2Params({amountIn: 10 ether, amountOutMin: 0, path: path, deadline: block.timestamp});
 
         BinanceSwaps.SrcTransferParams[] memory srcParams = new  BinanceSwaps.SrcTransferParams[](1);
-        srcParams[0] =  BinanceSwaps.SrcTransferParams({token: 0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56, receiver: address(this), amount: 0});
+        srcParams[0] = BinanceSwaps.SrcTransferParams({
+            token: 0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56,
+            receiver: address(this),
+            amount: 0
+        });
 
         data[0] = abi.encode(10 ether);
         data[1] = abi.encode(params);

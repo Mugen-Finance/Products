@@ -16,7 +16,6 @@ contract BinanceSwaps is SushiAdapter, StargateBinance, IBinanceSwaps {
     error MoreThanZero();
     error WithdrawFailed();
 
-    event SuccessfulWithdraw(bool success);
     event FeePaid(address _token, uint256 _fee);
 
     IWETH9 internal immutable weth;
@@ -69,7 +68,7 @@ contract BinanceSwaps is SushiAdapter, StargateBinance, IBinanceSwaps {
     }
 
     function binanceSwaps(uint8[] calldata steps, bytes[] calldata data) external payable lock {
-        if(steps.length != data.length) revert MismatchedLengths();
+        if (steps.length != data.length) revert MismatchedLengths();
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {
@@ -106,9 +105,9 @@ contract BinanceSwaps is SushiAdapter, StargateBinance, IBinanceSwaps {
                 (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
                 amount = amount != 0 ? amount : IERC20(weth).balanceOf(address(this));
                 weth.withdraw(amount);
-                (bool success,) = to.call{value: amount}("");
-                if (!success) revert WithdrawFailed();
-                emit SuccessfulWithdraw(success);
+                uint256 ethFee = calculateFee(amount);
+                SafeTransferLib.safeTransferETH(to, (amount - ethFee));
+                SafeTransferLib.safeTransferETH(feeCollector, ethFee);
             } else if (step == STARGATE) {
                 (StargateParams memory params, uint8[] memory stepperions, bytes[] memory datass) =
                     abi.decode(data[i], (StargateParams, uint8[], bytes[]));
