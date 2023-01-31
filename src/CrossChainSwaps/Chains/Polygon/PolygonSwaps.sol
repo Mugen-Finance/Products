@@ -16,7 +16,7 @@ contract PolygonSwaps is UniswapAdapter, SushiAdapter, StargatePolygon, IPolygon
     error MoreThanZero();
     error WithdrawFailed();
 
-    event SuccessfulWithdraw(bool success);
+    event FeePaid(address _token, uint256 _fee);
 
     IWETH9 internal immutable weth;
     address public immutable feeCollector;
@@ -59,7 +59,8 @@ contract PolygonSwaps is UniswapAdapter, SushiAdapter, StargatePolygon, IPolygon
         feeCollector = _feeCollector;
     }
 
-    function polygonSwaps(uint8[] calldata steps, bytes[] calldata data) external payable lock {
+    function polygonSwaps(uint8[] calldata steps, bytes[] calldata data) external payable override lock {
+        if (steps.length != data.length) revert MismatchedLengths();
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {
@@ -99,9 +100,9 @@ contract PolygonSwaps is UniswapAdapter, SushiAdapter, StargatePolygon, IPolygon
                 (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
                 amount = amount != 0 ? amount : IERC20(weth).balanceOf(address(this));
                 weth.withdraw(amount);
-                (bool success,) = to.call{value: amount}("");
-                if (!success) revert WithdrawFailed();
-                emit SuccessfulWithdraw(success);
+                uint256 ethFee = calculateFee(amount);
+                SafeTransferLib.safeTransferETH(to, (amount - ethFee));
+                SafeTransferLib.safeTransferETH(feeCollector, ethFee);
             } else if (step == STARGATE) {
                 (StargateParams memory params, uint8[] memory stepperions, bytes[] memory datass) =
                     abi.decode(data[i], (StargateParams, uint8[], bytes[]));
@@ -117,6 +118,10 @@ contract PolygonSwaps is UniswapAdapter, SushiAdapter, StargatePolygon, IPolygon
         IERC20(_token).safeTransfer(feeCollector, fee);
         IERC20(_token).safeTransfer(to, amount);
         emit FeePaid(_token, fee);
+    }
+
+    function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
+        fee = amount - ((amount * 9995) / 1e4);
     }
 
     receive() external payable {}

@@ -33,9 +33,13 @@ abstract contract UniswapAdapter {
 
     function swapExactInputSingle(UniswapV3Single memory swapParams) internal returns (uint256 amountOut) {
         // msg.sender must approve this contract
+        swapParams.amountIn =
+            swapParams.amountIn == 0 ? IERC20(swapParams.token1).balanceOf(address(this)) : swapParams.amountIn;
 
         // Approve the router to spend token1.
-        TransferHelper.safeApprove(swapParams.token1, address(swapRouter), swapParams.amountIn);
+        if (IERC20(swapParams.token1).allowance(address(this), address(swapRouter)) < swapParams.amountIn) {
+            TransferHelper.safeApprove(swapParams.token1, address(swapRouter), type(uint256).max);
+        }
 
         // set the sqrtPriceLimitx96 to be 0 to ensure we swap our exact input amount.
         ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams({
@@ -55,8 +59,12 @@ abstract contract UniswapAdapter {
 
     /// @dev The calling address must approve this contract to spend at least `amountIn` worth of its token1 for this function to succeed.
     function swapExactInputMultihop(UniswapV3Multi memory multiParams) internal returns (uint256 amountOut) {
+        multiParams.amountIn =
+            multiParams.amountIn == 0 ? IERC20(multiParams.token1).balanceOf(address(this)) : multiParams.amountIn;
         // Approve the router to spend token1.
-        TransferHelper.safeApprove(multiParams.token1, address(swapRouter), multiParams.amountIn);
+        if (IERC20(multiParams.token1).allowance(address(this), address(swapRouter)) < multiParams.amountIn) {
+            TransferHelper.safeApprove(multiParams.token1, address(swapRouter), type(uint256).max);
+        }
 
         // Multiple pool swaps are encoded through bytes called a `path`. A path is a sequence of token addresses and poolFees that define the pools used in the swaps.
         // The format for pool encoding is (tokenIn, fee, tokenOut/tokenIn, fee, tokenOut) where tokenIn/tokenOut parameter is the shared token across the pools.

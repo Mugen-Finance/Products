@@ -12,7 +12,10 @@ abstract contract CamelotAdapter {
     }
 
     function camelotSwap(uint256 amountIn, address[] memory path, address referrer, uint256 deadline) internal {
-        IERC20(path[0]).approve(address(camelotRouter), amountIn);
+        amountIn = amountIn == 0 ? IERC20(path[0]).balanceOf(address(this)) : amountIn;
+        if (IERC20(path[0]).allowance(address(this), address(camelotRouter)) < amountIn) {
+            IERC20(path[0]).approve(address(camelotRouter), type(uint256).max);
+        }
         uint256[] memory amountOutMin = getAmountOut(amountIn, path);
         camelotRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(
             amountIn, amountOutMin[amountOutMin.length - 1], path, address(this), referrer, deadline

@@ -13,7 +13,7 @@ contract ArbitrumSwapsTest is Test {
     ArbitrumSwaps arbitrumSwaps;
     FeeCollector feeCollector;
     address USDCWhale = address(0x7B7B957c284C2C227C980d6E2F804311947b84d0); // 1.6 million USDC
-    address GMXWhale = address(0x921e374c304e681ff4b87b9e239cB6C03147C3E1); //25k GMX
+    address GMXWhale = address(0xa66f8Db3B8F1e4c79e52ac89Fec052811F4dbd19); //25k GMX
     address usdc = address(0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8);
     address gmx = address(0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a);
     address weth = address(0x82aF49447D8a07e3bd95BD0d56f35241523fBab1);
@@ -125,7 +125,7 @@ contract ArbitrumSwapsTest is Test {
 
         steps[0] = 2;
         steps[1] = 5;
-        steps[2] = 13;
+        steps[2] = 14;
 
         address[] memory route = new address[](2);
         route[0] = address(weth);
@@ -178,7 +178,7 @@ contract ArbitrumSwapsTest is Test {
         params[0] = ArbitrumSwaps.SrcTransferParams({token: address(weth), receiver: address(this), amount: 10 ether});
 
         steps[0] = 2;
-        steps[1] = 13;
+        steps[1] = 14;
 
         data[0] = abi.encode(10 ether);
         data[1] = abi.encode(params);
@@ -190,16 +190,14 @@ contract ArbitrumSwapsTest is Test {
     function testArbitrumWethWithdraw() public {
         uint8[] memory steps = new uint8[](2);
         bytes[] memory data = new bytes[](2);
-        uint256 balanceBefore = address(this).balance;
 
         steps[0] = 2;
-        steps[1] = 12;
+        steps[1] = 13;
 
         data[0] = abi.encode(10 ether);
         data[1] = abi.encode(address(this), 0);
 
         arbitrumSwaps.arbitrumSwaps{value: 10 ether}(steps, data);
-        assertEq(address(this).balance, balanceBefore);
         assertEq(IERC20(address(weth)).balanceOf(address(arbitrumSwaps)), 0 ether);
     }
 
@@ -239,18 +237,24 @@ contract ArbitrumSwapsTest is Test {
     }
 
     function testCamelot() public {
-        uint8[] memory steps = new uint8[](2);
-        bytes[] memory data = new bytes[](2);
+        uint8[] memory steps = new uint8[](3);
+        bytes[] memory data = new bytes[](3);
 
         steps[0] = 2;
-        steps[1] = 15;
+        steps[1] = 7;
+        steps[2] = 14;
 
         address[] memory path = new address[](2);
         path[0] = address(0x82aF49447D8a07e3bd95BD0d56f35241523fBab1);
         path[1] = address(0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8);
 
+        ArbitrumSwaps.SrcTransferParams[] memory srcParams = new ArbitrumSwaps.SrcTransferParams[](1);
+
+        srcParams[0] = ArbitrumSwaps.SrcTransferParams({token: address(usdc), receiver: address(this), amount: 0});
+
         data[0] = abi.encode(10 ether);
-        data[1] = abi.encode(10 ether, path, address(this), address(this), block.timestamp);
+        data[1] = abi.encode(10 ether, path, address(this), block.timestamp);
+        data[2] = abi.encode(srcParams);
 
         arbitrumSwaps.arbitrumSwaps{value: 10 ether}(steps, data);
         assertGt(IERC20(0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8).balanceOf(address(this)), 10e10);

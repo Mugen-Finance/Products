@@ -116,7 +116,6 @@ contract ArbitrumSwaps is
             } else if (step == XCAL) {
                 XcaliburParams[] memory params = abi.decode(data[i], (XcaliburParams[]));
                 for (uint256 j; j < params.length; j++) {
-                    IERC20(params[j].routes[0].from).approve(address(xcalRouter), params[j].amountIn);
                     swapExactTokensForTokens(params[j]);
                 }
             } else if (step == CAMELOT) {
@@ -144,6 +143,10 @@ contract ArbitrumSwaps is
                 revert InvaldStep();
             }
         }
+    }
+
+    function approve(address token, address to) internal {
+        IERC20(token).safeIncreaseAllowance(to, type(uint256).max);
     }
 
     function _srcTransfer(address _token, uint256 amount, address to) private {
