@@ -64,7 +64,9 @@ abstract contract StargateOptimism is IStargateReceiver {
         if (params.gas < 100000) revert NotEnoughGas();
         bytes memory payload = abi.encode(params.to, stepsDst, dataDst);
         params.amount = params.amount != 0 ? params.amount : IERC20(params.token).balanceOf(address(this));
-        IERC20(params.token).safeIncreaseAllowance(address(stargateRouter), params.amount);
+        if (IERC20(params.token).allowance(address(this), address(stargateRouter)) < params.amount) {
+            IERC20(params.token).approve(address(stargateRouter), type(uint256).max);
+        }
         IStargateRouter(stargateRouter).swap{value: address(this).balance}(
             params.dstChainId,
             params.srcPoolId,
