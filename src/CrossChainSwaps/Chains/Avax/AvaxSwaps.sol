@@ -86,7 +86,7 @@ contract AvaxSwaps is IAvaxSwaps, SushiAdapter, StargateAvax {
     }
 
     function avaxSwaps(uint8[] calldata steps, bytes[] calldata data) external payable lock {
-        if(steps.length != data.length) revert MismatchedLengths();
+        if (steps.length != data.length) revert MismatchedLengths();
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {
@@ -121,7 +121,15 @@ contract AvaxSwaps is IAvaxSwaps, SushiAdapter, StargateAvax {
                 Arrays memory array;
                 LiquidityBookParams[] memory params = abi.decode(data[i], (LiquidityBookParams[]));
                 for (uint256 j = 0; j < params.length; j++) {
-                    IERC20(params[j].tokenPath[0]).safeApprove(address(joeLBRouter), params[j].amountIn);
+                    params[j].amountIn = params[j].amountIn == 0
+                        ? IERC20(params[j].tokenPath[0]).balanceOf(address(this))
+                        : params[j].amountIn;
+                    if (
+                        IERC20(params[j].tokenPath[0]).allowance(address(this), address(joeLBRouter))
+                            < params[j].amountIn
+                    ) {
+                        IERC20(params[j].tokenPath[0]).safeIncreaseAllowance(address(joeLBRouter), type(uint256).max);
+                    }
                     address[] memory tokens = params[j].tokenPath;
                     array.path = convertor(tokens, tokens.length);
                     joeLBRouter.swapExactTokensForTokens(
@@ -136,7 +144,12 @@ contract AvaxSwaps is IAvaxSwaps, SushiAdapter, StargateAvax {
             } else if (step == TRADER_JOE) {
                 UniswapV2Params[] memory params = abi.decode(data[i], (UniswapV2Params[]));
                 for (uint256 j; j < params.length; j++) {
-                    IERC20(params[j].path[0]).safeIncreaseAllowance(address(joeRouter), params[j].amountIn);
+                    params[j].amountIn = params[j].amountIn == 0
+                        ? IERC20(params[j].path[0]).balanceOf(address(this))
+                        : params[j].amountIn;
+                    if (IERC20(params[j].path[0]).allowance(address(this), address(joeRouter)) < params[j].amountIn) {
+                        IERC20(params[j].path[0]).safeIncreaseAllowance(address(joeRouter), type(uint256).max);
+                    }
                     IJoeRouter02(joeRouter).swapExactTokensForTokens(
                         params[j].amountIn, params[j].amountOutMin, params[j].path, address(this), params[j].deadline
                     );
@@ -166,7 +179,7 @@ contract AvaxSwaps is IAvaxSwaps, SushiAdapter, StargateAvax {
         emit FeePaid(_token, fee);
     }
 
-     function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
+    function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
         fee = amount - ((amount * 9995) / 1e4);
     }
 

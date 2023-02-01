@@ -38,8 +38,7 @@ abstract contract SushiAdapter {
         /// @dev force sends token to the first pair if not already sent
         if (params.sendTokens) {
             IERC20(params.path[0]).safeTransfer(
-                UniswapV2Library.pairFor(factory, params.path[0], params.path[1], pairCodeHash),
-                params.amountIn
+                UniswapV2Library.pairFor(factory, params.path[0], params.path[1], pairCodeHash), params.amountIn
             );
         }
         _swap(amounts, params.path, address(this));

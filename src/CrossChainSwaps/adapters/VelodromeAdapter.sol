@@ -118,7 +118,8 @@ abstract contract VelodromeAdapter is IRouter {
         ensure(params.deadline)
         returns (uint256[] memory amounts)
     {
-        params.amountIn = params.amountIn == 0 ? IERC20(params.routes[0].from).balanceOf(address(this)) : params.amountIn;
+        params.amountIn =
+            params.amountIn == 0 ? IERC20(params.routes[0].from).balanceOf(address(this)) : params.amountIn;
         amounts = getAmountsOut(params.amountIn, params.routes);
         require(amounts[amounts.length - 1] >= params.amountOutMin, "Router: INSUFFICIENT_OUTPUT_AMOUNT");
         _safeTransfer(

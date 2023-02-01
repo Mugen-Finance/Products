@@ -7,6 +7,7 @@ import {ICamelotRouter} from "../interfaces/ICamelotRouter.sol";
 
 abstract contract CamelotAdapter {
     using SafeERC20 for IERC20;
+
     ICamelotRouter public immutable camelotRouter;
 
     constructor(address _camelotRouter) {
@@ -16,8 +17,10 @@ abstract contract CamelotAdapter {
     function camelotSwap(uint256 amountIn, address[] memory path, address referrer, uint256 deadline) internal {
         amountIn = amountIn == 0 ? IERC20(path[0]).balanceOf(address(this)) : amountIn;
         if (IERC20(path[0]).allowance(address(this), address(camelotRouter)) < amountIn) {
-            if(IERC20(path[0]).allowance(address(this), address(camelotRouter)) > 0) {
-                IERC20(path[0]).safeDecreaseAllowance(address(camelotRouter), IERC20(path[0]).allowance(address(this), address(camelotRouter)));
+            if (IERC20(path[0]).allowance(address(this), address(camelotRouter)) > 0) {
+                IERC20(path[0]).safeDecreaseAllowance(
+                    address(camelotRouter), IERC20(path[0]).allowance(address(this), address(camelotRouter))
+                );
             }
             IERC20(path[0]).approve(address(camelotRouter), type(uint256).max);
         }
