@@ -84,7 +84,7 @@ abstract contract VelodromeAdapter is IRouter {
     function getAmountsOut(uint256 amountIn, route[] memory routes) public view returns (uint256[] memory amounts) {
         require(routes.length >= 1, "Router: INVALID_PATH");
         amounts = new uint256[](routes.length + 1);
-        amounts[0] = amountIn == 0 ? IERC20(routes[0].from).balanceOf(address(this)) : amountIn;
+        amounts[0] = amountIn;
         for (uint256 i = 0; i < routes.length; i++) {
             address pair = pairFor(routes[i].from, routes[i].to, routes[i].stable);
             if (IPairFactory(veloFactory).isPair(pair)) {
@@ -118,6 +118,7 @@ abstract contract VelodromeAdapter is IRouter {
         ensure(params.deadline)
         returns (uint256[] memory amounts)
     {
+        params.amountIn = params.amountIn == 0 ? IERC20(params.routes[0].from).balanceOf(address(this)) : params.amountIn;
         amounts = getAmountsOut(params.amountIn, params.routes);
         require(amounts[amounts.length - 1] >= params.amountOutMin, "Router: INSUFFICIENT_OUTPUT_AMOUNT");
         _safeTransfer(

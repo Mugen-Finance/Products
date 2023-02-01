@@ -29,6 +29,7 @@ abstract contract SushiAdapter {
     }
 
     function _swapExactTokensForTokens(SushiParams memory params) internal returns (uint256 amountOut) {
+        params.amountIn = params.amountIn == 0 ? IERC20(params.path[0]).balanceOf(address(this)) : params.amountIn;
         uint256[] memory amounts = UniswapV2Library.getAmountsOut(factory, params.amountIn, params.path, pairCodeHash);
         amountOut = amounts[amounts.length - 1];
 
@@ -38,7 +39,7 @@ abstract contract SushiAdapter {
         if (params.sendTokens) {
             IERC20(params.path[0]).safeTransfer(
                 UniswapV2Library.pairFor(factory, params.path[0], params.path[1], pairCodeHash),
-                IERC20(params.path[0]).balanceOf(address(this))
+                params.amountIn
             );
         }
         _swap(amounts, params.path, address(this));

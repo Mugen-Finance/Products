@@ -126,6 +126,7 @@ abstract contract XCaliburAdapter is IRouter {
         ensure(params.deadline)
         returns (uint256[] memory amounts)
     {
+        params.amountIn = params.amountIn == 0 ? IERC20(params.routes[0].from).balanceOf(address(this)) : params.amountIn;
         amounts = getAmountsOut(params.amountIn, params.routes);
         require(amounts[amounts.length - 1] >= params.amountOutMin, "BaseV1Router: INSUFFICIENT_OUTPUT_AMOUNT");
         _safeTransfer(

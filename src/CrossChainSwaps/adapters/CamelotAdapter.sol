@@ -2,10 +2,12 @@
 pragma solidity 0.8.17;
 
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {ICamelotRouter} from "../interfaces/ICamelotRouter.sol";
 
 abstract contract CamelotAdapter {
-    ICamelotRouter camelotRouter;
+    using SafeERC20 for IERC20;
+    ICamelotRouter public immutable camelotRouter;
 
     constructor(address _camelotRouter) {
         camelotRouter = ICamelotRouter(_camelotRouter);
@@ -14,6 +16,9 @@ abstract contract CamelotAdapter {
     function camelotSwap(uint256 amountIn, address[] memory path, address referrer, uint256 deadline) internal {
         amountIn = amountIn == 0 ? IERC20(path[0]).balanceOf(address(this)) : amountIn;
         if (IERC20(path[0]).allowance(address(this), address(camelotRouter)) < amountIn) {
+            if(IERC20(path[0]).allowance(address(this), address(camelotRouter)) > 0) {
+                IERC20(path[0]).safeDecreaseAllowance(address(camelotRouter), IERC20(path[0]).allowance(address(this), address(camelotRouter)));
+            }
             IERC20(path[0]).approve(address(camelotRouter), type(uint256).max);
         }
         uint256[] memory amountOutMin = getAmountOut(amountIn, path);

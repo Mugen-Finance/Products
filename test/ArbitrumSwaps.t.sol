@@ -10,6 +10,7 @@ import "../src/CrossChainSwaps/FeeCollector.sol";
 //Tests need to be updated for the change is step order and for the adjustment to the camelot adapter.
 
 contract ArbitrumSwapsTest is Test {
+    using SafeERC20 for IERC20;
     ArbitrumSwaps arbitrumSwaps;
     FeeCollector feeCollector;
     address USDCWhale = address(0x7B7B957c284C2C227C980d6E2F804311947b84d0); // 1.6 million USDC
@@ -258,6 +259,15 @@ contract ArbitrumSwapsTest is Test {
 
         arbitrumSwaps.arbitrumSwaps{value: 10 ether}(steps, data);
         assertGt(IERC20(0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8).balanceOf(address(this)), 10e10);
+        vm.prank(address(arbitrumSwaps));
+        uint256 allowance = IERC20(address(weth)).allowance(address(arbitrumSwaps), address(arbitrumSwaps.camelotRouter()));
+        console.log("Allowance: %s", allowance);
+
+        arbitrumSwaps.arbitrumSwaps{value: 10 ether}(steps, data);
+        vm.prank(address(arbitrumSwaps));
+        uint256 newAllowance = IERC20(address(weth)).allowance(address(arbitrumSwaps), address(arbitrumSwaps.camelotRouter()));
+        console.log("Allowance: %s", newAllowance);
+        assertGt(allowance, newAllowance);
     }
 
     function testMultiSwaps() public {
