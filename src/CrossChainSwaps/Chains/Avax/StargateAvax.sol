@@ -1,12 +1,13 @@
 //SPDX-License-Identifier: ISC
 
-pragma solidity ^0.8.13;
+pragma solidity 0.8.17;
 
 import {IStargateReceiver} from "../../interfaces/IStargateReceiver.sol";
 import {IStargateRouter} from "../../interfaces/IStargateRouter.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IAvaxSwaps} from "./interfaces/IAvaxSwaps.sol";
+import {SafeTransferLib} from "solmate/src/utils/SafeTransferLib.sol";
 
 abstract contract StargateAvax is IStargateReceiver {
     using SafeERC20 for IERC20;
@@ -23,10 +24,10 @@ abstract contract StargateAvax is IStargateReceiver {
     //////////////////////////////////////////////////////////////*/
 
     event ReceivedOnDestination(address indexed token, uint256 amountLD, bool failed, bool dustSent);
-    event FeePaid(address _token, uint256 _fee);
 
     error NotStgRouter();
-    error MustBeGt0();
+    error NotEnoughGas();
+    error MismatchedLengths();
 
     /*//////////////////////////////////////////////////////////////
                                CONSTRUCTOR
@@ -56,12 +57,12 @@ abstract contract StargateAvax is IStargateReceiver {
     //////////////////////////////////////////////////////////////*/
 
     /// @param params parameters for the stargate router defined in StargateParams
-    /// @param stepsDst an arrat of steps to be performed on the dst chain
+    /// @param stepsDst an array of steps to be performed on the dst chain
     /// @param dataDst an array of data to be performed on the dst chain
     function stargateSwap(StargateParams memory params, uint8[] memory stepsDst, bytes[] memory dataDst) internal {
-        if (msg.value <= 0) revert MustBeGt0();
+        if (stepsDst.length != dataDst.length) revert MismatchedLengths();
+        if (params.gas < 100000) revert NotEnoughGas();
         bytes memory payload = abi.encode(params.to, stepsDst, dataDst);
-
         params.amount = params.amount != 0 ? params.amount : IERC20(params.token).balanceOf(address(this));
         if (IERC20(params.token).allowance(address(this), address(stargateRouter)) < params.amount) {
             IERC20(params.token).approve(address(stargateRouter), type(uint256).max);
@@ -70,7 +71,7 @@ abstract contract StargateAvax is IStargateReceiver {
             params.dstChainId,
             params.srcPoolId,
             params.dstPoolId,
-            payable(address(this)),
+            payable(msg.sender),
             params.amount,
             params.amountMin,
             IStargateRouter.lzTxObj(params.gas, params.dustAmount, abi.encodePacked(params.receiver)),
@@ -79,8 +80,15 @@ abstract contract StargateAvax is IStargateReceiver {
         );
     }
 
-    function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
-        fee = amount - ((amount * 9995) / 1e4);
+    function getFee(StargateParams memory params, bytes memory payload) external view returns (uint256 _fee) {
+        bytes memory toAddress = abi.encodePacked(params.receiver);
+        (_fee,) = IStargateRouter(stargateRouter).quoteLayerZeroFee(
+            params.dstChainId,
+            1,
+            toAddress,
+            payload,
+            IStargateRouter.lzTxObj(params.gas, params.dustAmount, abi.encodePacked(params.receiver))
+        );
     }
 
     /*//////////////////////////////////////////////////////////////
@@ -96,17 +104,30 @@ abstract contract StargateAvax is IStargateReceiver {
     {
         if (msg.sender != address(stargateRouter)) revert NotStgRouter();
 
-        (address to, uint8[] memory steps, bytes[] memory data) = abi.decode(_payload, (address, uint8[], bytes[]));
         bool failed;
+        bool dustSent;
 
-        try IAvaxSwaps(payable(address(this))).avaxSwaps{gas: 200000}(steps, data) {}
+        uint256 reserveGas = 100000;
+        uint256 limit = gasleft() - reserveGas;
+
+        (address to, uint8[] memory steps, bytes[] memory data) = abi.decode(_payload, (address, uint8[], bytes[]));
+
+        if (gasleft() < reserveGas) {
+            IERC20(_token).safeTransfer(to, amountLD);
+            /// @dev transfer any native token received as dust to the to address
+            if (address(this).balance > 0) {
+                SafeTransferLib.safeTransferETH(to, address(this).balance);
+            }
+        }
+
+        try IAvaxSwaps(payable(address(this))).avaxSwaps{gas: limit}(steps, data) {}
         catch (bytes memory) {
             IERC20(_token).safeTransfer(to, amountLD);
             failed = true;
         }
-        bool dustSent;
+
         if (address(this).balance > 0) {
-            (dustSent,) = to.call{value: address(this).balance}("");
+            SafeTransferLib.safeTransferETH(to, address(this).balance);
         }
         emit ReceivedOnDestination(_token, amountLD, failed, dustSent);
     }

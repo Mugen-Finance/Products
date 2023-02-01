@@ -260,6 +260,50 @@ contract ArbitrumSwapsTest is Test {
         assertGt(IERC20(0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8).balanceOf(address(this)), 10e10);
     }
 
+    function testMultiSwaps() public {
+        uint256 gmxBeforeBalance = IERC20(address(gmx)).balanceOf(address(this));
+        uint256 usdcBeforeBalance = IERC20(address(usdc)).balanceOf(address(this));
+        uint8[] memory steps = new uint8[](4);
+        bytes[] memory data = new bytes[](4);
+
+        steps[0] = 2;
+        steps[1] = 3;
+        steps[2] = 4;
+        steps[3] = 14;
+
+        ArbitrumSwaps.UniswapV3Single[] memory singleParams = new ArbitrumSwaps.UniswapV3Single[](1);
+
+        singleParams[0] = UniswapAdapter.UniswapV3Single({amountIn: 5 ether,
+        amountOutMin: 0,
+        token1: address(weth),
+        token2: address(gmx),
+        poolFee: 3000});
+
+        ArbitrumSwaps.UniswapV3Multi[] memory multiParams = new ArbitrumSwaps.UniswapV3Multi[](1);
+
+        multiParams[0] = UniswapAdapter.UniswapV3Multi({amountIn: 0,
+        amountOutMin: 0,
+        token1: address(weth),
+        token2: address(dai), 
+        token3: address(usdc), 
+        fee1: 3000,
+        fee2: 500});
+
+        ArbitrumSwaps.SrcTransferParams[] memory srcParams = new ArbitrumSwaps.SrcTransferParams[](2);
+
+        srcParams[0] = ArbitrumSwaps.SrcTransferParams({token: address(usdc), receiver: address(this), amount: 0});
+        srcParams[1] = ArbitrumSwaps.SrcTransferParams({token: address(gmx), receiver: address(this), amount: 0});
+
+        data[0] = abi.encode(10 ether);
+        data[1] = abi.encode(singleParams);
+        data[2] = abi.encode(multiParams);
+        data[3] = abi.encode(srcParams);
+
+        arbitrumSwaps.arbitrumSwaps{value: 10 ether}(steps, data);
+        assertGt(IERC20(address(gmx)).balanceOf(address(this)), gmxBeforeBalance);
+        assertGt(IERC20(address(usdc)).balanceOf(address(this)), usdcBeforeBalance);
+    }
+
     function testInvalidStep() public {
         uint8[] memory steps = new uint8[](1);
         bytes[] memory data = new bytes[](1);

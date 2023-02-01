@@ -6,6 +6,7 @@ import "../../adapters/SushiAdapter.sol";
 import {IAvaxSwaps} from "./interfaces/IAvaxSwaps.sol";
 import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {SafeTransferLib} from "solmate/src/utils/SafeTransferLib.sol";
 import {IWETH9} from "../../interfaces/IWETH9.sol";
 import {IJoeRouter02} from "traderjoe/interfaces/IJoeRouter02.sol";
 import {ILBRouter} from "traderjoe/interfaces/ILBRouter.sol";
@@ -16,6 +17,8 @@ contract AvaxSwaps is IAvaxSwaps, SushiAdapter, StargateAvax {
 
     error MoreThanZero();
     error WithdrawFailed();
+
+    event FeePaid(address _token, uint256 _fee);
 
     modifier lock() {
         require(locked == 1, "REENTRANCY");
@@ -83,6 +86,7 @@ contract AvaxSwaps is IAvaxSwaps, SushiAdapter, StargateAvax {
     }
 
     function avaxSwaps(uint8[] calldata steps, bytes[] calldata data) external payable lock {
+        if(steps.length != data.length) revert MismatchedLengths();
         for (uint256 i; i < steps.length; i++) {
             uint8 step = steps[i];
             if (step == BATCH_DEPOSIT) {
@@ -105,8 +109,9 @@ contract AvaxSwaps is IAvaxSwaps, SushiAdapter, StargateAvax {
                 (address to, uint256 amount) = abi.decode(data[i], (address, uint256));
                 amount = amount != 0 ? amount : IERC20(weth).balanceOf(address(this));
                 weth.withdraw(amount);
-                (bool success,) = to.call{value: amount}("");
-                if (!success) revert WithdrawFailed();
+                uint256 ethFee = calculateFee(amount);
+                SafeTransferLib.safeTransferETH(to, (amount - ethFee));
+                SafeTransferLib.safeTransferETH(feeCollector, ethFee);
             } else if (step == SRC_TRANSFER) {
                 SrcTransferParams[] memory params = abi.decode(data[i], (SrcTransferParams[]));
                 for (uint256 k; k < params.length; k++) {
@@ -159,6 +164,10 @@ contract AvaxSwaps is IAvaxSwaps, SushiAdapter, StargateAvax {
         IERC20(_token).safeTransfer(feeCollector, fee);
         IERC20(_token).safeTransfer(to, amount);
         emit FeePaid(_token, fee);
+    }
+
+     function calculateFee(uint256 amount) internal pure returns (uint256 fee) {
+        fee = amount - ((amount * 9995) / 1e4);
     }
 
     receive() external payable {}

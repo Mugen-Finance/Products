@@ -101,10 +101,6 @@ contract OptimismSwaps is UniswapAdapter, SushiAdapter, VelodromeAdapter, Starga
             } else if (step == VELODROME) {
                 VeloParams[] memory params = abi.decode(data[i], (VeloParams[]));
                 for (uint256 j; j < params.length; j++) {
-                    //    if (
-                    //         IERC20(params[j].routes[0].from).allowance(address(this), address(veloRouter))
-                    //             < params[j].amountIn
-                    //     ) approve(params[j].routes[0].from, address(this));
                     veloSwapExactTokensForTokens(params[j]);
                 }
             } else if (step == SRC_TRANSFER) {
@@ -135,10 +131,6 @@ contract OptimismSwaps is UniswapAdapter, SushiAdapter, VelodromeAdapter, Starga
         IERC20(_token).safeTransfer(feeCollector, fee);
         IERC20(_token).safeTransfer(to, amount);
         emit FeePaid(_token, fee);
-    }
-
-    function approve(address token, address to) internal {
-        IERC20(token).safeIncreaseAllowance(to, type(uint256).max);
     }
 
     function calculateFee(uint256 amount) internal pure returns (uint256 fee) {

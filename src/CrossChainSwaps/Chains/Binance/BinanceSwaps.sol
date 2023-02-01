@@ -90,7 +90,9 @@ contract BinanceSwaps is SushiAdapter, StargateBinance, IBinanceSwaps {
             } else if (step == PANCAKE_SWAP) {
                 UniswapV2Params[] memory params = abi.decode(data[i], (UniswapV2Params[]));
                 for (uint256 j; j < params.length; j++) {
-                    IERC20(params[j].path[0]).safeIncreaseAllowance(address(pancakeRouter), params[j].amountIn);
+                    if(IERC20(params[j].path[0]).allowance(address(this), address(pancakeRouter)) < params[j].amountIn) {
+                        IERC20(params[j].path[0]).safeIncreaseAllowance(address(pancakeRouter), type(uint256).max);
+                    }
                     IPancakeRouter02(pancakeRouter).swapExactTokensForTokens(
                         params[j].amountIn, params[j].amountOutMin, params[j].path, address(this), params[j].deadline
                     );
